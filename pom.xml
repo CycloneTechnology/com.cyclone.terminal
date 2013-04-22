@@ -7,7 +7,7 @@
    </parent>
    <version>${netPrefect.version}</version>
    <modelVersion>4.0.0</modelVersion>
-   <artifactId>com.cyclone.netPrefect.gui.terminal</artifactId>
+   <artifactId>com.cyclone.terminal</artifactId>
 
    <packaging>eclipse-plugin</packaging>
 

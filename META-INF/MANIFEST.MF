@@ -1,12 +1,12 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: netPrefect Terminal
-Bundle-SymbolicName: com.cyclone.netPrefect.gui.terminal
+Bundle-Name: Cyclone Terminal
+Bundle-SymbolicName: com.cyclone.terminal
 Bundle-Version: 3.0.0.qualifier
-Bundle-Activator: com.cyclone.netPrefect.gui.terminal.Activator
+Bundle-Activator: com.cyclone.terminal.Activator
 Bundle-Vendor: CYCLONE
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
-Export-Package: com.cyclone.netPrefect.gui.terminal.emulator
+Export-Package: com.cyclone.terminal.emulator
