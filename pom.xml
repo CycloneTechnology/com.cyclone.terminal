@@ -1,0 +1,37 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+   <parent>
+      <groupId>com.cyclone</groupId>
+      <artifactId>com.cyclone.netPrefect.gui.parent</artifactId>
+      <version>1.0.0-PARENT</version>
+   </parent>
+   <version>${netPrefect.version}</version>
+   <modelVersion>4.0.0</modelVersion>
+   <artifactId>com.cyclone.netPrefect.gui.terminal</artifactId>
+
+   <packaging>eclipse-plugin</packaging>
+
+   <dependencies>
+      <dependency>
+         <groupId>commons-net</groupId>
+         <artifactId>commons-net</artifactId>
+         <version>${commons_net.version}</version>
+         <scope>test</scope>
+      </dependency>
+      <dependency>
+         <groupId>com.cyclone</groupId>
+         <artifactId>com.cyclone.common</artifactId>
+         <version>${project.version}</version>
+      </dependency>
+      <dependency>
+         <groupId>com.cyclone</groupId>
+         <artifactId>com.cyclone.netPrefect.gui.application</artifactId>
+         <version>${project.version}</version>
+      </dependency>
+      <dependency>
+         <groupId>org.springframework</groupId>
+         <artifactId>spring-context</artifactId>
+      </dependency>
+   </dependencies>
+
+</project>
