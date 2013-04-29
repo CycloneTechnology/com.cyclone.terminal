@@ -3,9 +3,9 @@
    <parent>
       <groupId>com.cyclone</groupId>
       <artifactId>com.cyclone.netPrefect.gui.parent</artifactId>
-      <version>1.0.0-PARENT</version>
+      <version>3.0.0-SNAPSHOT</version>
    </parent>
-   <version>${netPrefect.version}</version>
+
    <modelVersion>4.0.0</modelVersion>
    <artifactId>com.cyclone.terminal</artifactId>
 
