@@ -5,8 +5,8 @@ Bundle-SymbolicName: com.cyclone.terminal
 Bundle-Version: 3.0.0.qualifier
 Bundle-Activator: com.cyclone.terminal.Activator
 Bundle-Vendor: CYCLONE
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
 Export-Package: com.cyclone.terminal.emulator
-Import-Package: org.osgi.framework;version="1.3.0"
+Import-Package: org.osgi.framework
 Require-Bundle: org.eclipse.swt
