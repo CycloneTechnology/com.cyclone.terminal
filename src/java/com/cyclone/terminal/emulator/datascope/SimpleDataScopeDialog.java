@@ -142,7 +142,7 @@ public class SimpleDataScopeDialog implements DataScope
         {
             return m_color;
         }
-    };
+    }
 
     public SimpleDataScopeDialog(final Shell a_parent)
     {

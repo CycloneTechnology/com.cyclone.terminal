@@ -361,7 +361,7 @@ public abstract class BaseTerminal extends Parser implements Terminal
 
     private void initializeCells()
     {
-        m_screenData = new ArrayList<ScreenRow>();
+        m_screenData = new ArrayList<>();
 
         for (int iRow = 0; iRow < (m_logicalScreen.getHeight() + m_logicalScreen
                 .getHistory()); iRow++)
@@ -1530,7 +1530,7 @@ public abstract class BaseTerminal extends Parser implements Terminal
                 m_logicalScreen.setWidth(a_width);
                 m_logicalScreen.getCursor().home();
 
-                m_screenData = new ArrayList<ScreenRow>();
+                m_screenData = new ArrayList<>();
 
                 for (int iRow = 0; iRow < (m_logicalScreen.getHeight() + 1); iRow++)
                 {

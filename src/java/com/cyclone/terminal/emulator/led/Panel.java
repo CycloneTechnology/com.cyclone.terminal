@@ -22,7 +22,7 @@ public class Panel
      */
     public Panel(final Composite a_parent, final int a_count)
     {
-        m_LEDs = new ArrayList<LED>();
+        m_LEDs = new ArrayList<>();
         for (int i = 0; i < a_count; i++)
         {
             m_LEDs.add(new LED(a_parent));
