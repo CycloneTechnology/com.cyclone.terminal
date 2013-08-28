@@ -5,6 +5,7 @@ package com.cyclone.terminal.emulator.font.VT100;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.text.MessageFormat;
 
@@ -44,7 +45,8 @@ public class CharSet implements CharPatterns
     }
 
     /**
-     * @see com.cyclone.terminal.emulator.font.VT100.CharPatterns#getImage(com.cyclone.terminal.emulator.cell.Cell, boolean, com.cyclone.terminal.emulator.cell.BlinkState)
+     * @see com.cyclone.terminal.emulator.font.VT100.CharPatterns#getImage(com.cyclone.terminal.emulator.cell.Cell,
+     *      boolean, com.cyclone.terminal.emulator.cell.BlinkState)
      */
     @Override
     public final Image getImage(final Cell a_cell, final boolean a_selected,
@@ -179,70 +181,69 @@ public class CharSet implements CharPatterns
             {charNumber};
             final String thisCharacter = characterIdFormatter.format(charNum);
 
-            try
+            try (final FileOutputStream out = new FileOutputStream(
+                    "D:\\netPrefect\\cyclone_terminal\\src\\java\\" + a_package
+                            + "\\CHAR" + thisCharacter + ".java"))
             {
-                final FileOutputStream out = new FileOutputStream(
-                        "D:\\netPrefect\\cyclone_terminal\\src\\java\\"
-                                + a_package + "\\CHAR" + thisCharacter
-                                + ".java");
-
-                final PrintStream p = new PrintStream(out);
-                p.println("/**");
-                p.println(" * ");
-                p.println(" */");
-                p.println("package "
-                        + a_package.replace('\\', '.').substring(0,
-                                a_package.length() - 1) + ";");
-                p.println();
-                p.println("import org.eclipse.swt.graphics.Point;");
-                p.println();
-                p.println("import com.cyclone.terminal.emulator.font.VT100.characters.RenderImage;");
-                p.println("/**");
-                p.println(" * @author Phil.Baxter");
-                p.println(" * ");
-                p.println(" */");
-                p.println("public class CHAR" + thisCharacter
-                        + " extends RenderImage");
-                p.println("{");
-                p.println("/**");
-                p.println(" * ");
-                p.println(" */");
-                p.println("private static final int[] DATA = new int[] {");
-                p.println("//");
-                for (int iRow = 0; iRow < 36; iRow++)
+                try (final PrintStream p = new PrintStream(out))
                 {
-                    for (int iColumn = 0; iColumn < 15; iColumn++)
-                    {
-                        p.print(character[iColumn][iRow] + ", ");
-                    }
+                    p.println("/**");
+                    p.println(" * ");
+                    p.println(" */");
+                    p.println("package "
+                            + a_package.replace('\\', '.').substring(0,
+                                    a_package.length() - 1) + ";");
                     p.println();
+                    p.println("import org.eclipse.swt.graphics.Point;");
+                    p.println();
+                    p.println("import com.cyclone.terminal.emulator.font.VT100.characters.RenderImage;");
+                    p.println("/**");
+                    p.println(" * @author Phil.Baxter");
+                    p.println(" * ");
+                    p.println(" */");
+                    p.println("public class CHAR" + thisCharacter
+                            + " extends RenderImage");
+                    p.println("{");
+                    p.println("/**");
+                    p.println(" * ");
+                    p.println(" */");
+                    p.println("private static final int[] DATA = new int[] {");
+                    p.println("//");
+                    for (int iRow = 0; iRow < 36; iRow++)
+                    {
+                        for (int iColumn = 0; iColumn < 15; iColumn++)
+                        {
+                            p.print(character[iColumn][iRow] + ", ");
+                        }
+                        p.println();
+                    }
+                    p.println("};");
+                    p.println();
+                    p.println("/**");
+                    p.println(" * @see com.cyclone.netPrefect.gui.terminal.emulator.font.VT100.characters.RenderImage#getData()");
+                    p.println(" */");
+                    p.println("@Override");
+                    p.println("public final int[] getData()");
+                    p.println("{");
+                    p.println("    return DATA;");
+                    p.println("}");
+                    p.println("");
+                    p.println("/**");
+                    p.println(" * @see com.cyclone.netPrefect.gui.terminal.emulator.font.VT100.characters.RenderImage#getSize()");
+                    p.println(" */");
+                    p.println("@Override");
+                    p.println("public final Point getSize()");
+                    p.println("{");
+                    p.println("    return new Point(15, 36);");
+                    p.println("}");
+                    p.println("}");
                 }
-                p.println("};");
-                p.println();
-                p.println("/**");
-                p.println(" * @see com.cyclone.netPrefect.gui.terminal.emulator.font.VT100.characters.RenderImage#getData()");
-                p.println(" */");
-                p.println("@Override");
-                p.println("public final int[] getData()");
-                p.println("{");
-                p.println("    return DATA;");
-                p.println("}");
-                p.println("");
-                p.println("/**");
-                p.println(" * @see com.cyclone.netPrefect.gui.terminal.emulator.font.VT100.characters.RenderImage#getSize()");
-                p.println(" */");
-                p.println("@Override");
-                p.println("public final Point getSize()");
-                p.println("{");
-                p.println("    return new Point(15, 36);");
-                p.println("}");
-                p.println("}");
-
-                p.close();
             }
             catch (FileNotFoundException e)
             {
-
+            }
+            catch (IOException e1)
+            {
             }
             charNumber++;
         }
