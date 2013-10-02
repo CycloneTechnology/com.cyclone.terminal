@@ -2,9 +2,15 @@ package com.cyclone.terminal.emulator.datascope;
 
 import com.cyclone.terminal.emulator.datascope.SimpleDataScopeDialog.Direction;
 
-
+/**
+ * @author Phil.Baxter
+ * 
+ */
 public interface DataScope
 {
+    /**
+     * The translation of ascii code to a string representation of it
+     */
     String[] ASCII_CODES = new String[]
     {
             // Ascii code 0 thru 127
@@ -89,7 +95,7 @@ public interface DataScope
 
     /**
      * Method used to process data and add it to the datascope display
-     *
+     * 
      * @param a_data
      * @param a_count
      * @param a_direction
@@ -98,7 +104,7 @@ public interface DataScope
 
     /**
      * Add a message to the message pane of the datascope window.
-     *
+     * 
      * @param a_message
      */
     void addMessage(final String a_message);

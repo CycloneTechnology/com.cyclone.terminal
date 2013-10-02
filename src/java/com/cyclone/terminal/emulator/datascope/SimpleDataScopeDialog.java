@@ -14,6 +14,10 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 
+/**
+ * @author Phil.Baxter
+ * 
+ */
 public class SimpleDataScopeDialog implements DataScope
 {
     private final Shell m_dialogShell;
@@ -110,10 +114,20 @@ public class SimpleDataScopeDialog implements DataScope
         }
     }
 
+    /**
+     * @author Phil.Baxter
+     * 
+     */
     public enum Direction
     {
+        /**
+         * 
+         */
         SEND("Data Sent to Device", Display.getDefault().getSystemColor(
                 SWT.COLOR_BLACK)),
+        /**
+         * 
+         */
         RECEIVE("Data Received from Device", Display.getDefault()
                 .getSystemColor(SWT.COLOR_BLACK));
 
@@ -144,6 +158,9 @@ public class SimpleDataScopeDialog implements DataScope
         }
     }
 
+    /**
+     * @param a_parent
+     */
     public SimpleDataScopeDialog(final Shell a_parent)
     {
 
@@ -202,8 +219,7 @@ public class SimpleDataScopeDialog implements DataScope
     }
 
     /**
-     * @see com.cyclone.terminal.emulator.datascope.DataScope#add(byte[],
-     *      int,
+     * @see com.cyclone.terminal.emulator.datascope.DataScope#add(byte[], int,
      *      com.cyclone.terminal.emulator.datascope.SimpleDataScopeDialog.Direction)
      */
     @Override
