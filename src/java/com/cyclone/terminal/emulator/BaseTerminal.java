@@ -1655,8 +1655,7 @@ public abstract class BaseTerminal extends Parser implements Terminal
     }
 
     /**
-     * @see com.cyclone.terminal.emulator.Terminal#processDataRead(byte[],
-     *      int)
+     * @see com.cyclone.terminal.emulator.Terminal#processDataRead(byte[], int)
      */
     @Override
     public final void processDataRead(byte[] a_Data, int a_count)
@@ -1838,6 +1837,9 @@ public abstract class BaseTerminal extends Parser implements Terminal
         m_AllowWidthChange = a_allowWidthChange;
     }
 
+    /**
+     * @param a_dataScope
+     */
     public final void setDataScope(final DataScope a_dataScope)
     {
         if (m_dataScope != null)
@@ -1848,6 +1850,9 @@ public abstract class BaseTerminal extends Parser implements Terminal
         m_dataScope = a_dataScope;
     }
 
+    /**
+     * @param a_message
+     */
     public final void addMessageToDataScope(final String a_message)
     {
         if (m_dataScope != null)
