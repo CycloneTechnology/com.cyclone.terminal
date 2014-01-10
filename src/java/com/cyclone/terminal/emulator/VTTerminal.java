@@ -9,7 +9,6 @@ import org.eclipse.swt.widgets.Composite;
 import com.cyclone.terminal.emulator.cell.LineHeight;
 import com.cyclone.terminal.emulator.cell.LineWidth;
 import com.cyclone.terminal.parser.Action;
-import com.cyclone.terminal.parser.ParseTable;
 import com.cyclone.terminal.parser.Parser;
 
 /**
@@ -54,8 +53,7 @@ public abstract class VTTerminal extends VT300
             final char a_ch)
     {
 
-        System.out.println("Received action "
-                + ParseTable.ACTION_NAMES[a_action.ordinal()] + " char:" + a_ch
+        System.out.println("Received action [" + a_action + "] char:" + a_ch
                 + "(" + Integer.toHexString(a_ch) + ")");
         for (int i = 0; i < a_parser.getIntermediateCharPos(); i++)
         {

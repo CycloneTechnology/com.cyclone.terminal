@@ -9,24 +9,6 @@ package com.cyclone.terminal.parser;
  */
 public interface ParseTable
 {
-
-    /**
-     * 
-     */
-    String[] ACTION_NAMES =
-    {"<no action>", "CLEAR", "COLLECT", "CSI_DISPATCH", "ESC_DISPATCH",
-            "EXECUTE", "HOOK", "IGNORE", "OSC_END", "OSC_PUT", "OSC_START",
-            "PARAM", "PRINT", "PUT", "UNHOOK"};
-
-    /**
-     * 
-     */
-    String[] STATE_NAMES =
-    {"ANYWHERE", "CSI_ENTRY", "CSI_IGNORE", "CSI_INTERMEDIATE", "CSI_PARAM",
-            "DCS_ENTRY", "DCS_IGNORE", "DCS_INTERMEDIATE", "DCS_PARAM",
-            "DCS_PASSTHROUGH", "ESCAPE", "ESCAPE_INTERMEDIATE", "GROUND",
-            "OSC_STRING", "SOS_PM_APC_STRING"};
-
     /**
      * 
      */
