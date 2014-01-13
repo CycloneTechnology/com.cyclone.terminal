@@ -10,7 +10,13 @@ package com.cyclone.terminal.parser;
 public interface ParseTable
 {
     /**
-     * 
+     * The from and To are or'ed together in the following array, with the to being left shifted by 4 bits before the or operation.
+     *  
+     *  State.From State.To Action.Action
+     *  
+     *  ANYWHERE, GROUND, EXECUTE, method()
+     *  
+     *  FIXME - This could all be done in a much cleaner type safe way!
      */
     int[][] STATE_TABLE =
     {
