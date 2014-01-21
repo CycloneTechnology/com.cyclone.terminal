@@ -1,7 +1,5 @@
 package com.cyclone.terminal.parser;
 
-import java.util.Map;
-
 /**
  * @author Phil.Baxter
  * 
@@ -57,7 +55,8 @@ public class VTxxxParser
     // }
     // }
     //
-    
+
+    @SuppressWarnings("unused")
     private static enum Event
     {
         // ASCII CODES
