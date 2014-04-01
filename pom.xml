@@ -124,4 +124,5 @@
 
 	<packaging>eclipse-plugin</packaging>
 
+	<name>Cyclone VTxxx Terminal Emulation</name>
 </project>
