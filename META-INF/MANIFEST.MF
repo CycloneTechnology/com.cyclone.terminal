@@ -4,7 +4,7 @@ Bundle-Name: Cyclone Terminal
 Bundle-SymbolicName: com.cyclone.terminal
 Bundle-Version: 3.1.0.qualifier
 Bundle-Activator: com.cyclone.terminal.Activator
-Bundle-Vendor: CYCLONE
+Bundle-Vendor: Cyclone Technology Limited
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
 Export-Package: com.cyclone.terminal.emulator
