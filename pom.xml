@@ -10,10 +10,6 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>com.cyclone.terminal</artifactId>
 
-	<properties>
-		<tycho-version>0.18.1</tycho-version>
-	</properties>
-
 	<prerequisites>
 		<maven>3.0</maven>
 	</prerequisites>
