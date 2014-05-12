@@ -18,7 +18,7 @@ import org.eclipse.swt.widgets.Shell;
  * @author Phil.Baxter
  * 
  */
-public class SimpleDataScopeDialog implements DataScope
+public final class SimpleDataScopeDialog implements DataScope
 {
     private final Shell m_dialogShell;
 
