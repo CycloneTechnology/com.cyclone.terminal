@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Cyclone Terminal
 Bundle-SymbolicName: com.cyclone.terminal
-Bundle-Version: 3.1.0.qualifier
+Bundle-Version: 3.2.0.qualifier
 Bundle-Activator: com.cyclone.terminal.Activator
 Bundle-Vendor: Cyclone Technology Limited
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
