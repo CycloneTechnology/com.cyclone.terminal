@@ -1,124 +1,88 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
-	<parent>
-		<groupId>com.cyclone</groupId>
-		<artifactId>com.cyclone</artifactId>
-		<version>3.2.0-SNAPSHOT</version>
-	</parent>
-
-	<modelVersion>4.0.0</modelVersion>
-	<artifactId>com.cyclone.terminal</artifactId>
-
-	<prerequisites>
-		<maven>3.0</maven>
-	</prerequisites>
-
-	<repositories>
-
-		<!-- <repository> <id>cyclone</id> <name>Cyclone</name> <url>http://nexus/nexus/content/groups/public</url> 
-			<layout>default</layout> <releases> <enabled>true</enabled> <updatePolicy>never</updatePolicy> 
-			</releases> <snapshots> <enabled>true</enabled> <updatePolicy>always</updatePolicy> 
-			</snapshots> </repository> -->
-		<repository>
-			<id>4.5</id>
-			<layout>p2</layout>
-			<url>http://download.eclipse.org/eclipse/updates/4.5/</url>
-		</repository>
-
-		<repository>
-			<id>mars-ext</id>
-			<layout>p2</layout>
-			<url>http://download.eclipse.org/releases/mars/</url>
-		</repository>
-
-	</repositories>
-
-	<build>
-		<plugins>
-			<!-- This is actually needed by m2eclipse for eclipse-plugin projects 
-				because otherwise m2eclipse can not determine the jdk version Since the help 
-				goal has no phase defined it won't run. https://issues.sonatype.org/browse/MNGECLIPSE-2152 -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<executions>
-					<execution>
-						<goals>
-							<goal>help</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.eclipse.tycho</groupId>
-				<artifactId>tycho-maven-plugin</artifactId>
-				<version>${tycho-version}</version>
-				<extensions>true</extensions>
-			</plugin>
-
-			<plugin>
-				<groupId>org.eclipse.tycho</groupId>
-				<artifactId>target-platform-configuration</artifactId>
-				<version>${tycho-version}</version>
-				<configuration>
-					<resolver>p2</resolver>
-					<pomDependencies>consider</pomDependencies>
-					<dependency-resolution>
-						<optionalDependencies>ignore</optionalDependencies>
-					</dependency-resolution>
-					<environments>
-						<environment>
-							<os>linux</os>
-							<ws>gtk</ws>
-							<arch>x86</arch>
-						</environment>
-						<environment>
-							<os>linux</os>
-							<ws>gtk</ws>
-							<arch>x86_64</arch>
-						</environment>
-						<environment>
-							<os>win32</os>
-							<ws>win32</ws>
-							<arch>x86</arch>
-						</environment>
-						<environment>
-							<os>win32</os>
-							<ws>win32</ws>
-							<arch>x86_64</arch>
-						</environment>
-						<!-- <environment> <os>macosx</os> <ws>cocoa</ws> <arch>x86_64</arch> 
-							</environment> -->
-					</environments>
-				</configuration>
-			</plugin>
-		</plugins>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-compiler-plugin</artifactId>
-					<version>3.1</version>
-					<configuration>
-						<source>1.7</source>
-						<target>1.7</target>
-					</configuration>
-				</plugin>
-				<plugin>
-					<groupId>org.eclipse.tycho</groupId>
-					<artifactId>tycho-packaging-plugin</artifactId>
-					<version>${tycho-version}</version>
-					<configuration>
-						<strictVersions>false</strictVersions>
-						<!-- <format>'v'yyyyMMdd-HHmm</format>> -->
-					</configuration>
-				</plugin>
-			</plugins>
-		</pluginManagement>
-	</build>
-
-	<packaging>eclipse-plugin</packaging>
-
-	<name>Cyclone VTxxx Terminal Emulation</name>
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>com.cyclone</groupId>
+        <artifactId>com.cyclone</artifactId>
+        <version>3.2.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>com.cyclone.terminal</artifactId>
+    <prerequisites>
+        <maven>3.0</maven>
+    </prerequisites>
+    <repositories>
+        <!-- <repository> <id>cyclone</id> <name>Cyclone</name> <url>http://nexus/nexus/content/groups/public</url> 
+            <layout>default</layout> <releases> <enabled>true</enabled> <updatePolicy>never</updatePolicy> 
+            </releases> <snapshots> <enabled>true</enabled> <updatePolicy>always</updatePolicy> 
+            </snapshots> </repository> -->
+        <repository>
+            <id>4.5</id>
+            <layout>p2</layout>
+            <url>http://download.eclipse.org/eclipse/updates/4.5/</url>
+        </repository>
+        <repository>
+            <id>mars-ext</id>
+            <layout>p2</layout>
+            <url>http://download.eclipse.org/releases/mars/</url>
+        </repository>
+    </repositories>
+    <build>
+        <plugins>
+            <!-- This is actually needed by m2eclipse for eclipse-plugin projects 
+                because otherwise m2eclipse can not determine the jdk version Since the help goal 
+                has no phase defined it won't run. https://issues.sonatype.org/browse/MNGECLIPSE-2152 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>help</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.eclipse.tycho</groupId>
+                <artifactId>tycho-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.eclipse.tycho</groupId>
+                <artifactId>target-platform-configuration</artifactId>
+                <configuration>
+                    <resolver>p2</resolver>
+                    <pomDependencies>consider</pomDependencies>
+                    <dependency-resolution>
+                        <optionalDependencies>ignore</optionalDependencies>
+                    </dependency-resolution>
+                    <environments>
+                        <environment>
+                            <os>linux</os>
+                            <ws>gtk</ws>
+                            <arch>x86</arch>
+                        </environment>
+                        <environment>
+                            <os>linux</os>
+                            <ws>gtk</ws>
+                            <arch>x86_64</arch>
+                        </environment>
+                        <environment>
+                            <os>win32</os>
+                            <ws>win32</ws>
+                            <arch>x86</arch>
+                        </environment>
+                        <environment>
+                            <os>win32</os>
+                            <ws>win32</ws>
+                            <arch>x86_64</arch>
+                        </environment>
+                        <!-- <environment> <os>macosx</os> <ws>cocoa</ws> <arch>x86_64</arch> 
+                            </environment> -->
+                    </environments>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <packaging>eclipse-plugin</packaging>
+    <name>Cyclone VTxxx Terminal Emulation</name>
 </project>
