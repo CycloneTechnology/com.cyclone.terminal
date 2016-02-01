@@ -57,7 +57,7 @@ public class VTxxxParser
     //
 
     @SuppressWarnings("unused")
-    private static enum Event
+    private enum Event
     {
         // ASCII CODES
         BYTE_00("NUL", "Null char"),
@@ -340,7 +340,7 @@ public class VTxxxParser
         /**
          * @param a_symbol
          */
-        private Event(final String a_symbol, final String a_description)
+        Event(final String a_symbol, final String a_description)
         {
             m_symbol = a_symbol;
             m_description = a_description;

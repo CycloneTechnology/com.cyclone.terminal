@@ -34,7 +34,7 @@ public final class SimpleDataScopeDialog implements DataScope
 
         private final Direction m_direction;
 
-        public Scope(final Composite a_parent, final Direction a_direction)
+        Scope(final Composite a_parent, final Direction a_direction)
         {
             m_direction = a_direction;
 
@@ -135,7 +135,7 @@ public final class SimpleDataScopeDialog implements DataScope
 
         private final Color m_color;
 
-        private Direction(final String a_description, final Color a_color)
+        Direction(final String a_description, final Color a_color)
         {
             m_description = a_description;
             m_color = a_color;
