@@ -16,16 +16,14 @@
             </releases> <snapshots> <enabled>true</enabled> <updatePolicy>always</updatePolicy> 
             </snapshots> </repository> -->
         <repository>
-            <id>4.6</id>
+            <id>4.7</id>
             <layout>p2</layout>
-            <url>http://ftp.acc.umu.se/mirror/eclipse.org/eclipse/updates/4.6/</url>
-<!--            <url>http://download.eclipse.org/eclipse/updates/4.6/</url> -->
+            <url>http://ftp.acc.umu.se/mirror/eclipse.org/eclipse/updates/4.7/</url>
         </repository>
         <repository>
-            <id>mars-ext</id>
+            <id>oxygen-ext</id>
             <layout>p2</layout>
-            <url>http://ftp.acc.umu.se/mirror/eclipse.org/releases/neon/</url>
-<!--            <url>http://download.eclipse.org/releases/neon/</url> -->
+            <url>http://ftp.acc.umu.se/mirror/eclipse.org/releases/oxygen/</url>
         </repository>
     </repositories>
     <build>
