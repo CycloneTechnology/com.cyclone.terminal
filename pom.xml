@@ -16,14 +16,14 @@
             </releases> <snapshots> <enabled>true</enabled> <updatePolicy>always</updatePolicy> 
             </snapshots> </repository> -->
         <repository>
-            <id>4.7</id>
+            <id>4.8</id>
             <layout>p2</layout>
-            <url>http://ftp.acc.umu.se/mirror/eclipse.org/eclipse/updates/4.7/</url>
+            <url>http://ftp.acc.umu.se/mirror/eclipse.org/eclipse/updates/4.8/</url>
         </repository>
         <repository>
             <id>oxygen-ext</id>
             <layout>p2</layout>
-            <url>http://ftp.acc.umu.se/mirror/eclipse.org/releases/oxygen/</url>
+            <url>http://ftp.acc.umu.se/mirror/eclipse.org/releases/photon/</url>
         </repository>
     </repositories>
     <build>
