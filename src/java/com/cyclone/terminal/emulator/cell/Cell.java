@@ -12,23 +12,23 @@ import com.cyclone.terminal.emulator.CharacterSetSequence;
  */
 public class Cell
 {
-    private int m_Row;
+    private int row;
 
-    private int m_Column;
+    private int column;
 
-    private char m_Character;
+    private char character;
 
-    private Rendition m_Rendition;
+    private Rendition rendition;
 
-    private Attribute m_Attribute;
+    private Attribute attribute;
 
-    private CharacterSetSequence m_characterSetSequence;
+    private CharacterSetSequence characterSetSequence;
 
-    private CharacterSet m_characterSet;
+    private CharacterSet characterSet;
 
-    private LineWidth m_lineWidth;
+    private LineWidth lineWidth;
 
-    private LineHeight m_lineHeight;
+    private LineHeight lineHeight;
 
     /**
      * Constructor for Cell.
@@ -38,8 +38,8 @@ public class Cell
      */
     public Cell(final int a_Row, final int a_Column)
     {
-        m_Row = a_Row;
-        m_Column = a_Column;
+        row = a_Row;
+        column = a_Column;
         reset();
     }
 
@@ -48,7 +48,7 @@ public class Cell
      */
     public final Attribute getAttribute()
     {
-        return m_Attribute;
+        return attribute;
     }
 
     /**
@@ -56,7 +56,7 @@ public class Cell
      */
     public final char getCharacter()
     {
-        return m_Character;
+        return character;
     }
 
     /**
@@ -66,7 +66,7 @@ public class Cell
      */
     public final void setCharacter(char a_character)
     {
-        m_Character = a_character;
+        character = a_character;
     }
 
     /**
@@ -74,7 +74,7 @@ public class Cell
      */
     public final Rendition getRendition()
     {
-        return m_Rendition;
+        return rendition;
     }
 
     /**
@@ -84,7 +84,7 @@ public class Cell
      */
     public final void setRendition(final Rendition a_rendition)
     {
-        m_Rendition = Rendition.createClone(a_rendition);
+        rendition = Rendition.createClone(a_rendition);
     }
 
     /**
@@ -92,13 +92,13 @@ public class Cell
      */
     public final void reset()
     {
-        m_Character = 32; // Set to space initially
-        m_Rendition = new Rendition();
-        m_Attribute = new Attribute();
-        m_lineWidth = LineWidth.NORMAL;
-        m_lineHeight = LineHeight.NORMAL;
-        m_characterSetSequence = CharacterSetSequence.G0;
-        m_characterSet = CharacterSet.USASCII;
+        character = 32; // Set to space initially
+        rendition = new Rendition();
+        attribute = new Attribute();
+        lineWidth = LineWidth.NORMAL;
+        lineHeight = LineHeight.NORMAL;
+        characterSetSequence = CharacterSetSequence.G0;
+        characterSet = CharacterSet.USASCII;
 
     }
 
@@ -107,7 +107,7 @@ public class Cell
      */
     public final int getColumn()
     {
-        return m_Column;
+        return column;
     }
 
     /**
@@ -115,7 +115,7 @@ public class Cell
      */
     public final int getRow()
     {
-        return m_Row;
+        return row;
     }
 
     /**
@@ -125,7 +125,7 @@ public class Cell
      */
     public final LineHeight getLineHeight()
     {
-        return m_lineHeight;
+        return lineHeight;
     }
 
     /**
@@ -133,7 +133,7 @@ public class Cell
      */
     public final void setLineHeight(LineHeight a_doubleHeight)
     {
-        m_lineHeight = a_doubleHeight;
+        lineHeight = a_doubleHeight;
     }
 
     /**
@@ -142,7 +142,7 @@ public class Cell
      */
     public final LineWidth getLineWidth()
     {
-        return m_lineWidth;
+        return lineWidth;
     }
 
     /**
@@ -150,7 +150,7 @@ public class Cell
      */
     public final void setLineWidth(LineWidth a_lineWidth)
     {
-        m_lineWidth = a_lineWidth;
+        lineWidth = a_lineWidth;
     }
 
     /**
@@ -158,7 +158,7 @@ public class Cell
      */
     public final void setRow(int a_row)
     {
-        m_Row = a_row;
+        row = a_row;
     }
 
     /**
@@ -166,7 +166,7 @@ public class Cell
      */
     public final CharacterSet getCharacterSet()
     {
-        return m_characterSet;
+        return characterSet;
     }
 
     /**
@@ -174,7 +174,7 @@ public class Cell
      */
     public final void setCharacterSet(CharacterSet a_characterSet)
     {
-        m_characterSet = a_characterSet;
+        characterSet = a_characterSet;
     }
 
     /**
@@ -182,7 +182,7 @@ public class Cell
      */
     public final CharacterSetSequence getCharacterSetsSequence()
     {
-        return m_characterSetSequence;
+        return characterSetSequence;
     }
 
     /**
@@ -191,6 +191,6 @@ public class Cell
     public final void setCharacterSetSequence(
             CharacterSetSequence a_characterSetSequence)
     {
-        m_characterSetSequence = a_characterSetSequence;
+        characterSetSequence = a_characterSetSequence;
     }
 }

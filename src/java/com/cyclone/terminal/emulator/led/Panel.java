@@ -14,7 +14,7 @@ import org.eclipse.swt.widgets.Composite;
  */
 public class Panel
 {
-    private List<LED> m_LEDs;
+    private List<LED> leds;
 
     /**
      * @param a_parent
@@ -22,10 +22,10 @@ public class Panel
      */
     public Panel(final Composite a_parent, final int a_count)
     {
-        m_LEDs = new ArrayList<>();
+        leds = new ArrayList<>();
         for (int i = 0; i < a_count; i++)
         {
-            m_LEDs.add(new LED(a_parent));
+            leds.add(new LED(a_parent));
         }
     }
 
@@ -35,9 +35,9 @@ public class Panel
      */
     public final void setLED(final int a_index, final boolean a_on)
     {
-        if (a_index < m_LEDs.size())
+        if (a_index < leds.size())
         {
-            m_LEDs.get(a_index).setOn(a_on);
+            leds.get(a_index).setOn(a_on);
         }
     }
 
@@ -46,7 +46,7 @@ public class Panel
      */
     public final void refresh()
     {
-        for (LED led : m_LEDs)
+        for (LED led : leds)
         {
             led.redraw();
         }
@@ -59,7 +59,7 @@ public class Panel
      */
     public final void show(boolean a_show)
     {
-        for (LED led : m_LEDs)
+        for (LED led : leds)
         {
             led.show(a_show);
         }

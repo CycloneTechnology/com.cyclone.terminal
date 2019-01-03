@@ -57,65 +57,65 @@ import com.cyclone.terminal.parser.Parser;
  */
 public abstract class BaseTerminal extends Parser implements Terminal
 {
-    private LogicalScreen m_logicalScreen;
+    private LogicalScreen logicalScreen;
 
-    private Composite m_composite;
+    private Composite composite;
 
-    private Canvas m_canvas;
+    private Canvas canvas;
 
-    private Menu m_menu;
+    private Menu menu;
 
-    private Panel m_LEDPanel;
+    private Panel ledPanel;
 
-    private CLabel m_statusLine;
+    private CLabel statusLine;
 
-    private GC m_gc;
+    private GC gc;
 
-    private Font m_font;
+    private Font font;
 
-    private Image m_image;
+    private Image image;
 
-    private CursorStyle m_cursorStyle = CursorStyle.BLOCK;
+    private CursorStyle cursorStyle = CursorStyle.BLOCK;
 
-    private Thread m_blinkThread;
+    private Thread blinkThread;
 
-    private CharSet m_charSet;
+    private CharSet charSet;
 
-    private CharacterSetSequence m_charSetSequenceOnDisplay;
+    private CharacterSetSequence charSetSequenceOnDisplay;
 
-    private CharacterSet m_charSetOnDisplay;
+    private CharacterSet charSetOnDisplay;
 
-    private Rendition m_ActiveRendition;
+    private Rendition activeRendition;
 
-    private boolean m_haveSelection;
+    private boolean haveSelection;
 
-    private int m_selectionStartRow;
+    private int selectionStartRow;
 
-    private int m_selectionStartColumn;
+    private int selectionStartColumn;
 
-    private int m_selectionEndRow;
+    private int selectionEndRow;
 
-    private int m_selectionEndColumn;
+    private int selectionEndColumn;
 
-    private boolean m_readOnly;
+    private boolean readOnly;
 
-    private boolean m_invisibleCursor;
+    private boolean invisibleCursor;
 
-    private boolean m_Linefeed;
+    private boolean linefeed;
 
-    private List<ScreenRow> m_screenData;
+    private List<ScreenRow> screenData;
 
-    private boolean m_useApplicationCursorKeys;
+    private boolean useApplicationCursorKeys;
 
-    private boolean m_autoRepeat = true;
+    private boolean autoRepeat = true;
 
-    private boolean m_keyDown; // = false;
+    private boolean keyDown; // = false;
 
-    private boolean m_AllowWidthChange = true;
+    private boolean allowWidthChange = true;
 
-    private DataScope m_dataScope;
+    private DataScope dataScope;
 
-    private boolean m_bsSendsDel = true;
+    private boolean bsSendsDel = true;
 
     /**
      * Constructor for BaseTerminal.
@@ -138,7 +138,7 @@ public abstract class BaseTerminal extends Parser implements Terminal
     public BaseTerminal(final Composite a_parent, final int a_width,
             final int a_height, final int a_history)
     {
-        m_logicalScreen = new LogicalScreen(a_width, a_height, a_history);
+        logicalScreen = new LogicalScreen(a_width, a_height, a_history);
 
         initialize(a_parent);
     }
@@ -156,33 +156,33 @@ public abstract class BaseTerminal extends Parser implements Terminal
 
     private void initialize(final Composite a_parent)
     {
-        m_charSetSequenceOnDisplay = CharacterSetSequence.G0;
-        m_charSetOnDisplay = CharacterSet.USASCII;
-        m_ActiveRendition = new Rendition();
-        m_useApplicationCursorKeys = false;
+        charSetSequenceOnDisplay = CharacterSetSequence.G0;
+        charSetOnDisplay = CharacterSet.USASCII;
+        activeRendition = new Rendition();
+        useApplicationCursorKeys = false;
 
         initializeCells();
         initializeEmulatorWindow(a_parent);
         initializeBlinking();
 
-        m_readOnly = false;
+        readOnly = false;
     }
 
     private void initializeEmulatorWindow(final Composite a_parent)
     {
         createComposite(a_parent);
 
-        m_charSet = new CharSet(getDisplay());
+        charSet = new CharSet(getDisplay());
 
-        m_gc = new GC(m_canvas);
-        m_gc.setFont(m_font);
-        m_gc.setBackground(new Color(getDisplay(),
+        gc = new GC(canvas);
+        gc.setFont(font);
+        gc.setBackground(new Color(getDisplay(),
                 Colours.NORMAL[Colours.BACKGROUND_COLOUR_INDEX]));
-        m_gc.setForeground(new Color(getDisplay(),
+        gc.setForeground(new Color(getDisplay(),
                 Colours.NORMAL[Colours.FOREGROUND_COLOUR_INDEX]));
-        m_gc.fillRectangle(m_canvas.getClientArea());
+        gc.fillRectangle(canvas.getClientArea());
 
-        m_canvas.addKeyListener(new KeyListener()
+        canvas.addKeyListener(new KeyListener()
         {
             /**
              * @see org.eclipse.swt.events.KeyListener#keyPressed(org.eclipse.swt.events.KeyEvent)
@@ -190,14 +190,14 @@ public abstract class BaseTerminal extends Parser implements Terminal
             @Override
             public void keyPressed(KeyEvent a_e)
             {
-                if (!m_keyDown || m_autoRepeat)
+                if (!keyDown || autoRepeat)
                 {
-                    if (!m_readOnly)
+                    if (!readOnly)
                     {
                         final ByteArrayOutputStream bb = new ByteArrayOutputStream();
 
                         final byte[] keyCode = translateKeyCode(a_e.keyCode,
-                                a_e.character, m_useApplicationCursorKeys);
+                                a_e.character, useApplicationCursorKeys);
                         if (keyCode != null)
                         {
                             try
@@ -213,7 +213,7 @@ public abstract class BaseTerminal extends Parser implements Terminal
                         {
                             if (a_e.character == 13)
                             {
-                                if (m_Linefeed)
+                                if (linefeed)
                                 {
                                     bb.write((byte) a_e.character);
                                     bb.write((byte) 10);
@@ -226,7 +226,7 @@ public abstract class BaseTerminal extends Parser implements Terminal
                             else if (a_e.character == 8)
                             {
                                 // BS (Backspace key pressed) so send DEL (127)
-                                if (m_bsSendsDel)
+                                if (bsSendsDel)
                                 {
                                     bb.write((byte) 127);
                                 }
@@ -240,9 +240,9 @@ public abstract class BaseTerminal extends Parser implements Terminal
                             }
                         }
 
-                        if (m_dataScope != null)
+                        if (dataScope != null)
                         {
-                            m_dataScope.add(bb.toByteArray(), bb.size(),
+                            dataScope.add(bb.toByteArray(), bb.size(),
                                     Direction.SEND);
                         }
 
@@ -250,33 +250,33 @@ public abstract class BaseTerminal extends Parser implements Terminal
                     }
                 }
 
-                m_keyDown = true;
+                keyDown = true;
             }
 
             @Override
             public void keyReleased(KeyEvent a_e)
             {
-                m_keyDown = false;
+                keyDown = false;
             }
 
         });
 
-        m_canvas.addControlListener(new ControlListener()
+        canvas.addControlListener(new ControlListener()
         {
             @Override
             public void controlResized(ControlEvent a_e)
             {
-                m_composite.redraw();
+                composite.redraw();
             }
 
             @Override
             public void controlMoved(ControlEvent a_e)
             {
-                m_composite.redraw();
+                composite.redraw();
             }
         });
 
-        m_canvas.addPaintListener(new PaintListener()
+        canvas.addPaintListener(new PaintListener()
         {
             @Override
             public void paintControl(PaintEvent a_e)
@@ -288,22 +288,22 @@ public abstract class BaseTerminal extends Parser implements Terminal
         enableMenu(true);
 
         // Set the active position to row 0, column 0 (the home position)
-        m_logicalScreen.getCursor().home();
+        logicalScreen.getCursor().home();
 
         drawScreen();
     }
 
     /**
-     * This method initializes m_composite
+     * This method initializes composite
      * 
      * @param a_parent
      */
     private void createComposite(final Composite a_parent)
     {
-        // m_composite = new Composite(a_parent, SWT.NONE);
-        // m_composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
+        // composite = new Composite(a_parent, SWT.NONE);
+        // composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
         // true));
-        m_composite = a_parent;
+        composite = a_parent;
 
         final GridLayout compositeGridLayout = new GridLayout();
         compositeGridLayout.numColumns = 5;
@@ -312,9 +312,9 @@ public abstract class BaseTerminal extends Parser implements Terminal
         compositeGridLayout.marginWidth = 0;
         compositeGridLayout.marginHeight = 0;
         compositeGridLayout.makeColumnsEqualWidth = false;
-        m_composite.setLayout(compositeGridLayout);
+        composite.setLayout(compositeGridLayout);
 
-        m_composite.addDisposeListener(new DisposeListener()
+        composite.addDisposeListener(new DisposeListener()
         {
             /**
              * @see org.eclipse.swt.events.DisposeListener#widgetDisposed(org.eclipse.swt.events.DisposeEvent)
@@ -322,16 +322,16 @@ public abstract class BaseTerminal extends Parser implements Terminal
             @Override
             public void widgetDisposed(DisposeEvent a_e)
             {
-                m_blinkThread.interrupt();
+                blinkThread.interrupt();
                 try
                 {
-                    m_blinkThread.join();
+                    blinkThread.join();
                 }
                 catch (InterruptedException e)
                 {
 
                 }
-                m_blinkThread = null;
+                blinkThread = null;
             }
 
         });
@@ -339,34 +339,33 @@ public abstract class BaseTerminal extends Parser implements Terminal
         final GridData canvasGridData = new GridData(SWT.FILL, SWT.FILL, true,
                 true);
         canvasGridData.horizontalSpan = 5;
-        m_canvas = new Canvas(m_composite, SWT.NO_BACKGROUND);
-        m_canvas.setLayoutData(canvasGridData);
+        canvas = new Canvas(composite, SWT.NO_BACKGROUND);
+        canvas.setLayoutData(canvasGridData);
 
-        m_font = new Font(getDisplay(), "fixed", 120, SWT.NONE);
-        m_canvas.setFont(m_font);
-        m_canvas.setBackground(new Color(getDisplay(),
+        font = new Font(getDisplay(), "fixed", 120, SWT.NONE);
+        canvas.setFont(font);
+        canvas.setBackground(new Color(getDisplay(),
                 Colours.NORMAL[Colours.BACKGROUND_COLOUR_INDEX]));
-        m_canvas.setForeground(new Color(getDisplay(),
+        canvas.setForeground(new Color(getDisplay(),
                 Colours.NORMAL[Colours.FOREGROUND_COLOUR_INDEX]));
 
-        m_statusLine = new CLabel(m_composite, SWT.NONE);
-        m_statusLine.setText("Online");
-        m_statusLine
-                .setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+        statusLine = new CLabel(composite, SWT.NONE);
+        statusLine.setText("Online");
+        statusLine.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 
-        m_LEDPanel = new Panel(m_composite, 4);
+        ledPanel = new Panel(composite, 4);
 
-        m_LEDPanel.refresh();
+        ledPanel.refresh();
     }
 
     private void initializeCells()
     {
-        m_screenData = new ArrayList<>();
+        screenData = new ArrayList<>();
 
-        for (int iRow = 0; iRow < (m_logicalScreen.getHeight() + m_logicalScreen
-                .getHistory()); iRow++)
+        for (int iRow = 0; iRow < (logicalScreen.getHeight()
+                + logicalScreen.getHistory()); iRow++)
         {
-            m_screenData.add(new ScreenRow(iRow, m_logicalScreen.getWidth()));
+            screenData.add(new ScreenRow(iRow, logicalScreen.getWidth()));
         }
     }
 
@@ -376,7 +375,7 @@ public abstract class BaseTerminal extends Parser implements Terminal
     @Override
     public final Panel getLEDPanel()
     {
-        return m_LEDPanel;
+        return ledPanel;
     }
 
     /**
@@ -387,8 +386,8 @@ public abstract class BaseTerminal extends Parser implements Terminal
     {
         if (!isDisposed())
         {
-            m_LEDPanel.show(a_show);
-            m_statusLine.pack();
+            ledPanel.show(a_show);
+            statusLine.pack();
         }
     }
 
@@ -400,7 +399,7 @@ public abstract class BaseTerminal extends Parser implements Terminal
     {
         if (!isDisposed())
         {
-            m_statusLine.setText(a_status);
+            statusLine.setText(a_status);
         }
     }
 
@@ -427,8 +426,8 @@ public abstract class BaseTerminal extends Parser implements Terminal
     {
         if (!isDisposed())
         {
-            m_statusLine.setVisible(a_show);
-            m_statusLine.pack();
+            statusLine.setVisible(a_show);
+            statusLine.pack();
         }
     }
 
@@ -437,27 +436,27 @@ public abstract class BaseTerminal extends Parser implements Terminal
      */
     private void reorderSelection()
     {
-        if (m_selectionEndRow < m_selectionStartRow)
+        if (selectionEndRow < selectionStartRow)
         {
             int tmp;
 
-            tmp = m_selectionStartRow;
-            m_selectionStartRow = m_selectionEndRow;
-            m_selectionEndRow = tmp;
+            tmp = selectionStartRow;
+            selectionStartRow = selectionEndRow;
+            selectionEndRow = tmp;
 
-            tmp = m_selectionStartColumn;
-            m_selectionStartColumn = m_selectionEndColumn;
-            m_selectionEndColumn = tmp;
+            tmp = selectionStartColumn;
+            selectionStartColumn = selectionEndColumn;
+            selectionEndColumn = tmp;
         }
         else
         {
-            if (m_selectionEndRow == m_selectionStartRow)
+            if (selectionEndRow == selectionStartRow)
             {
-                if (m_selectionEndColumn < m_selectionStartColumn)
+                if (selectionEndColumn < selectionStartColumn)
                 {
-                    final int tmp = m_selectionStartColumn;
-                    m_selectionStartColumn = m_selectionEndColumn;
-                    m_selectionEndColumn = tmp;
+                    final int tmp = selectionStartColumn;
+                    selectionStartColumn = selectionEndColumn;
+                    selectionEndColumn = tmp;
                 }
             }
         }
@@ -467,28 +466,28 @@ public abstract class BaseTerminal extends Parser implements Terminal
     {
         final StringBuilder selection = new StringBuilder();
 
-        for (int iRow = m_selectionStartRow; iRow <= m_selectionEndRow; iRow++)
+        for (int iRow = selectionStartRow; iRow <= selectionEndRow; iRow++)
         {
             final StringBuilder sb = new StringBuilder();
-            if ((iRow == m_selectionStartRow) && (iRow == m_selectionEndRow))
+            if ((iRow == selectionStartRow) && (iRow == selectionEndRow))
             {
                 // All on one row, so get the characters...
-                for (int iCol = m_selectionStartColumn; iCol <= m_selectionEndColumn; iCol++)
+                for (int iCol = selectionStartColumn; iCol <= selectionEndColumn; iCol++)
                 {
-                    sb.append(m_screenData.get(iRow).getCell(iCol)
-                            .getCharacter());
+                    sb.append(
+                            screenData.get(iRow).getCell(iCol).getCharacter());
                 }
                 selection.append(sb.toString().trim());
             }
             else
             {
                 // Multiple rows...
-                if (iRow == m_selectionStartRow)
+                if (iRow == selectionStartRow)
                 {
-                    for (int iCol = m_selectionStartColumn; iCol < m_logicalScreen
+                    for (int iCol = selectionStartColumn; iCol < logicalScreen
                             .getWidth(); iCol++)
                     {
-                        sb.append(m_screenData.get(iRow).getCell(iCol)
+                        sb.append(screenData.get(iRow).getCell(iCol)
                                 .getCharacter());
                     }
                     selection.append(sb.toString().trim());
@@ -496,20 +495,21 @@ public abstract class BaseTerminal extends Parser implements Terminal
                 }
                 else
                 {
-                    if (iRow == m_selectionEndRow)
+                    if (iRow == selectionEndRow)
                     {
-                        for (int iCol = 0; iCol <= m_selectionEndRow; iCol++)
+                        for (int iCol = 0; iCol <= selectionEndRow; iCol++)
                         {
-                            sb.append(m_screenData.get(iRow).getCell(iCol)
+                            sb.append(screenData.get(iRow).getCell(iCol)
                                     .getCharacter());
                         }
                         selection.append(sb.toString().trim());
                     }
                     else
                     {
-                        for (int iCol = 0; iCol < m_logicalScreen.getWidth(); iCol++)
+                        for (int iCol = 0; iCol < logicalScreen
+                                .getWidth(); iCol++)
                         {
-                            sb.append(m_screenData.get(iRow).getCell(iCol)
+                            sb.append(screenData.get(iRow).getCell(iCol)
                                     .getCharacter());
                         }
                         selection.append(sb.toString().trim());
@@ -531,13 +531,13 @@ public abstract class BaseTerminal extends Parser implements Terminal
     {
         if (a_enable)
         {
-            if (m_menu == null)
+            if (menu == null)
             {
                 final Clipboard cb = new Clipboard(getDisplay());
 
-                m_menu = new Menu(m_composite.getShell(), SWT.POP_UP);
+                menu = new Menu(composite.getShell(), SWT.POP_UP);
 
-                final MenuItem copyItem = new MenuItem(m_menu, SWT.PUSH);
+                final MenuItem copyItem = new MenuItem(menu, SWT.PUSH);
                 copyItem.setText("Copy");
                 copyItem.addListener(SWT.Selection, new Listener()
                 {
@@ -557,7 +557,7 @@ public abstract class BaseTerminal extends Parser implements Terminal
                     }
                 });
 
-                final MenuItem pasteItem = new MenuItem(m_menu, SWT.PUSH);
+                final MenuItem pasteItem = new MenuItem(menu, SWT.PUSH);
                 pasteItem.setText("Paste");
                 pasteItem.addListener(SWT.Selection, new Listener()
                 {
@@ -577,7 +577,7 @@ public abstract class BaseTerminal extends Parser implements Terminal
                     }
                 });
 
-                m_menu.addMenuListener(new MenuAdapter()
+                menu.addMenuListener(new MenuAdapter()
                 {
                     /**
                      * @see org.eclipse.swt.events.MenuAdapter#menuShown(org.eclipse.swt.events.MenuEvent)
@@ -591,14 +591,14 @@ public abstract class BaseTerminal extends Parser implements Terminal
 
                         // is paste valid?
                         boolean enabled = false;
-                        if (!m_readOnly)
+                        if (!readOnly)
                         {
                             final TransferData[] available = cb
                                     .getAvailableTypes();
                             for (TransferData element : available)
                             {
-                                if (TextTransfer.getInstance().isSupportedType(
-                                        element))
+                                if (TextTransfer.getInstance()
+                                        .isSupportedType(element))
                                 {
                                     enabled = true;
                                     break;
@@ -612,7 +612,7 @@ public abstract class BaseTerminal extends Parser implements Terminal
 
             final Listener listener = new Listener()
             {
-                private boolean m_inDrag;
+                private boolean inDrag;
 
                 /**
                  * @see org.eclipse.swt.widgets.Listener#handleEvent(org.eclipse.swt.widgets.Event)
@@ -625,7 +625,7 @@ public abstract class BaseTerminal extends Parser implements Terminal
                         case SWT.MouseDown:
                             if (a_event.button == 1)
                             {
-                                m_inDrag = true;
+                                inDrag = true;
 
                                 // Save the drag start position, i.e. row and
                                 // column...
@@ -635,7 +635,7 @@ public abstract class BaseTerminal extends Parser implements Terminal
                                 setSelectionEndRow(a_event.y);
                                 setSelectionEndColumn(a_event.x);
 
-                                m_haveSelection = true;
+                                haveSelection = true;
 
                                 drawScreen();
                             }
@@ -645,7 +645,7 @@ public abstract class BaseTerminal extends Parser implements Terminal
                             // move event is given to us, so, we only need to do
                             // anything here if we are currently in a drag
                             // operation.
-                            if (m_inDrag)
+                            if (inDrag)
                             {
                                 // Get the current cursor point and select
                                 // all
@@ -660,7 +660,7 @@ public abstract class BaseTerminal extends Parser implements Terminal
                             break;
                         case SWT.MouseUp:
                             //
-                            if ((a_event.button == 1) && m_inDrag)
+                            if ((a_event.button == 1) && inDrag)
                             {
                                 // stop the selection and save the final cell
                                 // position i.e. row and column.
@@ -672,10 +672,10 @@ public abstract class BaseTerminal extends Parser implements Terminal
                                 if ((getSelectionEndColumn() == getSelectionStartColumn())
                                         && (getSelectionStartRow() == getSelectionEndRow()))
                                 {
-                                    m_haveSelection = false;
+                                    haveSelection = false;
                                 }
 
-                                m_inDrag = false;
+                                inDrag = false;
 
                                 drawScreen();
                             }
@@ -686,21 +686,21 @@ public abstract class BaseTerminal extends Parser implements Terminal
                 }
             };
 
-            m_canvas.addListener(SWT.MouseDown, listener);
-            m_canvas.addListener(SWT.MouseMove, listener);
-            m_canvas.addListener(SWT.MouseUp, listener);
+            canvas.addListener(SWT.MouseDown, listener);
+            canvas.addListener(SWT.MouseMove, listener);
+            canvas.addListener(SWT.MouseUp, listener);
 
-            m_canvas.setMenu(m_menu);
+            canvas.setMenu(menu);
         }
         else
         {
-            m_canvas.setMenu(null);
+            canvas.setMenu(null);
         }
     }
 
     private void initializeBlinking()
     {
-        m_blinkThread = new Thread()
+        blinkThread = new Thread()
         {
             /**
              * @see java.lang.Thread#run()
@@ -725,30 +725,30 @@ public abstract class BaseTerminal extends Parser implements Terminal
                                 @Override
                                 public void run()
                                 {
-                                    for (int iRow = 0; iRow < m_logicalScreen
+                                    for (int iRow = 0; iRow < logicalScreen
                                             .getHeight(); iRow++)
                                     {
-                                        for (int iColumn = 0; iColumn < m_logicalScreen
+                                        for (int iColumn = 0; iColumn < logicalScreen
                                                 .getWidth(); iColumn++)
                                         {
-                                            final Cell cell = m_screenData.get(
-                                                    iRow).getCell(iColumn);
+                                            final Cell cell = screenData
+                                                    .get(iRow).getCell(iColumn);
 
                                             // is this cell the one under the
                                             // cursor?
-                                            if ((iRow == m_logicalScreen
+                                            if ((iRow == logicalScreen
                                                     .getCursor().getRow())
-                                                    && (iColumn == m_logicalScreen
+                                                    && (iColumn == logicalScreen
                                                             .getCursor()
                                                             .getColumn()))
                                             {
-                                                if (!m_invisibleCursor)
+                                                if (!invisibleCursor)
                                                 {
                                                     // Blink the cursor...
-                                                    if (m_logicalScreen
+                                                    if (logicalScreen
                                                             .cursorInBounds())
                                                     {
-                                                        switch (m_cursorStyle)
+                                                        switch (cursorStyle)
                                                         {
                                                             default:
                                                             case BLOCK:
@@ -795,7 +795,7 @@ public abstract class BaseTerminal extends Parser implements Terminal
             }
         };
 
-        m_blinkThread.start();
+        blinkThread.start();
     }
 
     /**
@@ -803,7 +803,7 @@ public abstract class BaseTerminal extends Parser implements Terminal
      */
     protected final Display getDisplay()
     {
-        return m_composite.getDisplay();
+        return composite.getDisplay();
     }
 
     /**
@@ -812,26 +812,25 @@ public abstract class BaseTerminal extends Parser implements Terminal
     @Override
     public final Composite getParent()
     {
-        return m_composite.getParent();
+        return composite.getParent();
     }
 
     private Image getImage()
     {
-        if (m_image == null)
+        if (image == null)
         {
-            final Point charSize = m_charSet.getCharSize();
-            m_image = new Image(getDisplay(), charSize.x
-                    * m_logicalScreen.getWidth(), charSize.y
-                    * m_logicalScreen.getHeight());
+            final Point charSize = charSet.getCharSize();
+            image = new Image(getDisplay(),
+                    charSize.x * logicalScreen.getWidth(),
+                    charSize.y * logicalScreen.getHeight());
 
             final GC imgGC = new GC(getImage());
             try
             {
                 imgGC.setBackground(new Color(getDisplay(),
                         Colours.NORMAL[Colours.BACKGROUND_COLOUR_INDEX]));
-                imgGC.fillRectangle(0, 0,
-                        charSize.x * m_logicalScreen.getWidth(), charSize.y
-                                * m_logicalScreen.getHeight());
+                imgGC.fillRectangle(0, 0, charSize.x * logicalScreen.getWidth(),
+                        charSize.y * logicalScreen.getHeight());
             }
             finally
             {
@@ -839,14 +838,14 @@ public abstract class BaseTerminal extends Parser implements Terminal
             }
         }
 
-        return m_image;
+        return image;
     }
 
     private void redrawScreen()
     {
-        final Rectangle clientRect = m_canvas.getClientArea();
+        final Rectangle clientRect = canvas.getClientArea();
 
-        m_gc.drawImage(getImage(), 0, 0, getImage().getBounds().width,
+        gc.drawImage(getImage(), 0, 0, getImage().getBounds().width,
                 getImage().getBounds().height, 0, 0, clientRect.width,
                 clientRect.height);
     }
@@ -859,20 +858,20 @@ public abstract class BaseTerminal extends Parser implements Terminal
         setRedraw(false);
 
         // We are drawing the entire screen, so get a new image for it...
-        if (m_image != null)
+        if (image != null)
         {
-            m_image.dispose();
-            m_image = null;
+            image.dispose();
+            image = null;
         }
 
         // Draw each cell on the screen, ignore any cells that have a rendition
         // that is the default in order to improve performance especially when
         // scrolling.
-        for (int iRow = 0; iRow < m_logicalScreen.getHeight(); iRow++)
+        for (int iRow = 0; iRow < logicalScreen.getHeight(); iRow++)
         {
-            for (int iColumn = 0; iColumn < m_logicalScreen.getWidth(); iColumn++)
+            for (int iColumn = 0; iColumn < logicalScreen.getWidth(); iColumn++)
             {
-                final Cell cell = m_screenData.get(iRow).getCell(iColumn);
+                final Cell cell = screenData.get(iRow).getCell(iColumn);
                 final boolean doDraw;
                 if (cell.getCharacter() != 32)
                 {
@@ -912,11 +911,11 @@ public abstract class BaseTerminal extends Parser implements Terminal
     {
         final boolean selected;
 
-        if (m_haveSelection)
+        if (haveSelection)
         {
             // Check the rows, is this cell on one of the selected rows?
-            if ((a_cell.getRow() >= m_selectionStartRow)
-                    && (a_cell.getRow() <= m_selectionEndRow))
+            if ((a_cell.getRow() >= selectionStartRow)
+                    && (a_cell.getRow() <= selectionEndRow))
             {
                 // Check to see if the column for the cell is in the selected
                 // area,
@@ -925,17 +924,17 @@ public abstract class BaseTerminal extends Parser implements Terminal
                 // they may not start or finish at the beginning or end of the
                 // row
                 // respectively
-                if (a_cell.getRow() == m_selectionStartRow)
+                if (a_cell.getRow() == selectionStartRow)
                 {
                     // On the first row, is our column after the selection start
                     // column?
-                    if (a_cell.getColumn() >= m_selectionStartColumn)
+                    if (a_cell.getColumn() >= selectionStartColumn)
                     {
                         // But is this our end row too?
-                        if (a_cell.getRow() == m_selectionEndRow)
+                        if (a_cell.getRow() == selectionEndRow)
                         {
                             // Last row, is our column before the end column?
-                            if (a_cell.getColumn() <= m_selectionEndColumn)
+                            if (a_cell.getColumn() <= selectionEndColumn)
                             {
                                 selected = true;
                             }
@@ -956,10 +955,10 @@ public abstract class BaseTerminal extends Parser implements Terminal
                 }
                 else
                 {
-                    if (a_cell.getRow() == m_selectionEndRow)
+                    if (a_cell.getRow() == selectionEndRow)
                     {
                         // Last row, is our column before the end column?
-                        if (a_cell.getColumn() <= m_selectionEndColumn)
+                        if (a_cell.getColumn() <= selectionEndColumn)
                         {
                             selected = true;
                         }
@@ -993,46 +992,47 @@ public abstract class BaseTerminal extends Parser implements Terminal
     {
         setRedraw(false);
 
-        if (m_haveSelection)
+        if (haveSelection)
         {
-            for (int iRow = m_selectionStartRow; iRow <= m_selectionEndRow; iRow++)
+            for (int iRow = selectionStartRow; iRow <= selectionEndRow; iRow++)
             {
-                if (iRow == m_selectionStartRow)
+                if (iRow == selectionStartRow)
                 {
-                    if (iRow == m_selectionEndRow)
+                    if (iRow == selectionEndRow)
                     {
-                        for (int iCol = m_selectionStartColumn; iCol <= m_selectionEndColumn; iCol++)
+                        for (int iCol = selectionStartColumn; iCol <= selectionEndColumn; iCol++)
                         {
-                            drawCell(m_screenData.get(iRow).getCell(iCol),
-                                    false, BlinkState.OFF);
+                            drawCell(screenData.get(iRow).getCell(iCol), false,
+                                    BlinkState.OFF);
                         }
                     }
                     else
                     {
-                        for (int iCol = m_selectionStartColumn; iCol < m_logicalScreen
+                        for (int iCol = selectionStartColumn; iCol < logicalScreen
                                 .getWidth(); iCol++)
                         {
-                            drawCell(m_screenData.get(iRow).getCell(iCol),
-                                    false, BlinkState.OFF);
+                            drawCell(screenData.get(iRow).getCell(iCol), false,
+                                    BlinkState.OFF);
                         }
                     }
                 }
                 else
                 {
-                    if (iRow == m_selectionEndRow)
+                    if (iRow == selectionEndRow)
                     {
-                        for (int iCol = 0; iCol < m_selectionEndColumn; iCol++)
+                        for (int iCol = 0; iCol < selectionEndColumn; iCol++)
                         {
-                            drawCell(m_screenData.get(iRow).getCell(iCol),
-                                    false, BlinkState.OFF);
+                            drawCell(screenData.get(iRow).getCell(iCol), false,
+                                    BlinkState.OFF);
                         }
                     }
                     else
                     {
-                        for (int iCol = 0; iCol < m_logicalScreen.getWidth(); iCol++)
+                        for (int iCol = 0; iCol < logicalScreen
+                                .getWidth(); iCol++)
                         {
-                            drawCell(m_screenData.get(iRow).getCell(iCol),
-                                    false, BlinkState.OFF);
+                            drawCell(screenData.get(iRow).getCell(iCol), false,
+                                    BlinkState.OFF);
                         }
                     }
                 }
@@ -1041,7 +1041,7 @@ public abstract class BaseTerminal extends Parser implements Terminal
 
         setRedraw(true);
 
-        m_canvas.getDisplay().readAndDispatch();
+        canvas.getDisplay().readAndDispatch();
     }
 
     /**
@@ -1054,18 +1054,18 @@ public abstract class BaseTerminal extends Parser implements Terminal
     protected final synchronized void drawCell(final Cell a_cell,
             final boolean a_useActiveRendition, final BlinkState a_blinkState)
     {
-        if (!m_canvas.isDisposed())
+        if (!canvas.isDisposed())
         {
             // Set this cell to use the active rendition
             if (a_useActiveRendition)
             {
-                a_cell.setRendition(m_ActiveRendition);
+                a_cell.setRendition(activeRendition);
             }
 
             final GC imgGC = new GC(getImage());
             try
             {
-                final Point charSize = m_charSet.getCharSize();
+                final Point charSize = charSet.getCharSize();
 
                 final boolean selected = isCellSelected(a_cell);
 
@@ -1073,8 +1073,8 @@ public abstract class BaseTerminal extends Parser implements Terminal
                 {
                     int cellX;
                     int cellY;
-                    final Image cellImage = m_charSet.getImage(a_cell,
-                            selected, a_blinkState);
+                    final Image cellImage = charSet.getImage(a_cell, selected,
+                            a_blinkState);
 
                     switch (a_cell.getLineHeight())
                     {
@@ -1088,18 +1088,16 @@ public abstract class BaseTerminal extends Parser implements Terminal
                                     cellY = charSize.y * a_cell.getRow();
                                     imgGC.drawImage(cellImage, 0, 0,
                                             cellImage.getBounds().width,
-                                            cellImage.getBounds().height,
-                                            cellX, cellY, charSize.x,
-                                            charSize.y);
+                                            cellImage.getBounds().height, cellX,
+                                            cellY, charSize.x, charSize.y);
                                     break;
                                 case DOUBLE:
                                     cellX = charSize.x * 2 * a_cell.getColumn();
                                     cellY = charSize.y * a_cell.getRow();
                                     imgGC.drawImage(cellImage, 0, 0,
                                             cellImage.getBounds().width,
-                                            cellImage.getBounds().height,
-                                            cellX, cellY, charSize.x * 2,
-                                            charSize.y);
+                                            cellImage.getBounds().height, cellX,
+                                            cellY, charSize.x * 2, charSize.y);
                                     break;
                             }
                             break;
@@ -1160,7 +1158,7 @@ public abstract class BaseTerminal extends Parser implements Terminal
 
                 }
 
-                m_canvas.redraw();
+                canvas.redraw();
             }
             finally
             {
@@ -1174,23 +1172,22 @@ public abstract class BaseTerminal extends Parser implements Terminal
      */
     protected final void putCharacter(final char a_ch)
     {
-        if (!m_canvas.isDisposed())
+        if (!canvas.isDisposed())
         {
-            final Cell cell = m_screenData.get(
-                    m_logicalScreen.getCursor().getRow()).getCell(
-                    m_logicalScreen.getCursor().getColumn());
+            final Cell cell = screenData.get(logicalScreen.getCursor().getRow())
+                    .getCell(logicalScreen.getCursor().getColumn());
             cell.setCharacter(a_ch);
             // System.out.println("Cell at ("
-            // + m_logicalScreen.getCursorPosition().getRow() + ","
-            // + m_logicalScreen.getCursorPosition().getColumn()
-            // + ") using set " + m_charSetSequenceOnDisplay + ":"
-            // + m_charSetOnDisplay);
+            // + logicalScreen.getCursorPosition().getRow() + ","
+            // + logicalScreen.getCursorPosition().getColumn()
+            // + ") using set " + charSetSequenceOnDisplay + ":"
+            // + charSetOnDisplay);
             cell.setCharacterSetSequence(getCharSetsSequenceOnDisplay());
             cell.setCharacterSet(getCharSetOnDisplay());
 
             drawCell(cell, true, BlinkState.OFF);
 
-            m_logicalScreen.getCursor().right();
+            logicalScreen.getCursor().right();
         }
     }
 
@@ -1201,19 +1198,20 @@ public abstract class BaseTerminal extends Parser implements Terminal
     {
         setRedraw(false);
 
-        drawCell(m_screenData.get(m_logicalScreen.getCursor().getRow())
-                .getCell(m_logicalScreen.getCursor().getColumn()), false,
-                BlinkState.OFF);
+        drawCell(
+                screenData.get(logicalScreen.getCursor().getRow())
+                        .getCell(logicalScreen.getCursor().getColumn()),
+                false, BlinkState.OFF);
 
         final Scroll scroll;
-        if (m_Linefeed)
+        if (linefeed)
         {
-            scroll = m_logicalScreen.getCursor().down();
-            m_logicalScreen.getCursor().setColumn(0);
+            scroll = logicalScreen.getCursor().down();
+            logicalScreen.getCursor().setColumn(0);
         }
         else
         {
-            scroll = m_logicalScreen.getCursor().down();
+            scroll = logicalScreen.getCursor().down();
         }
 
         switch (scroll.getScrollDirection())
@@ -1243,11 +1241,12 @@ public abstract class BaseTerminal extends Parser implements Terminal
      */
     protected final void performCR()
     {
-        drawCell(m_screenData.get(m_logicalScreen.getCursor().getRow())
-                .getCell(m_logicalScreen.getCursor().getColumn()), false,
-                BlinkState.OFF);
+        drawCell(
+                screenData.get(logicalScreen.getCursor().getRow())
+                        .getCell(logicalScreen.getCursor().getColumn()),
+                false, BlinkState.OFF);
 
-        m_logicalScreen.getCursor().setColumn(0);
+        logicalScreen.getCursor().setColumn(0);
     }
 
     /**
@@ -1255,12 +1254,12 @@ public abstract class BaseTerminal extends Parser implements Terminal
      */
     protected final void performBS()
     {
-        m_logicalScreen.getCursor().left();
+        logicalScreen.getCursor().left();
     }
 
     protected final void performTAB()
     {
-        m_logicalScreen.getCursor().tab();
+        logicalScreen.getCursor().tab();
     }
 
     /**
@@ -1280,36 +1279,34 @@ public abstract class BaseTerminal extends Parser implements Terminal
         final int bottomMargin = getLogicalScreen().getCursor()
                 .getBottomMargin();
 
-        m_screenData.remove(topMargin);
+        screenData.remove(topMargin);
 
-        m_screenData.add(
-                bottomMargin,
-                new ScreenRow(m_logicalScreen.getHeight(), m_logicalScreen
-                        .getWidth() + 1));
+        screenData.add(bottomMargin, new ScreenRow(logicalScreen.getHeight(),
+                logicalScreen.getWidth() + 1));
 
         for (int iRow = topMargin; iRow <= bottomMargin; iRow++)
         {
-            m_screenData.get(iRow).setRow(iRow);
+            screenData.get(iRow).setRow(iRow);
         }
 
         // If there is a selection, adjust its start and end row too...
-        if (m_haveSelection)
+        if (haveSelection)
         {
-            final Rectangle clientArea = m_canvas.getClientArea();
+            final Rectangle clientArea = canvas.getClientArea();
             final int cellHeight = clientArea.height
-                    / m_logicalScreen.getHeight();
+                    / logicalScreen.getHeight();
 
-            m_selectionStartRow -= cellHeight;
-            m_selectionEndRow -= cellHeight;
+            selectionStartRow -= cellHeight;
+            selectionEndRow -= cellHeight;
 
-            if (m_selectionStartRow < 0)
+            if (selectionStartRow < 0)
             {
-                m_selectionStartRow = 0;
-                m_selectionEndRow = 0;
-                m_selectionStartColumn = 0;
-                m_selectionEndColumn = 0;
+                selectionStartRow = 0;
+                selectionEndRow = 0;
+                selectionStartColumn = 0;
+                selectionEndColumn = 0;
 
-                m_haveSelection = false;
+                haveSelection = false;
             }
         }
 
@@ -1338,23 +1335,23 @@ public abstract class BaseTerminal extends Parser implements Terminal
                 {
                     for (int iColumn = a_startColumn; iColumn <= a_endColumn; iColumn++)
                     {
-                        if (m_logicalScreen.cursorInBounds(iRow, iColumn))
+                        if (logicalScreen.cursorInBounds(iRow, iColumn))
                         {
-                            m_screenData.get(iRow).getCell(iColumn).reset();
-                            drawCell(m_screenData.get(iRow).getCell(iColumn),
+                            screenData.get(iRow).getCell(iColumn).reset();
+                            drawCell(screenData.get(iRow).getCell(iColumn),
                                     false, BlinkState.OFF);
                         }
                     }
                 }
                 else
                 {
-                    for (int iColumn = a_startColumn; iColumn <= m_logicalScreen
+                    for (int iColumn = a_startColumn; iColumn <= logicalScreen
                             .getWidth(); iColumn++)
                     {
-                        if (m_logicalScreen.cursorInBounds(iRow, iColumn))
+                        if (logicalScreen.cursorInBounds(iRow, iColumn))
                         {
-                            m_screenData.get(iRow).getCell(iColumn).reset();
-                            drawCell(m_screenData.get(iRow).getCell(iColumn),
+                            screenData.get(iRow).getCell(iColumn).reset();
+                            drawCell(screenData.get(iRow).getCell(iColumn),
                                     false, BlinkState.OFF);
                         }
                     }
@@ -1369,12 +1366,11 @@ public abstract class BaseTerminal extends Parser implements Terminal
                     {
                         for (int iColumn = a_startColumn; iColumn <= a_endColumn; iColumn++)
                         {
-                            if (m_logicalScreen.cursorInBounds(iRow, iColumn))
+                            if (logicalScreen.cursorInBounds(iRow, iColumn))
                             {
-                                m_screenData.get(iRow).getCell(iColumn).reset();
-                                drawCell(m_screenData.get(iRow)
-                                        .getCell(iColumn), false,
-                                        BlinkState.OFF);
+                                screenData.get(iRow).getCell(iColumn).reset();
+                                drawCell(screenData.get(iRow).getCell(iColumn),
+                                        false, BlinkState.OFF);
                             }
                         }
                     }
@@ -1384,12 +1380,11 @@ public abstract class BaseTerminal extends Parser implements Terminal
                         // the final column
                         for (int iColumn = 0; iColumn <= a_endColumn; iColumn++)
                         {
-                            if (m_logicalScreen.cursorInBounds(iRow, iColumn))
+                            if (logicalScreen.cursorInBounds(iRow, iColumn))
                             {
-                                m_screenData.get(iRow).getCell(iColumn).reset();
-                                drawCell(m_screenData.get(iRow)
-                                        .getCell(iColumn), false,
-                                        BlinkState.OFF);
+                                screenData.get(iRow).getCell(iColumn).reset();
+                                drawCell(screenData.get(iRow).getCell(iColumn),
+                                        false, BlinkState.OFF);
                             }
                         }
                     }
@@ -1397,12 +1392,13 @@ public abstract class BaseTerminal extends Parser implements Terminal
                 else
                 {
                     // An intermediate row, erase the entire row...
-                    for (int iColumn = 0; iColumn <= m_logicalScreen.getWidth(); iColumn++)
+                    for (int iColumn = 0; iColumn <= logicalScreen
+                            .getWidth(); iColumn++)
                     {
-                        if (m_logicalScreen.cursorInBounds(iRow, iColumn))
+                        if (logicalScreen.cursorInBounds(iRow, iColumn))
                         {
-                            m_screenData.get(iRow).getCell(iColumn).reset();
-                            drawCell(m_screenData.get(iRow).getCell(iColumn),
+                            screenData.get(iRow).getCell(iColumn).reset();
+                            drawCell(screenData.get(iRow).getCell(iColumn),
                                     false, BlinkState.OFF);
                         }
                     }
@@ -1419,7 +1415,7 @@ public abstract class BaseTerminal extends Parser implements Terminal
     @Override
     public final CursorStyle getCursorStyle()
     {
-        return m_cursorStyle;
+        return cursorStyle;
     }
 
     /**
@@ -1428,7 +1424,7 @@ public abstract class BaseTerminal extends Parser implements Terminal
     @Override
     public final void setCursorStyle(CursorStyle a_cursorStyle)
     {
-        m_cursorStyle = a_cursorStyle;
+        cursorStyle = a_cursorStyle;
     }
 
     /**
@@ -1437,15 +1433,15 @@ public abstract class BaseTerminal extends Parser implements Terminal
     @Override
     public final void setLineWidth(final LineWidth a_lineWidth)
     {
-        for (int iColumn = 0; iColumn < m_logicalScreen.getWidth(); iColumn++)
+        for (int iColumn = 0; iColumn < logicalScreen.getWidth(); iColumn++)
         {
-            if (iColumn > (m_logicalScreen.getWidth() / 2))
+            if (iColumn > (logicalScreen.getWidth() / 2))
             {
-                m_screenData.get(m_logicalScreen.getCursor().getRow())
+                screenData.get(logicalScreen.getCursor().getRow())
                         .getCell(iColumn).reset();
             }
-            m_screenData.get(m_logicalScreen.getCursor().getRow())
-                    .getCell(iColumn).setLineWidth(a_lineWidth);
+            screenData.get(logicalScreen.getCursor().getRow()).getCell(iColumn)
+                    .setLineWidth(a_lineWidth);
         }
     }
 
@@ -1455,10 +1451,10 @@ public abstract class BaseTerminal extends Parser implements Terminal
     @Override
     public final void setLineHeight(final LineHeight a_height)
     {
-        for (int iColumn = 0; iColumn < m_logicalScreen.getWidth(); iColumn++)
+        for (int iColumn = 0; iColumn < logicalScreen.getWidth(); iColumn++)
         {
-            m_screenData.get(m_logicalScreen.getCursor().getRow())
-                    .getCell(iColumn).setLineHeight(a_height);
+            screenData.get(logicalScreen.getCursor().getRow()).getCell(iColumn)
+                    .setLineHeight(a_height);
         }
     }
 
@@ -1468,8 +1464,8 @@ public abstract class BaseTerminal extends Parser implements Terminal
     @Override
     public final Cell getCurrentCell()
     {
-        return m_screenData.get(m_logicalScreen.getCursor().getRow()).getCell(
-                m_logicalScreen.getCursor().getColumn());
+        return screenData.get(logicalScreen.getCursor().getRow())
+                .getCell(logicalScreen.getCursor().getColumn());
     }
 
     /**
@@ -1478,7 +1474,7 @@ public abstract class BaseTerminal extends Parser implements Terminal
     @Override
     public final CharacterSet getCharSetOnDisplay()
     {
-        return m_charSetOnDisplay;
+        return charSetOnDisplay;
     }
 
     /**
@@ -1487,7 +1483,7 @@ public abstract class BaseTerminal extends Parser implements Terminal
     @Override
     public final void setCharSetOnDisplay(CharacterSet a_charSetOnDisplay)
     {
-        m_charSetOnDisplay = a_charSetOnDisplay;
+        charSetOnDisplay = a_charSetOnDisplay;
     }
 
     /**
@@ -1496,7 +1492,7 @@ public abstract class BaseTerminal extends Parser implements Terminal
     @Override
     public final CharacterSetSequence getCharSetsSequenceOnDisplay()
     {
-        return m_charSetSequenceOnDisplay;
+        return charSetSequenceOnDisplay;
     }
 
     /**
@@ -1506,7 +1502,7 @@ public abstract class BaseTerminal extends Parser implements Terminal
     public final void setCharSetsSequenceOnDisplay(
             CharacterSetSequence a_charSetsSequenceOnDisplay)
     {
-        m_charSetSequenceOnDisplay = a_charSetsSequenceOnDisplay;
+        charSetSequenceOnDisplay = a_charSetsSequenceOnDisplay;
     }
 
     /**
@@ -1514,7 +1510,7 @@ public abstract class BaseTerminal extends Parser implements Terminal
      */
     protected final Rendition getActiveRendition()
     {
-        return m_ActiveRendition;
+        return activeRendition;
     }
 
     /**
@@ -1523,19 +1519,20 @@ public abstract class BaseTerminal extends Parser implements Terminal
     @Override
     public final void setScreenWidth(final int a_width)
     {
-        if (m_AllowWidthChange)
+        if (allowWidthChange)
         {
-            if (a_width != m_logicalScreen.getWidth())
+            if (a_width != logicalScreen.getWidth())
             {
-                m_logicalScreen.setWidth(a_width);
-                m_logicalScreen.getCursor().home();
+                logicalScreen.setWidth(a_width);
+                logicalScreen.getCursor().home();
 
-                m_screenData = new ArrayList<>();
+                screenData = new ArrayList<>();
 
-                for (int iRow = 0; iRow < (m_logicalScreen.getHeight() + 1); iRow++)
+                for (int iRow = 0; iRow < (logicalScreen.getHeight()
+                        + 1); iRow++)
                 {
-                    m_screenData.add(new ScreenRow(iRow, m_logicalScreen
-                            .getWidth() + 1));
+                    screenData.add(
+                            new ScreenRow(iRow, logicalScreen.getWidth() + 1));
                 }
 
                 drawScreen();
@@ -1549,7 +1546,7 @@ public abstract class BaseTerminal extends Parser implements Terminal
     @Override
     public final int getSelectionStartColumn()
     {
-        return m_selectionStartColumn;
+        return selectionStartColumn;
     }
 
     /**
@@ -1558,7 +1555,7 @@ public abstract class BaseTerminal extends Parser implements Terminal
     @Override
     public final void setSelectionStartColumn(int a_selectionStartColumn)
     {
-        m_selectionStartColumn = getColumnFromCoords(a_selectionStartColumn);
+        selectionStartColumn = getColumnFromCoords(a_selectionStartColumn);
     }
 
     /**
@@ -1567,7 +1564,7 @@ public abstract class BaseTerminal extends Parser implements Terminal
     @Override
     public final int getSelectionStartRow()
     {
-        return m_selectionStartRow;
+        return selectionStartRow;
     }
 
     /**
@@ -1576,7 +1573,7 @@ public abstract class BaseTerminal extends Parser implements Terminal
     @Override
     public final void setSelectionStartRow(int a_selectionStartRow)
     {
-        m_selectionStartRow = getRowFromCoords(a_selectionStartRow);
+        selectionStartRow = getRowFromCoords(a_selectionStartRow);
     }
 
     /**
@@ -1585,7 +1582,7 @@ public abstract class BaseTerminal extends Parser implements Terminal
     @Override
     public final int getSelectionEndColumn()
     {
-        return m_selectionEndColumn;
+        return selectionEndColumn;
     }
 
     /**
@@ -1594,7 +1591,7 @@ public abstract class BaseTerminal extends Parser implements Terminal
     @Override
     public final void setSelectionEndColumn(int a_selectionEndColumn)
     {
-        m_selectionEndColumn = getColumnFromCoords(a_selectionEndColumn);
+        selectionEndColumn = getColumnFromCoords(a_selectionEndColumn);
     }
 
     /**
@@ -1603,7 +1600,7 @@ public abstract class BaseTerminal extends Parser implements Terminal
     @Override
     public final int getSelectionEndRow()
     {
-        return m_selectionEndRow;
+        return selectionEndRow;
     }
 
     /**
@@ -1612,7 +1609,7 @@ public abstract class BaseTerminal extends Parser implements Terminal
     @Override
     public final void setSelectionEndRow(int a_selectionEndRow)
     {
-        m_selectionEndRow = getRowFromCoords(a_selectionEndRow);
+        selectionEndRow = getRowFromCoords(a_selectionEndRow);
     }
 
     /**
@@ -1623,9 +1620,9 @@ public abstract class BaseTerminal extends Parser implements Terminal
     {
         // The row number is the y coordinate value of the cursor divided by the
         // cell height in pixels
-        final Rectangle clientArea = m_canvas.getClientArea();
+        final Rectangle clientArea = canvas.getClientArea();
         final float cellHeight = (float) clientArea.height
-                / (float) m_logicalScreen.getHeight();
+                / (float) logicalScreen.getHeight();
 
         return (int) (a_y / cellHeight);
     }
@@ -1638,9 +1635,9 @@ public abstract class BaseTerminal extends Parser implements Terminal
     {
         // The column number is the x coordinate value of the cursor divided by
         // the cell width in pixels
-        final Rectangle clientArea = m_canvas.getClientArea();
+        final Rectangle clientArea = canvas.getClientArea();
         final float cellWidth = (float) clientArea.width
-                / (float) m_logicalScreen.getWidth();
+                / (float) logicalScreen.getWidth();
 
         return (int) (a_x / cellWidth);
     }
@@ -1660,9 +1657,9 @@ public abstract class BaseTerminal extends Parser implements Terminal
     @Override
     public final void processDataRead(byte[] a_Data, int a_count)
     {
-        if (m_dataScope != null)
+        if (dataScope != null)
         {
-            m_dataScope.add(a_Data, a_count, Direction.RECEIVE);
+            dataScope.add(a_Data, a_count, Direction.RECEIVE);
         }
         parse(a_Data, a_count);
     }
@@ -1673,7 +1670,7 @@ public abstract class BaseTerminal extends Parser implements Terminal
     @Override
     public final boolean isReadOnly()
     {
-        return m_readOnly;
+        return readOnly;
     }
 
     /**
@@ -1682,7 +1679,7 @@ public abstract class BaseTerminal extends Parser implements Terminal
     @Override
     public final void setReadOnly(boolean a_readOnly)
     {
-        m_readOnly = a_readOnly;
+        readOnly = a_readOnly;
     }
 
     /**
@@ -1691,7 +1688,7 @@ public abstract class BaseTerminal extends Parser implements Terminal
     @Override
     public final boolean setFocus()
     {
-        return m_canvas.setFocus();
+        return canvas.setFocus();
     }
 
     /**
@@ -1700,7 +1697,7 @@ public abstract class BaseTerminal extends Parser implements Terminal
     @Override
     public final void setRedraw(final boolean a_redraw)
     {
-        m_canvas.setRedraw(a_redraw);
+        canvas.setRedraw(a_redraw);
     }
 
     /**
@@ -1709,18 +1706,18 @@ public abstract class BaseTerminal extends Parser implements Terminal
     @Override
     public final void fillScreen(final char a_char)
     {
-        for (int iRow = 0; iRow < m_logicalScreen.getHeight(); iRow++)
+        for (int iRow = 0; iRow < logicalScreen.getHeight(); iRow++)
         {
-            for (int iColumn = 0; iColumn < m_logicalScreen.getWidth(); iColumn++)
+            for (int iColumn = 0; iColumn < logicalScreen.getWidth(); iColumn++)
             {
-                final Cell cell = m_screenData.get(iRow).getCell(iColumn);
+                final Cell cell = screenData.get(iRow).getCell(iColumn);
                 cell.reset();
                 cell.setCharacter(a_char);
             }
         }
 
-        m_logicalScreen.getCursor().setColumn(0);
-        m_logicalScreen.getCursor().setRow(0);
+        logicalScreen.getCursor().setColumn(0);
+        logicalScreen.getCursor().setRow(0);
     }
 
     /**
@@ -1731,7 +1728,7 @@ public abstract class BaseTerminal extends Parser implements Terminal
     {
         setScreenWidth(DEFAULT_COLUMN_COUNT);
         fillScreen(' ');
-        m_logicalScreen.getCursor().reset();
+        logicalScreen.getCursor().reset();
     }
 
     /**
@@ -1740,7 +1737,7 @@ public abstract class BaseTerminal extends Parser implements Terminal
     @Override
     public final boolean isInvisibleCursor()
     {
-        return m_invisibleCursor;
+        return invisibleCursor;
     }
 
     /**
@@ -1749,7 +1746,7 @@ public abstract class BaseTerminal extends Parser implements Terminal
     @Override
     public final void setInvisibleCursor(boolean a_invisibleCursor)
     {
-        m_invisibleCursor = a_invisibleCursor;
+        invisibleCursor = a_invisibleCursor;
     }
 
     /**
@@ -1758,7 +1755,7 @@ public abstract class BaseTerminal extends Parser implements Terminal
     @Override
     public final boolean isLinefeed()
     {
-        return m_Linefeed;
+        return linefeed;
     }
 
     /**
@@ -1767,7 +1764,7 @@ public abstract class BaseTerminal extends Parser implements Terminal
     @Override
     public final void setLinefeed(final boolean a_Linefeed)
     {
-        m_Linefeed = a_Linefeed;
+        linefeed = a_Linefeed;
     }
 
     /**
@@ -1775,7 +1772,7 @@ public abstract class BaseTerminal extends Parser implements Terminal
      */
     public final LogicalScreen getLogicalScreen()
     {
-        return m_logicalScreen;
+        return logicalScreen;
     }
 
     /**
@@ -1783,7 +1780,7 @@ public abstract class BaseTerminal extends Parser implements Terminal
      */
     public final void setApplicationCursorKeys(final boolean a_applicationKeys)
     {
-        m_useApplicationCursorKeys = a_applicationKeys;
+        useApplicationCursorKeys = a_applicationKeys;
     }
 
     /**
@@ -1795,13 +1792,13 @@ public abstract class BaseTerminal extends Parser implements Terminal
             final CharacterSet a_set)
     {
         addMessageToDataScope("\n+++\nCharacter set change\n    Was : "
-                + m_charSetSequenceOnDisplay + ":" + m_charSetOnDisplay);
+                + charSetSequenceOnDisplay + ":" + charSetOnDisplay);
 
-        m_charSetSequenceOnDisplay = a_sequence;
-        m_charSetOnDisplay = a_set;
+        charSetSequenceOnDisplay = a_sequence;
+        charSetOnDisplay = a_set;
 
-        addMessageToDataScope("\n    Now : " + m_charSetSequenceOnDisplay + ":"
-                + m_charSetOnDisplay + "\n+++\n");
+        addMessageToDataScope("\n    Now : " + charSetSequenceOnDisplay + ":"
+                + charSetOnDisplay + "\n+++\n");
     }
 
     /**
@@ -1809,7 +1806,7 @@ public abstract class BaseTerminal extends Parser implements Terminal
      */
     public final boolean isAutoRepeat()
     {
-        return m_autoRepeat;
+        return autoRepeat;
     }
 
     /**
@@ -1817,7 +1814,7 @@ public abstract class BaseTerminal extends Parser implements Terminal
      */
     public final void setAutoRepeat(boolean a_autoRepeat)
     {
-        m_autoRepeat = a_autoRepeat;
+        autoRepeat = a_autoRepeat;
     }
 
     /**
@@ -1826,7 +1823,7 @@ public abstract class BaseTerminal extends Parser implements Terminal
      */
     public final boolean isAllowWidthChange()
     {
-        return m_AllowWidthChange;
+        return allowWidthChange;
     }
 
     /**
@@ -1834,7 +1831,7 @@ public abstract class BaseTerminal extends Parser implements Terminal
      */
     public final void setAllowWidthChange(boolean a_allowWidthChange)
     {
-        m_AllowWidthChange = a_allowWidthChange;
+        allowWidthChange = a_allowWidthChange;
     }
 
     /**
@@ -1842,12 +1839,12 @@ public abstract class BaseTerminal extends Parser implements Terminal
      */
     public final void setDataScope(final DataScope a_dataScope)
     {
-        if (m_dataScope != null)
+        if (dataScope != null)
         {
-            m_dataScope.close();
+            dataScope.close();
         }
 
-        m_dataScope = a_dataScope;
+        dataScope = a_dataScope;
     }
 
     /**
@@ -1855,9 +1852,9 @@ public abstract class BaseTerminal extends Parser implements Terminal
      */
     public final void addMessageToDataScope(final String a_message)
     {
-        if (m_dataScope != null)
+        if (dataScope != null)
         {
-            m_dataScope.addMessage(a_message);
+            dataScope.addMessage(a_message);
         }
     }
 
@@ -1866,7 +1863,7 @@ public abstract class BaseTerminal extends Parser implements Terminal
      */
     public final boolean isBsSendsDel()
     {
-        return m_bsSendsDel;
+        return bsSendsDel;
     }
 
     /**
@@ -1874,6 +1871,6 @@ public abstract class BaseTerminal extends Parser implements Terminal
      */
     public final void setBsSendsDel(boolean a_bsSendsDel)
     {
-        m_bsSendsDel = a_bsSendsDel;
+        bsSendsDel = a_bsSendsDel;
     }
 }

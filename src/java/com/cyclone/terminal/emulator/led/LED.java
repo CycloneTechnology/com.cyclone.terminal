@@ -22,11 +22,11 @@ public class LED extends Canvas
 
     private static final String LED_ON_IMAGE_PATH = "images/led/on.gif";
 
-    private boolean m_on;
+    private boolean on;
 
-    private final Image m_imageOn;
+    private final Image imageOn;
 
-    private final Image m_imageOff;
+    private final Image imageOff;
 
     /**
      * @param a_parent
@@ -52,9 +52,9 @@ public class LED extends Canvas
             }
         });
 
-        m_imageOn = new Image(getDisplay(), getClass().getClassLoader()
+        imageOn = new Image(getDisplay(), getClass().getClassLoader()
                 .getResourceAsStream(LED_ON_IMAGE_PATH));
-        m_imageOff = new Image(getDisplay(), getClass().getClassLoader()
+        imageOff = new Image(getDisplay(), getClass().getClassLoader()
                 .getResourceAsStream(LED_OFF_IMAGE_PATH));
 
     }
@@ -64,13 +64,13 @@ public class LED extends Canvas
         final GC gc = new GC(this);
         try
         {
-            if (m_on)
+            if (on)
             {
-                gc.drawImage(m_imageOn, 0, 0, 20, 20, 0, 0, 20, 20);
+                gc.drawImage(imageOn, 0, 0, 20, 20, 0, 0, 20, 20);
             }
             else
             {
-                gc.drawImage(m_imageOff, 0, 0, 20, 20, 0, 0, 20, 20);
+                gc.drawImage(imageOff, 0, 0, 20, 20, 0, 0, 20, 20);
             }
         }
         finally
@@ -84,7 +84,7 @@ public class LED extends Canvas
      */
     public final boolean isOn()
     {
-        return m_on;
+        return on;
     }
 
     /**
@@ -94,7 +94,7 @@ public class LED extends Canvas
      */
     public final void setOn(final boolean a_on)
     {
-        m_on = a_on;
+        on = a_on;
         draw();
     }
 

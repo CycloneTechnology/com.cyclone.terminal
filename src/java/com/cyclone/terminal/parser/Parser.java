@@ -11,28 +11,28 @@ public abstract class Parser implements ParseTable
 {
     static final int MAX_INTERMEDIATE_CHARS = 2;
 
-    private State m_state;
+    private State state;
 
-    private char[] m_intermediateChars = new char[MAX_INTERMEDIATE_CHARS + 1];
+    private char[] intermediateChars = new char[MAX_INTERMEDIATE_CHARS + 1];
 
-    private int m_intermediateCharPos;
+    private int intermediateCharPos;
 
-    private boolean m_ignoreFlagged;
+    private boolean ignoreFlagged;
 
-    private int[] m_params = new int[256];
+    private int[] params = new int[256];
 
-    private int m_numParams;
+    private int numParams;
 
     /**
      * 
      */
     public Parser()
     {
-        m_state = State.GROUND;
-        m_intermediateCharPos = 0;
-        m_intermediateChars[m_intermediateCharPos] = '\0';
-        m_numParams = 0;
-        m_ignoreFlagged = false;
+        state = State.GROUND;
+        intermediateCharPos = 0;
+        intermediateChars[intermediateCharPos] = '\0';
+        numParams = 0;
+        ignoreFlagged = false;
     }
 
     /**
@@ -45,10 +45,10 @@ public abstract class Parser implements ParseTable
 
     private void clear()
     {
-        m_intermediateCharPos = 0;
-        m_intermediateChars[m_intermediateCharPos] = '\0';
-        m_numParams = 0;
-        m_ignoreFlagged = false;
+        intermediateCharPos = 0;
+        intermediateChars[intermediateCharPos] = '\0';
+        numParams = 0;
+        ignoreFlagged = false;
     }
 
     /**
@@ -87,11 +87,11 @@ public abstract class Parser implements ParseTable
         {
             try
             {
-                change = STATE_TABLE[m_state.ordinal()][a_data];
+                change = STATE_TABLE[state.ordinal()][a_data];
             }
             catch (ArrayIndexOutOfBoundsException e)
             {
-                System.out.println("STATE_TABLE ERROR (" + m_state.ordinal()
+                System.out.println("STATE_TABLE ERROR (" + state.ordinal()
                         + ") " + a_data);
             }
         }
@@ -134,7 +134,8 @@ public abstract class Parser implements ParseTable
                 /**
                  * Append the character to the intermediate params
                  */
-                if (a_parser.getIntermediateCharPos() + 1 > MAX_INTERMEDIATE_CHARS)
+                if (a_parser.getIntermediateCharPos()
+                        + 1 > MAX_INTERMEDIATE_CHARS)
                 {
                     a_parser.setIgnoreFlagged(true);
                 }
@@ -177,13 +178,13 @@ public abstract class Parser implements ParseTable
                 break;
 
             default:
-                System.out.println("Internal error, unknown action "
-                        + a_action.ordinal());
+                System.out.println(
+                        "Internal error, unknown action " + a_action.ordinal());
         }
     }
 
-    private static void doStateChange(final Parser a_parser,
-            final int a_change, final char a_ch)
+    private static void doStateChange(final Parser a_parser, final int a_change,
+            final char a_ch)
     {
         // A state change is an action and/or a new state to transition to.
         final State newState = State.fromMask(a_change);
@@ -201,7 +202,8 @@ public abstract class Parser implements ParseTable
              * 3. the entry action of the new action
              */
 
-            final Action exitAction = EXIT_ACTIONS[a_parser.getState().ordinal()];
+            final Action exitAction = EXIT_ACTIONS[a_parser.getState()
+                    .ordinal()];
             final Action entryAction = ENTRY_ACTIONS[newState.ordinal()];
 
             if (exitAction != Action.NONE)
@@ -232,7 +234,7 @@ public abstract class Parser implements ParseTable
      */
     public final boolean isIgnoreFlagged()
     {
-        return m_ignoreFlagged;
+        return ignoreFlagged;
     }
 
     /**
@@ -240,7 +242,7 @@ public abstract class Parser implements ParseTable
      */
     public final void setIgnoreFlagged(boolean a_ignoreFlagged)
     {
-        m_ignoreFlagged = a_ignoreFlagged;
+        ignoreFlagged = a_ignoreFlagged;
     }
 
     /**
@@ -248,7 +250,7 @@ public abstract class Parser implements ParseTable
      */
     public final int getIntermediateCharPos()
     {
-        return m_intermediateCharPos;
+        return intermediateCharPos;
     }
 
     /**
@@ -256,7 +258,7 @@ public abstract class Parser implements ParseTable
      */
     public final void setIntermediateCharPos(int a_intermediateCharPos)
     {
-        m_intermediateCharPos = a_intermediateCharPos;
+        intermediateCharPos = a_intermediateCharPos;
     }
 
     /**
@@ -264,7 +266,7 @@ public abstract class Parser implements ParseTable
      */
     public final char[] getIntermediateChars()
     {
-        return m_intermediateChars;
+        return intermediateChars;
     }
 
     /**
@@ -272,7 +274,7 @@ public abstract class Parser implements ParseTable
      */
     public final void addIntermediateChar(final char a_ch)
     {
-        m_intermediateChars[m_intermediateCharPos++] = a_ch;
+        intermediateChars[intermediateCharPos++] = a_ch;
     }
 
     /**
@@ -280,8 +282,8 @@ public abstract class Parser implements ParseTable
      */
     public final void clearIntermediateChars()
     {
-        m_intermediateCharPos = 0;
-        m_intermediateChars[m_intermediateCharPos] = '\0';
+        intermediateCharPos = 0;
+        intermediateChars[intermediateCharPos] = '\0';
     }
 
     /**
@@ -289,7 +291,7 @@ public abstract class Parser implements ParseTable
      */
     public final int getNumParams()
     {
-        return m_numParams;
+        return numParams;
     }
 
     /**
@@ -297,7 +299,7 @@ public abstract class Parser implements ParseTable
      */
     public final void setNumParams(int a_numParams)
     {
-        m_numParams = a_numParams;
+        numParams = a_numParams;
     }
 
     /**
@@ -305,7 +307,7 @@ public abstract class Parser implements ParseTable
      */
     public final void incrementNumParams()
     {
-        m_numParams++;
+        numParams++;
     }
 
     /**
@@ -313,7 +315,7 @@ public abstract class Parser implements ParseTable
      */
     public final int[] getParams()
     {
-        return m_params;
+        return params;
     }
 
     /**
@@ -322,7 +324,7 @@ public abstract class Parser implements ParseTable
      */
     public final int getParam(final int a_index)
     {
-        return m_params[a_index];
+        return params[a_index];
     }
 
     /**
@@ -330,7 +332,7 @@ public abstract class Parser implements ParseTable
      */
     public final void setParams(int[] a_params)
     {
-        m_params = a_params;
+        params = a_params;
     }
 
     /**
@@ -339,7 +341,7 @@ public abstract class Parser implements ParseTable
      */
     public final void setParam(final int a_index, int a_value)
     {
-        m_params[a_index] = a_value;
+        params[a_index] = a_value;
     }
 
     /**
@@ -347,7 +349,7 @@ public abstract class Parser implements ParseTable
      */
     public final State getState()
     {
-        return m_state;
+        return state;
     }
 
     /**
@@ -355,6 +357,6 @@ public abstract class Parser implements ParseTable
      */
     public final void setState(State a_state)
     {
-        m_state = a_state;
+        state = a_state;
     }
 }

@@ -11,9 +11,9 @@ import com.cyclone.terminal.emulator.cell.Cell;
  */
 public class ScreenRow
 {
-    private Cell[] m_Cells;
+    private Cell[] cells;
 
-    private int m_Row;
+    private int row;
 
     /**
      * Constructor for ScreenRow
@@ -23,12 +23,12 @@ public class ScreenRow
      */
     public ScreenRow(final int a_row, final int a_columns)
     {
-        m_Row = a_row;
+        row = a_row;
 
-        m_Cells = new Cell[a_columns];
+        cells = new Cell[a_columns];
         for (int iCol = 0; iCol < a_columns; iCol++)
         {
-            m_Cells[iCol] = new Cell(a_row, iCol);
+            cells[iCol] = new Cell(a_row, iCol);
         }
     }
 
@@ -36,11 +36,11 @@ public class ScreenRow
     {
         int col = a_column;
 
-        if (col >= m_Cells.length)
+        if (col >= cells.length)
         {
-            col = m_Cells.length - 1;
+            col = cells.length - 1;
         }
-        return m_Cells[col];
+        return cells[col];
     }
 
     /**
@@ -48,7 +48,7 @@ public class ScreenRow
      */
     public final int getRow()
     {
-        return m_Row;
+        return row;
     }
 
     /**
@@ -56,11 +56,11 @@ public class ScreenRow
      */
     public final void setRow(int a_row)
     {
-        m_Row = a_row;
+        row = a_row;
 
-        for (int iCol = 0; iCol < m_Cells.length; iCol++)
+        for (int iCol = 0; iCol < cells.length; iCol++)
         {
-            m_Cells[iCol].setRow(a_row);
+            cells[iCol].setRow(a_row);
         }
     }
 }

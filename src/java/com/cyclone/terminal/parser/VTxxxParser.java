@@ -333,17 +333,17 @@ public class VTxxxParser
         BYTE_FE("þ  ", "Latin small letter thorn"),
         BYTE_FF("ÿ  ", "Latin small letter y with diaeresis");
 
-        private final String m_symbol;
+        private final String symbol;
 
-        private final String m_description;
+        private final String description;
 
         /**
          * @param a_symbol
          */
         Event(final String a_symbol, final String a_description)
         {
-            m_symbol = a_symbol;
-            m_description = a_description;
+            symbol = a_symbol;
+            description = a_description;
         }
 
         /**
@@ -351,7 +351,7 @@ public class VTxxxParser
          */
         public String getSymbol()
         {
-            return m_symbol;
+            return symbol;
         }
 
         /**
@@ -359,7 +359,7 @@ public class VTxxxParser
          */
         public String getDescription()
         {
-            return m_description;
+            return description;
         }
     }
 }

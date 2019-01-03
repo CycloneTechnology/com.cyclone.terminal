@@ -32,16 +32,16 @@ public final class Scroll
         DOWN;
     }
 
-    private Direction m_scrollDirection;
+    private Direction scrollDirection;
 
-    private int m_scrollAmount;
+    private int scrollAmount;
 
     /**
      * 
      */
     public Scroll()
     {
-        m_scrollDirection = Direction.NONE;
+        scrollDirection = Direction.NONE;
     }
 
     /**
@@ -49,7 +49,7 @@ public final class Scroll
      */
     public int getScrollAmount()
     {
-        return m_scrollAmount;
+        return scrollAmount;
     }
 
     /**
@@ -57,7 +57,7 @@ public final class Scroll
      */
     public void setScrollAmount(int a_scrollAmount)
     {
-        m_scrollAmount = a_scrollAmount;
+        scrollAmount = a_scrollAmount;
     }
 
     /**
@@ -65,7 +65,7 @@ public final class Scroll
      */
     public void increment()
     {
-        m_scrollAmount++;
+        scrollAmount++;
     }
 
     /**
@@ -73,7 +73,7 @@ public final class Scroll
      */
     public Direction getScrollDirection()
     {
-        return m_scrollDirection;
+        return scrollDirection;
     }
 
     /**
@@ -81,6 +81,6 @@ public final class Scroll
      */
     public void setScrollDirection(Direction a_scrollDirection)
     {
-        m_scrollDirection = a_scrollDirection;
+        scrollDirection = a_scrollDirection;
     }
 }

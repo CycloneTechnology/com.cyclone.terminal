@@ -11,36 +11,36 @@ import com.cyclone.terminal.emulator.Colours;
  */
 public class Rendition implements Colours, Cloneable
 {
-    private boolean m_Bold;
+    private boolean bold;
 
-    private boolean m_Italics;
+    private boolean italics;
 
-    private boolean m_Underline;
+    private boolean underline;
 
-    private boolean m_Blink;
+    private boolean blink;
 
-    private boolean m_Inverse;
+    private boolean inverse;
 
-    private boolean m_Concealed;
+    private boolean concealed;
 
-    private int m_ForegroundIndex;
+    private int foregroundIndex;
 
-    private int m_BackgroundIndex;
+    private int backgroundIndex;
 
     /**
      * Constructor for Rendition.
      */
     public Rendition()
     {
-        m_Bold = false;
-        m_Italics = false;
-        m_Underline = false;
-        m_Blink = false;
-        m_Inverse = false;
-        m_Concealed = false;
+        bold = false;
+        italics = false;
+        underline = false;
+        blink = false;
+        inverse = false;
+        concealed = false;
 
-        m_ForegroundIndex = 2;
-        m_BackgroundIndex = 0;
+        foregroundIndex = 2;
+        backgroundIndex = 0;
     }
 
     /**
@@ -48,7 +48,7 @@ public class Rendition implements Colours, Cloneable
      */
     public final int getBackgroundIndex()
     {
-        return m_BackgroundIndex;
+        return backgroundIndex;
     }
 
     /**
@@ -58,7 +58,7 @@ public class Rendition implements Colours, Cloneable
      */
     public final void setBackgroundIndex(final int a_backgroundIndex)
     {
-        m_BackgroundIndex = a_backgroundIndex;
+        backgroundIndex = a_backgroundIndex;
     }
 
     /**
@@ -66,7 +66,7 @@ public class Rendition implements Colours, Cloneable
      */
     public final boolean isBlink()
     {
-        return m_Blink;
+        return blink;
     }
 
     /**
@@ -76,7 +76,7 @@ public class Rendition implements Colours, Cloneable
      */
     public final void setBlink(final boolean a_blink)
     {
-        m_Blink = a_blink;
+        blink = a_blink;
     }
 
     /**
@@ -84,7 +84,7 @@ public class Rendition implements Colours, Cloneable
      */
     public final boolean isBold()
     {
-        return m_Bold;
+        return bold;
     }
 
     /**
@@ -94,7 +94,7 @@ public class Rendition implements Colours, Cloneable
      */
     public final void setBold(final boolean a_bold)
     {
-        m_Bold = a_bold;
+        bold = a_bold;
     }
 
     /**
@@ -102,7 +102,7 @@ public class Rendition implements Colours, Cloneable
      */
     public final boolean isConcealed()
     {
-        return m_Concealed;
+        return concealed;
     }
 
     /**
@@ -110,7 +110,7 @@ public class Rendition implements Colours, Cloneable
      */
     public final void setConcealed(final boolean a_concealed)
     {
-        m_Concealed = a_concealed;
+        concealed = a_concealed;
     }
 
     /**
@@ -118,7 +118,7 @@ public class Rendition implements Colours, Cloneable
      */
     public final int getForegroundIndex()
     {
-        return m_ForegroundIndex;
+        return foregroundIndex;
     }
 
     /**
@@ -126,7 +126,7 @@ public class Rendition implements Colours, Cloneable
      */
     public final void setForegroundIndex(final int a_foregroundIndex)
     {
-        m_ForegroundIndex = a_foregroundIndex;
+        foregroundIndex = a_foregroundIndex;
     }
 
     /**
@@ -135,7 +135,7 @@ public class Rendition implements Colours, Cloneable
      */
     public final boolean isInverse()
     {
-        return m_Inverse;
+        return inverse;
     }
 
     /**
@@ -143,7 +143,7 @@ public class Rendition implements Colours, Cloneable
      */
     public final void setInverse(final boolean a_inverse)
     {
-        m_Inverse = a_inverse;
+        inverse = a_inverse;
     }
 
     /**
@@ -151,7 +151,7 @@ public class Rendition implements Colours, Cloneable
      */
     public final boolean isItalics()
     {
-        return m_Italics;
+        return italics;
     }
 
     /**
@@ -159,7 +159,7 @@ public class Rendition implements Colours, Cloneable
      */
     public final void setItalics(final boolean a_italics)
     {
-        m_Italics = a_italics;
+        italics = a_italics;
     }
 
     /**
@@ -167,7 +167,7 @@ public class Rendition implements Colours, Cloneable
      */
     public final boolean isUnderline()
     {
-        return m_Underline;
+        return underline;
     }
 
     /**
@@ -175,7 +175,7 @@ public class Rendition implements Colours, Cloneable
      */
     public final void setUnderline(final boolean a_underline)
     {
-        m_Underline = a_underline;
+        underline = a_underline;
     }
 
     /**
@@ -209,14 +209,14 @@ public class Rendition implements Colours, Cloneable
         {
             final Rendition toCompare = (Rendition) a_obj;
 
-            if ((m_Bold == toCompare.m_Bold)
-                    && (m_Italics == toCompare.m_Italics)
-                    && (m_Underline == toCompare.m_Underline)
-                    && (m_Blink == toCompare.m_Blink)
-                    && (m_Inverse == toCompare.m_Inverse)
-                    && (m_Concealed == toCompare.m_Concealed)
-                    && (m_ForegroundIndex == toCompare.m_ForegroundIndex)
-                    && (m_BackgroundIndex == toCompare.m_BackgroundIndex))
+            if ((bold == toCompare.bold)
+                    && (italics == toCompare.italics)
+                    && (underline == toCompare.underline)
+                    && (blink == toCompare.blink)
+                    && (inverse == toCompare.inverse)
+                    && (concealed == toCompare.concealed)
+                    && (foregroundIndex == toCompare.foregroundIndex)
+                    && (backgroundIndex == toCompare.backgroundIndex))
             {
                 return true;
             }
@@ -240,16 +240,16 @@ public class Rendition implements Colours, Cloneable
     public final boolean isPlain()
     {
         final boolean plain;
-        if (m_Bold || m_Italics || m_Underline || m_Blink || m_Inverse
-                || m_Concealed)
+        if (bold || italics || underline || blink || inverse
+                || concealed)
         {
             plain = false;
         }
-        else if (m_ForegroundIndex != 2)
+        else if (foregroundIndex != 2)
         {
             plain = false;
         }
-        else if (m_BackgroundIndex != 0)
+        else if (backgroundIndex != 0)
         {
             plain = false;
         }

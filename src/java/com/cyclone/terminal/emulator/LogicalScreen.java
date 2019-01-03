@@ -9,15 +9,15 @@ package com.cyclone.terminal.emulator;
  */
 public final class LogicalScreen
 {
-    private int m_Width;
+    private int width;
 
-    private int m_Height;
+    private int height;
 
-    private int m_History;
+    private int history;
 
-    private int m_firstVisibleRow;
+    private int firstVisibleRow;
 
-    private Cursor m_cursor;
+    private Cursor cursor;
 
     /**
      * @param a_Width
@@ -27,12 +27,12 @@ public final class LogicalScreen
     public LogicalScreen(final int a_Width, final int a_Height,
             final int a_History)
     {
-        m_Width = a_Width;
-        m_Height = a_Height;
-        m_History = a_History;
+        width = a_Width;
+        height = a_Height;
+        history = a_History;
 
-        m_firstVisibleRow = m_History - m_Height;
-        m_cursor = new Cursor(m_Width, m_Height);
+        firstVisibleRow = history - height;
+        cursor = new Cursor(width, height);
     }
 
     /**
@@ -40,7 +40,7 @@ public final class LogicalScreen
      */
     public int getHeight()
     {
-        return m_Height;
+        return height;
     }
 
     /**
@@ -48,8 +48,8 @@ public final class LogicalScreen
      */
     public void setHeight(int a_height)
     {
-        m_Height = a_height;
-        m_cursor.setBounds(m_Width, m_Height);
+        height = a_height;
+        cursor.setBounds(width, height);
     }
 
     /**
@@ -57,7 +57,7 @@ public final class LogicalScreen
      */
     public int getHistory()
     {
-        return m_History;
+        return history;
     }
 
     /**
@@ -65,8 +65,8 @@ public final class LogicalScreen
      */
     public void setHistory(int a_history)
     {
-        m_History = a_history;
-        m_firstVisibleRow = m_History - m_Height;
+        history = a_history;
+        firstVisibleRow = history - height;
     }
 
     /**
@@ -74,7 +74,7 @@ public final class LogicalScreen
      */
     public int getWidth()
     {
-        return m_Width;
+        return width;
     }
 
     /**
@@ -82,8 +82,8 @@ public final class LogicalScreen
      */
     public void setWidth(int a_width)
     {
-        m_Width = a_width;
-        m_cursor.setBounds(m_Width, m_Height);
+        width = a_width;
+        cursor.setBounds(width, height);
     }
 
     /**
@@ -91,7 +91,7 @@ public final class LogicalScreen
      */
     public Cursor getCursor()
     {
-        return m_cursor;
+        return cursor;
     }
 
     /**
@@ -100,7 +100,7 @@ public final class LogicalScreen
      */
     public int getFirstVisibleRow()
     {
-        return m_firstVisibleRow;
+        return firstVisibleRow;
     }
 
     /**
@@ -108,7 +108,7 @@ public final class LogicalScreen
      */
     public void setFirstVisibleRow(int a_firstVisibleRow)
     {
-        m_firstVisibleRow = a_firstVisibleRow;
+        firstVisibleRow = a_firstVisibleRow;
     }
 
     /**
@@ -119,7 +119,7 @@ public final class LogicalScreen
      */
     public boolean cursorInBounds(final int a_row, final int a_column)
     {
-        if (((a_row < m_Height) && (a_column < m_Width)) && (a_row >= 0)
+        if (((a_row < height) && (a_column < width)) && (a_row >= 0)
                 && (a_column >= 0))
         {
             return true;
@@ -134,7 +134,7 @@ public final class LogicalScreen
      */
     public boolean cursorInBounds()
     {
-        return cursorInBounds(m_cursor.getRow(), m_cursor.getColumn());
+        return cursorInBounds(cursor.getRow(), cursor.getColumn());
     }
 
     /**
@@ -142,7 +142,7 @@ public final class LogicalScreen
      */
     public int lastRow()
     {
-        return m_cursor.getLastRow();
+        return cursor.getLastRow();
     }
 
     /**
@@ -150,7 +150,7 @@ public final class LogicalScreen
      */
     public int lastColumn()
     {
-        return m_cursor.getLastColumn();
+        return cursor.getLastColumn();
     }
 
 }

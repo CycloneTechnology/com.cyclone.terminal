@@ -22,24 +22,24 @@ import com.cyclone.terminal.emulator.cell.Rendition;
  */
 public abstract class RenderImage implements Colours
 {
-    private Image m_image;
+    private Image image;
 
     /**
      * @param a_device
      * @param a_Rendition
      * @param a_selected
      * @param a_blinkState
-     * @return an m_image with the specified rendition
+     * @return an {@link Image} with the specified rendition
      */
     public final synchronized Image getImage(final Device a_device,
             final Rendition a_Rendition, final boolean a_selected,
             final BlinkState a_blinkState)
     {
         // We are going to create a new image, dispose of the old one...
-        if (m_image != null)
+        if (image != null)
         {
-            m_image.dispose();
-            m_image = null;
+            image.dispose();
+            image = null;
         }
 
         // Set up our foregound and background colours based upon the bold
@@ -87,11 +87,11 @@ public abstract class RenderImage implements Colours
                 paletteData);
         imageData.setPixels(0, 0, getSize().x * getSize().y, getData(), 0);
 
-        m_image = new Image(a_device, imageData);
+        image = new Image(a_device, imageData);
 
         // If we need the image modifying in any way, do it now (i.e. we may
         // need to underline the character
-        final GC gc = new GC(m_image);
+        final GC gc = new GC(image);
         try
         {
             gc.setForeground(new Color(a_device, fore));
@@ -107,7 +107,7 @@ public abstract class RenderImage implements Colours
             gc.dispose();
         }
 
-        return m_image;
+        return image;
     }
 
     /**

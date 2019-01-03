@@ -20,23 +20,23 @@ import org.eclipse.swt.widgets.Shell;
  */
 public final class SimpleDataScopeDialog implements DataScope
 {
-    private final Shell m_dialogShell;
+    private final Shell dialogShell;
 
-    private final StyledText m_messageText;
+    private final StyledText messageText;
 
-    private final Scope m_tx;
+    private final Scope tx;
 
-    private final Scope m_rx;
+    private final Scope rx;
 
     private final class Scope
     {
-        private StyledText m_text;
+        private StyledText text;
 
-        private final Direction m_direction;
+        private final Direction direction;
 
         Scope(final Composite a_parent, final Direction a_direction)
         {
-            m_direction = a_direction;
+            direction = a_direction;
 
             final Composite parentComposite = new Composite(a_parent, SWT.NONE);
             parentComposite.setLayout(new GridLayout(1, true));
@@ -46,15 +46,15 @@ public final class SimpleDataScopeDialog implements DataScope
             final Label label = new Label(parentComposite, SWT.NONE);
             label.setText(a_direction.getDescription());
 
-            m_text = new StyledText(parentComposite, SWT.MULTI | SWT.BORDER
+            text = new StyledText(parentComposite, SWT.MULTI | SWT.BORDER
                     | SWT.V_SCROLL | SWT.H_SCROLL | SWT.READ_ONLY);
-            m_text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+            text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
             final Font font = new Font(a_parent.getDisplay(), "Courier New", 8,
                     SWT.NORMAL);
-            m_text.setFont(font);
+            text.setFont(font);
 
-            m_text.addListener(SWT.Modify, new Listener()
+            text.addListener(SWT.Modify, new Listener()
             {
                 /**
                  * @see org.eclipse.swt.widgets.Listener#handleEvent(org.eclipse.swt.widgets.Event)
@@ -62,14 +62,14 @@ public final class SimpleDataScopeDialog implements DataScope
                 @Override
                 public void handleEvent(Event a_e)
                 {
-                    m_text.setTopIndex(m_text.getLineCount() - 1);
+                    text.setTopIndex(text.getLineCount() - 1);
                 }
             });
         }
 
         void add(byte[] a_Data, int a_count)
         {
-            if ((a_count > 0) && (!m_text.isDisposed()))
+            if ((a_count > 0) && (!text.isDisposed()))
             {
                 final StringBuilder sb = new StringBuilder();
 
@@ -99,15 +99,15 @@ public final class SimpleDataScopeDialog implements DataScope
                     public void run()
                     {
 
-                        final int start = m_text.getCharCount();
+                        final int start = text.getCharCount();
 
-                        m_text.append(sb.toString());
+                        text.append(sb.toString());
 
                         final StyleRange styleRange = new StyleRange();
                         styleRange.start = start;
                         styleRange.length = sb.length();
-                        styleRange.foreground = m_direction.getColor();
-                        m_text.setStyleRange(styleRange);
+                        styleRange.foreground = direction.getColor();
+                        text.setStyleRange(styleRange);
                     }
                 });
             }
@@ -131,14 +131,14 @@ public final class SimpleDataScopeDialog implements DataScope
         RECEIVE("Data Received from Device", Display.getDefault()
                 .getSystemColor(SWT.COLOR_BLACK));
 
-        private final String m_description;
+        private final String description;
 
-        private final Color m_color;
+        private final Color color;
 
         Direction(final String a_description, final Color a_color)
         {
-            m_description = a_description;
-            m_color = a_color;
+            description = a_description;
+            color = a_color;
         }
 
         /**
@@ -146,7 +146,7 @@ public final class SimpleDataScopeDialog implements DataScope
          */
         public String getDescription()
         {
-            return m_description;
+            return description;
         }
 
         /**
@@ -154,7 +154,7 @@ public final class SimpleDataScopeDialog implements DataScope
          */
         public Color getColor()
         {
-            return m_color;
+            return color;
         }
     }
 
@@ -164,18 +164,18 @@ public final class SimpleDataScopeDialog implements DataScope
     public SimpleDataScopeDialog(final Shell a_parent)
     {
 
-        m_dialogShell = new Shell(a_parent, SWT.DIALOG_TRIM | SWT.MODELESS
+        dialogShell = new Shell(a_parent, SWT.DIALOG_TRIM | SWT.MODELESS
                 | SWT.RESIZE);
-        m_dialogShell.setLayout(new GridLayout());
-        m_dialogShell.setText("Terminal Data Scope");
+        dialogShell.setLayout(new GridLayout());
+        dialogShell.setText("Terminal Data Scope");
 
-        final Composite parentComposite = new Composite(m_dialogShell, SWT.NONE);
+        final Composite parentComposite = new Composite(dialogShell, SWT.NONE);
         parentComposite.setLayout(new GridLayout(2, true));
         parentComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
                 true));
 
-        m_tx = new Scope(parentComposite, Direction.SEND);
-        m_rx = new Scope(parentComposite, Direction.RECEIVE);
+        tx = new Scope(parentComposite, Direction.SEND);
+        rx = new Scope(parentComposite, Direction.RECEIVE);
 
         final GridData labelLayoutData = new GridData(SWT.FILL, SWT.FILL, true,
                 false);
@@ -189,11 +189,11 @@ public final class SimpleDataScopeDialog implements DataScope
                 true, true);
         messageLayoutData.grabExcessHorizontalSpace = true;
         messageLayoutData.horizontalSpan = 2;
-        m_messageText = new StyledText(parentComposite, SWT.MULTI | SWT.BORDER
+        messageText = new StyledText(parentComposite, SWT.MULTI | SWT.BORDER
                 | SWT.V_SCROLL | SWT.H_SCROLL | SWT.READ_ONLY);
-        m_messageText.setLayoutData(messageLayoutData);
+        messageText.setLayoutData(messageLayoutData);
 
-        m_messageText.addListener(SWT.Modify, new Listener()
+        messageText.addListener(SWT.Modify, new Listener()
         {
             /**
              * @see org.eclipse.swt.widgets.Listener#handleEvent(org.eclipse.swt.widgets.Event)
@@ -201,12 +201,12 @@ public final class SimpleDataScopeDialog implements DataScope
             @Override
             public void handleEvent(Event a_e)
             {
-                m_messageText.setTopIndex(m_messageText.getLineCount() - 1);
+                messageText.setTopIndex(messageText.getLineCount() - 1);
             }
         });
 
-        m_dialogShell.setSize(1024, 500);
-        m_dialogShell.open();
+        dialogShell.setSize(1024, 500);
+        dialogShell.open();
     }
 
     /**
@@ -215,7 +215,7 @@ public final class SimpleDataScopeDialog implements DataScope
     @Override
     public void close()
     {
-        m_dialogShell.close();
+        dialogShell.close();
     }
 
     /**
@@ -229,10 +229,10 @@ public final class SimpleDataScopeDialog implements DataScope
         switch (a_direction)
         {
             case RECEIVE:
-                m_rx.add(a_Data, a_count);
+                rx.add(a_Data, a_count);
                 break;
             case SEND:
-                m_tx.add(a_Data, a_count);
+                tx.add(a_Data, a_count);
                 break;
             default:
                 break;
@@ -245,7 +245,7 @@ public final class SimpleDataScopeDialog implements DataScope
     @Override
     public void addMessage(final String a_message)
     {
-        m_messageText.getDisplay().asyncExec(new Runnable()
+        messageText.getDisplay().asyncExec(new Runnable()
         {
             /**
              * @see java.lang.Runnable#run()
@@ -253,8 +253,8 @@ public final class SimpleDataScopeDialog implements DataScope
             @Override
             public void run()
             {
-                m_messageText.append(a_message);
-                m_messageText.append("\n");
+                messageText.append(a_message);
+                messageText.append("\n");
             }
         });
     }

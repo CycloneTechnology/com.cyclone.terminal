@@ -9,33 +9,33 @@ package com.cyclone.terminal.emulator;
  */
 public final class Cursor
 {
-    private int m_lastColumn;
+    private int lastColumn;
 
-    private int m_lastRow;
+    private int lastRow;
 
-    private int m_Column;
+    private int column;
 
-    private int m_Row;
+    private int row;
 
-    private boolean m_AutoWrap;
+    private boolean autoWrap;
 
-    private boolean m_ReverseAutoWrap;
+    private boolean reverseAutoWrap;
 
-    private int m_SavedRow;
+    private int savedRow;
 
-    private int m_SavedColumn;
+    private int savedColumn;
 
-    private boolean[] m_tabs;
+    private boolean[] tabs;
 
-    private boolean m_origin;
+    private boolean origin;
 
-    private int m_leftMargin;
+    private int leftMargin;
 
-    private int m_rightMargin;
+    private int rightMargin;
 
-    private int m_topMargin;
+    private int topMargin;
 
-    private int m_bottomMargin;
+    private int bottomMargin;
 
     /**
      * @param a_width
@@ -55,23 +55,23 @@ public final class Cursor
      */
     public void setBounds(final int a_width, final int a_height)
     {
-        m_lastColumn = a_width - 1;
-        m_lastRow = a_height - 1;
+        lastColumn = a_width - 1;
+        lastRow = a_height - 1;
 
         // We need to reset our current row and column so that they are within
         // the new display bounds...
-        m_Row = Math.min(m_Row, m_lastRow);
-        m_Column = Math.min(m_Column, m_lastColumn);
+        row = Math.min(row, lastRow);
+        column = Math.min(column, lastColumn);
 
         // Set up our default tab positions...
-        m_tabs = new boolean[a_width];
+        tabs = new boolean[a_width];
         for (int iTab = 9; iTab < a_width; iTab += 8)
         {
-            m_tabs[iTab] = true;
+            tabs[iTab] = true;
         }
 
-        m_topMargin = 0;
-        m_bottomMargin = m_lastRow;
+        topMargin = 0;
+        bottomMargin = lastRow;
     }
 
     /**
@@ -79,7 +79,7 @@ public final class Cursor
      */
     public int getLastColumn()
     {
-        return m_lastColumn;
+        return lastColumn;
     }
 
     /**
@@ -87,7 +87,7 @@ public final class Cursor
      */
     public int getColumn()
     {
-        return m_Column;
+        return column;
     }
 
     /**
@@ -95,7 +95,7 @@ public final class Cursor
      */
     public void setColumn(final int a_column)
     {
-        m_Column = a_column;
+        column = a_column;
         validateColumn();
     }
 
@@ -104,7 +104,7 @@ public final class Cursor
      */
     public int getLastRow()
     {
-        return m_lastRow;
+        return lastRow;
     }
 
     /**
@@ -112,7 +112,7 @@ public final class Cursor
      */
     public int getRow()
     {
-        return m_Row;
+        return row;
     }
 
     /**
@@ -122,7 +122,7 @@ public final class Cursor
      */
     public void setRow(final int a_row)
     {
-        m_Row = a_row;
+        row = a_row;
         validateRow();
     }
 
@@ -143,8 +143,8 @@ public final class Cursor
      */
     public void home()
     {
-        m_Row = 0;
-        m_Column = 0;
+        row = 0;
+        column = 0;
     }
 
     /**
@@ -161,7 +161,7 @@ public final class Cursor
      */
     public void right(final int a_columns)
     {
-        m_Column += a_columns;
+        column += a_columns;
         validateColumn();
     }
 
@@ -180,7 +180,7 @@ public final class Cursor
      */
     public Scroll down(final int a_rows)
     {
-        m_Row += a_rows;
+        row += a_rows;
         return validateRow();
     }
 
@@ -199,7 +199,7 @@ public final class Cursor
      */
     public Scroll left(final int a_columns)
     {
-        m_Column -= a_columns;
+        column -= a_columns;
         return validateColumn();
     }
 
@@ -218,7 +218,7 @@ public final class Cursor
      */
     public Scroll up(final int a_rows)
     {
-        m_Row -= a_rows;
+        row -= a_rows;
         return validateRow();
     }
 
@@ -227,9 +227,9 @@ public final class Cursor
      */
     public void tab()
     {
-        for (int iCol = m_Column + 1; iCol <= m_lastColumn; iCol++)
+        for (int iCol = column + 1; iCol <= lastColumn; iCol++)
         {
-            if (m_tabs[iCol])
+            if (tabs[iCol])
             {
                 setColumn(iCol);
                 break;
@@ -242,7 +242,7 @@ public final class Cursor
      */
     public void setTab()
     {
-        m_tabs[m_Column] = true;
+        tabs[column] = true;
     }
 
     /**
@@ -252,7 +252,7 @@ public final class Cursor
      */
     public boolean getTab()
     {
-        return m_tabs[m_Column];
+        return tabs[column];
     }
 
     /**
@@ -260,7 +260,7 @@ public final class Cursor
      */
     public void clearTab()
     {
-        m_tabs[m_Column] = false;
+        tabs[column] = false;
     }
 
     /**
@@ -268,36 +268,36 @@ public final class Cursor
      */
     public void clearAllTabs()
     {
-        m_tabs = new boolean[m_lastColumn + 1];
+        tabs = new boolean[lastColumn + 1];
     }
 
     private Scroll validateColumn()
     {
         Scroll scroll = new Scroll();
-        if (m_Column > m_lastColumn)
+        if (column > lastColumn)
         {
-            if (m_AutoWrap)
+            if (autoWrap)
             {
                 scroll = down();
-                m_Column = 0;
+                column = 0;
             }
             else
             {
-                m_Column = m_lastColumn;
+                column = lastColumn;
             }
         }
         else
         {
-            if (m_Column < 0)
+            if (column < 0)
             {
-                if (m_ReverseAutoWrap)
+                if (reverseAutoWrap)
                 {
                     scroll = up();
-                    m_Column = m_lastColumn;
+                    column = lastColumn;
                 }
                 else
                 {
-                    m_Column = 0;
+                    column = 0;
                 }
             }
         }
@@ -308,18 +308,18 @@ public final class Cursor
     private Scroll validateRow()
     {
         final Scroll scroll = new Scroll();
-        while (m_Row > m_lastRow)
+        while (row > lastRow)
         {
             scroll.setScrollDirection(Scroll.Direction.UP);
             scroll.increment();
-            m_Row = m_lastRow;
+            row = lastRow;
         }
 
-        while (m_Row < 0)
+        while (row < 0)
         {
             scroll.setScrollDirection(Scroll.Direction.DOWN);
             scroll.increment();
-            m_Row++;
+            row++;
         }
 
         return scroll;
@@ -330,7 +330,7 @@ public final class Cursor
      */
     public void setAutoWrap(final boolean a_autoWrap)
     {
-        m_AutoWrap = a_autoWrap;
+        autoWrap = a_autoWrap;
     }
 
     /**
@@ -338,7 +338,7 @@ public final class Cursor
      */
     public boolean isAutoWrap()
     {
-        return m_AutoWrap;
+        return autoWrap;
     }
 
     /**
@@ -346,7 +346,7 @@ public final class Cursor
      */
     public void setReverseAutoWrap(final boolean a_reverseAutoWrap)
     {
-        m_ReverseAutoWrap = a_reverseAutoWrap;
+        reverseAutoWrap = a_reverseAutoWrap;
     }
 
     /**
@@ -354,7 +354,7 @@ public final class Cursor
      */
     public boolean isReverseAutoWrap()
     {
-        return m_ReverseAutoWrap;
+        return reverseAutoWrap;
     }
 
     /**
@@ -362,8 +362,8 @@ public final class Cursor
      */
     public void saveCursor()
     {
-        m_SavedRow = getRow();
-        m_SavedColumn = getColumn();
+        savedRow = getRow();
+        savedColumn = getColumn();
     }
 
     /**
@@ -371,7 +371,7 @@ public final class Cursor
      */
     public void unsaveCursor()
     {
-        setPosition(m_SavedRow, m_SavedColumn);
+        setPosition(savedRow, savedColumn);
     }
 
     /**
@@ -379,12 +379,12 @@ public final class Cursor
      */
     public void reset()
     {
-        m_Column = 0;
-        m_Row = 0;
-        m_AutoWrap = false;
-        m_ReverseAutoWrap = false;
-        m_SavedRow = 0;
-        m_SavedColumn = 0;
+        column = 0;
+        row = 0;
+        autoWrap = false;
+        reverseAutoWrap = false;
+        savedRow = 0;
+        savedColumn = 0;
     }
 
     /**
@@ -393,7 +393,7 @@ public final class Cursor
      */
     public boolean isOrigin()
     {
-        return m_origin;
+        return origin;
     }
 
     /**
@@ -410,7 +410,7 @@ public final class Cursor
      */
     public void setOrigin(boolean a_origin)
     {
-        m_origin = a_origin;
+        origin = a_origin;
     }
 
     /**
@@ -418,7 +418,7 @@ public final class Cursor
      */
     public int getLeftMargin()
     {
-        return m_leftMargin;
+        return leftMargin;
     }
 
     /**
@@ -426,7 +426,7 @@ public final class Cursor
      */
     public void setLeftMargin(int a_leftMargin)
     {
-        m_leftMargin = a_leftMargin;
+        leftMargin = a_leftMargin;
         validateMargins();
     }
 
@@ -435,7 +435,7 @@ public final class Cursor
      */
     public int getRightMargin()
     {
-        return m_rightMargin;
+        return rightMargin;
     }
 
     /**
@@ -443,7 +443,7 @@ public final class Cursor
      */
     public void setRightMargin(int a_rightMargin)
     {
-        m_rightMargin = a_rightMargin;
+        rightMargin = a_rightMargin;
         validateMargins();
     }
 
@@ -452,7 +452,7 @@ public final class Cursor
      */
     public int getTopMargin()
     {
-        return m_topMargin;
+        return topMargin;
     }
 
     /**
@@ -460,7 +460,7 @@ public final class Cursor
      */
     public void setTopMargin(int a_leftMargin)
     {
-        m_topMargin = a_leftMargin;
+        topMargin = a_leftMargin;
         validateMargins();
     }
 
@@ -469,7 +469,7 @@ public final class Cursor
      */
     public int getBottomMargin()
     {
-        return m_bottomMargin;
+        return bottomMargin;
     }
 
     /**
@@ -477,20 +477,20 @@ public final class Cursor
      */
     public void setBottomMargin(int a_bottomMargin)
     {
-        m_bottomMargin = a_bottomMargin;
+        bottomMargin = a_bottomMargin;
         validateMargins();
     }
 
     private void validateMargins()
     {
-        if (m_leftMargin >= m_rightMargin)
+        if (leftMargin >= rightMargin)
         {
-            m_leftMargin = m_rightMargin + 1;
+            leftMargin = rightMargin + 1;
         }
 
-        if (m_topMargin >= m_bottomMargin)
+        if (topMargin >= bottomMargin)
         {
-            m_topMargin = m_bottomMargin - 1;
+            topMargin = bottomMargin - 1;
         }
     }
 }

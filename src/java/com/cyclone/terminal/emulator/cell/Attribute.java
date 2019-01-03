@@ -9,14 +9,14 @@ package com.cyclone.terminal.emulator.cell;
  */
 public class Attribute
 {
-    private boolean m_SelectiveErase;
+    private boolean selectiveErase;
 
     /**
      * Constructor for Attribute
      */
     public Attribute()
     {
-        m_SelectiveErase = false;
+        selectiveErase = false;
     }
 
     /**
@@ -24,7 +24,7 @@ public class Attribute
      */
     public final boolean isSelectiveErase()
     {
-        return m_SelectiveErase;
+        return selectiveErase;
     }
 
     /**
@@ -32,6 +32,6 @@ public class Attribute
      */
     public final void setSelectiveErase(boolean a_selectiveErase)
     {
-        m_SelectiveErase = a_selectiveErase;
+        selectiveErase = a_selectiveErase;
     }
 }

@@ -26,7 +26,7 @@ import com.cyclone.terminal.emulator.font.VT100.characters.set2.Set2CharArray;
  */
 public class CharSet implements CharPatterns
 {
-    private final Device m_device;
+    private final Device device;
 
     /**
      * Constructor for CharSet. This construct6or creates an empty char set, you
@@ -37,7 +37,7 @@ public class CharSet implements CharPatterns
      */
     public CharSet(final Device a_device)
     {
-        m_device = a_device;
+        device = a_device;
         // generateCharacterClasses("images/glyphs/glyph_strip.bmp", 255,
         // "com\\cyclone\\terminal\\emulator\\font\\VT100\\characters\\set1\\");
         // generateCharacterClasses("images/glyphs/glyph_strip2.bmp", 255,
@@ -65,13 +65,13 @@ public class CharSet implements CharPatterns
                     case USASCII:
                     case ALTERNATESET_STANDARD:
                         image = Set1CharArray.PATTERN[a_cell.getCharacter()]
-                                .getImage(m_device, a_cell.getRendition(),
+                                .getImage(device, a_cell.getRendition(),
                                         a_selected, a_blinkState);
                         break;
                     case SPECIALGRAPHICS:
                     case ALTERNATESET_SPECIALGRAPHICS:
                         image = Set2CharArray.PATTERN[a_cell.getCharacter()]
-                                .getImage(m_device, a_cell.getRendition(),
+                                .getImage(device, a_cell.getRendition(),
                                         a_selected, a_blinkState);
                         break;
                 }
@@ -84,13 +84,13 @@ public class CharSet implements CharPatterns
                     case USASCII:
                     case ALTERNATESET_STANDARD:
                         image = Set1CharArray.PATTERN[a_cell.getCharacter()]
-                                .getImage(m_device, a_cell.getRendition(),
+                                .getImage(device, a_cell.getRendition(),
                                         a_selected, a_blinkState);
                         break;
                     case SPECIALGRAPHICS:
                     case ALTERNATESET_SPECIALGRAPHICS:
                         image = Set2CharArray.PATTERN[a_cell.getCharacter()]
-                                .getImage(m_device, a_cell.getRendition(),
+                                .getImage(device, a_cell.getRendition(),
                                         a_selected, a_blinkState);
                         break;
                 }
@@ -103,13 +103,13 @@ public class CharSet implements CharPatterns
                     case USASCII:
                     case ALTERNATESET_STANDARD:
                         image = Set1CharArray.PATTERN[a_cell.getCharacter()]
-                                .getImage(m_device, a_cell.getRendition(),
+                                .getImage(device, a_cell.getRendition(),
                                         a_selected, a_blinkState);
                         break;
                     case SPECIALGRAPHICS:
                     case ALTERNATESET_SPECIALGRAPHICS:
                         image = Set2CharArray.PATTERN[a_cell.getCharacter()]
-                                .getImage(m_device, a_cell.getRendition(),
+                                .getImage(device, a_cell.getRendition(),
                                         a_selected, a_blinkState);
                         break;
                 }
@@ -122,13 +122,13 @@ public class CharSet implements CharPatterns
                     case USASCII:
                     case ALTERNATESET_STANDARD:
                         image = Set1CharArray.PATTERN[a_cell.getCharacter()]
-                                .getImage(m_device, a_cell.getRendition(),
+                                .getImage(device, a_cell.getRendition(),
                                         a_selected, a_blinkState);
                         break;
                     case SPECIALGRAPHICS:
                     case ALTERNATESET_SPECIALGRAPHICS:
                         image = Set2CharArray.PATTERN[a_cell.getCharacter()]
-                                .getImage(m_device, a_cell.getRendition(),
+                                .getImage(device, a_cell.getRendition(),
                                         a_selected, a_blinkState);
                         break;
                 }
@@ -158,7 +158,7 @@ public class CharSet implements CharPatterns
         final MessageFormat characterIdFormatter = new MessageFormat(
                 "{0,number,000}");
 
-        final Image characterImage = new Image(m_device, a_glyphFile);
+        final Image characterImage = new Image(device, a_glyphFile);
 
         final ImageData imageData = characterImage.getImageData();
 
