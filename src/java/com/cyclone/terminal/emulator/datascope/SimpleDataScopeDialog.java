@@ -40,8 +40,8 @@ public final class SimpleDataScopeDialog implements DataScope
 
             final Composite parentComposite = new Composite(a_parent, SWT.NONE);
             parentComposite.setLayout(new GridLayout(1, true));
-            parentComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL,
-                    true, true));
+            parentComposite.setLayoutData(
+                    new GridData(SWT.FILL, SWT.FILL, true, true));
 
             final Label label = new Label(parentComposite, SWT.NONE);
             label.setText(a_direction.getDescription());
@@ -56,9 +56,6 @@ public final class SimpleDataScopeDialog implements DataScope
 
             text.addListener(SWT.Modify, new Listener()
             {
-                /**
-                 * @see org.eclipse.swt.widgets.Listener#handleEvent(org.eclipse.swt.widgets.Event)
-                 */
                 @Override
                 public void handleEvent(Event a_e)
                 {
@@ -120,16 +117,16 @@ public final class SimpleDataScopeDialog implements DataScope
      */
     public enum Direction
     {
-        /**
-         * 
-         */
-        SEND("Data Sent to Device", Display.getDefault().getSystemColor(
-                SWT.COLOR_BLACK)),
-        /**
-         * 
-         */
-        RECEIVE("Data Received from Device", Display.getDefault()
-                .getSystemColor(SWT.COLOR_BLACK));
+     /**
+      * 
+      */
+     SEND("Data Sent to Device",
+             Display.getDefault().getSystemColor(SWT.COLOR_BLACK)),
+     /**
+      * 
+      */
+     RECEIVE("Data Received from Device",
+             Display.getDefault().getSystemColor(SWT.COLOR_BLACK));
 
         private final String description;
 
@@ -164,15 +161,15 @@ public final class SimpleDataScopeDialog implements DataScope
     public SimpleDataScopeDialog(final Shell a_parent)
     {
 
-        dialogShell = new Shell(a_parent, SWT.DIALOG_TRIM | SWT.MODELESS
-                | SWT.RESIZE);
+        dialogShell = new Shell(a_parent,
+                SWT.DIALOG_TRIM | SWT.MODELESS | SWT.RESIZE);
         dialogShell.setLayout(new GridLayout());
         dialogShell.setText("Terminal Data Scope");
 
         final Composite parentComposite = new Composite(dialogShell, SWT.NONE);
         parentComposite.setLayout(new GridLayout(2, true));
-        parentComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
-                true));
+        parentComposite
+                .setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
         tx = new Scope(parentComposite, Direction.SEND);
         rx = new Scope(parentComposite, Direction.RECEIVE);
@@ -195,9 +192,6 @@ public final class SimpleDataScopeDialog implements DataScope
 
         messageText.addListener(SWT.Modify, new Listener()
         {
-            /**
-             * @see org.eclipse.swt.widgets.Listener#handleEvent(org.eclipse.swt.widgets.Event)
-             */
             @Override
             public void handleEvent(Event a_e)
             {
@@ -209,19 +203,12 @@ public final class SimpleDataScopeDialog implements DataScope
         dialogShell.open();
     }
 
-    /**
-     * @see com.cyclone.terminal.emulator.datascope.DataScope#close()
-     */
     @Override
     public void close()
     {
         dialogShell.close();
     }
 
-    /**
-     * @see com.cyclone.terminal.emulator.datascope.DataScope#add(byte[], int,
-     *      com.cyclone.terminal.emulator.datascope.SimpleDataScopeDialog.Direction)
-     */
     @Override
     public void add(final byte[] a_Data, final int a_count,
             final Direction a_direction)
@@ -239,17 +226,11 @@ public final class SimpleDataScopeDialog implements DataScope
         }
     }
 
-    /**
-     * @see com.cyclone.terminal.emulator.datascope.DataScope#addMessage(java.lang.String)
-     */
     @Override
     public void addMessage(final String a_message)
     {
         messageText.getDisplay().asyncExec(new Runnable()
         {
-            /**
-             * @see java.lang.Runnable#run()
-             */
             @Override
             public void run()
             {

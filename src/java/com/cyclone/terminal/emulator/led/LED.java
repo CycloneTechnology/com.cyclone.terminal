@@ -1,6 +1,3 @@
-/**
- *
- */
 package com.cyclone.terminal.emulator.led;
 
 import org.eclipse.swt.SWT;
@@ -35,16 +32,14 @@ public class LED extends Canvas
     {
         super(a_parent, SWT.NONE);
 
-        final GridData ledGridData = new GridData(SWT.FILL, SWT.FILL, false, false);
+        final GridData ledGridData = new GridData(SWT.FILL, SWT.FILL, false,
+                false);
         ledGridData.heightHint = 20;
         ledGridData.widthHint = 20;
 
         setLayoutData(ledGridData);
         addPaintListener(new PaintListener()
         {
-            /**
-             * @see org.eclipse.swt.events.PaintListener#paintControl(org.eclipse.swt.events.PaintEvent)
-             */
             @Override
             public void paintControl(PaintEvent a_e)
             {

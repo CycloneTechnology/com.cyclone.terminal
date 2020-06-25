@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.cyclone.terminal.emulator;
 
 import org.eclipse.swt.SWT;
@@ -107,8 +104,8 @@ public abstract class VT52 extends BaseTerminal
      * @param a_height
      * @param a_history
      */
-    public VT52(final Composite a_parent, final int a_width,
-            final int a_height, final int a_history)
+    public VT52(final Composite a_parent, final int a_width, final int a_height,
+            final int a_history)
     {
         super(a_parent, a_width, a_height, a_history);
     }
@@ -184,8 +181,9 @@ public abstract class VT52 extends BaseTerminal
      */
     public final void eraseToEndOfScreen()
     {
-        eraseCells(getLogicalScreen().getCursor().getRow(), getLogicalScreen()
-                .getCursor().getColumn(), getLogicalScreen().getHeight() - 1,
+        eraseCells(getLogicalScreen().getCursor().getRow(),
+                getLogicalScreen().getCursor().getColumn(),
+                getLogicalScreen().getHeight() - 1,
                 getLogicalScreen().lastColumn());
     }
 
@@ -194,15 +192,12 @@ public abstract class VT52 extends BaseTerminal
      */
     public final void eraseToEndOfLine()
     {
-        eraseCells(getLogicalScreen().getCursor().getRow(), getLogicalScreen()
-                .getCursor().getColumn(), getLogicalScreen().getCursor()
-                .getRow(), getLogicalScreen().lastColumn());
+        eraseCells(getLogicalScreen().getCursor().getRow(),
+                getLogicalScreen().getCursor().getColumn(),
+                getLogicalScreen().getCursor().getRow(),
+                getLogicalScreen().lastColumn());
     }
 
-    /**
-     * @see com.cyclone.terminal.emulator.BaseTerminal#translateKeyCode(int,
-     *      char, boolean)
-     */
     @Override
     protected final byte[] translateKeyCode(final int a_keyCode,
             final char a_character, final boolean a_applicationKeys)

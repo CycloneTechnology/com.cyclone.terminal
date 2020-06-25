@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.cyclone.terminal.emulator;
 
 import com.cyclone.terminal.emulator.cell.Cell;

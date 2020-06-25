@@ -1,6 +1,3 @@
-/**
- *
- */
 package com.cyclone.terminal.emulator;
 
 import org.eclipse.swt.SWT;
@@ -74,10 +71,6 @@ public abstract class VTTerminal extends VT300
 
     }
 
-    /**
-     * @see com.cyclone.terminal.parser.Parser#execute(com.cyclone.terminal.parser.Parser,
-     *      com.cyclone.terminal.parser.Action, char)
-     */
     @Override
     public final void execute(Parser a_parser, Action a_action, char a_ch)
     {
@@ -187,8 +180,7 @@ public abstract class VTTerminal extends VT300
                                         break;
                                     default:
                                         throw new EmulatorException(
-                                                "Escape Sequence for "
-                                                        + a_ch
+                                                "Escape Sequence for " + a_ch
                                                         + " (intermediate "
                                                         + a_parser
                                                                 .getIntermediateChars()[0]
@@ -213,8 +205,7 @@ public abstract class VTTerminal extends VT300
                                         break;
                                     default:
                                         throw new EmulatorException(
-                                                "Escape Sequence for "
-                                                        + a_ch
+                                                "Escape Sequence for " + a_ch
                                                         + " (intermediate "
                                                         + a_parser
                                                                 .getIntermediateChars()[0]
@@ -241,8 +232,7 @@ public abstract class VTTerminal extends VT300
                         {
                             default:
                                 throw new EmulatorException(
-                                        "Escape Sequence for "
-                                                + a_ch
+                                        "Escape Sequence for " + a_ch
                                                 + " (intermediate "
                                                 + a_parser
                                                         .getIntermediateChars()[0]
@@ -262,8 +252,7 @@ public abstract class VTTerminal extends VT300
                                         break;
                                     default:
                                         throw new EmulatorException(
-                                                "Escape Sequence for "
-                                                        + a_ch
+                                                "Escape Sequence for " + a_ch
                                                         + " (intermediate "
                                                         + a_parser
                                                                 .getIntermediateChars()[0]
@@ -291,8 +280,7 @@ public abstract class VTTerminal extends VT300
                                         break;
                                     default:
                                         throw new EmulatorException(
-                                                "Escape Sequence for "
-                                                        + a_ch
+                                                "Escape Sequence for " + a_ch
                                                         + " (intermediate "
                                                         + a_parser
                                                                 .getIntermediateChars()[0]
@@ -326,8 +314,7 @@ public abstract class VTTerminal extends VT300
                                         break;
                                     default:
                                         throw new EmulatorException(
-                                                "Escape Sequence for "
-                                                        + a_ch
+                                                "Escape Sequence for " + a_ch
                                                         + " (intermediate "
                                                         + a_parser
                                                                 .getIntermediateChars()[0]
@@ -352,8 +339,7 @@ public abstract class VTTerminal extends VT300
                                 break;
                             default:
                                 throw new EmulatorException(
-                                        "Escape Sequence for "
-                                                + a_ch
+                                        "Escape Sequence for " + a_ch
                                                 + " (intermediate "
                                                 + a_parser
                                                         .getIntermediateChars()[0]
@@ -432,23 +418,19 @@ public abstract class VTTerminal extends VT300
                         switch (a_parser.getIntermediateChars()[0])
                         {
                             case '(':
-                                selectCharacterSet(
-                                        CharacterSetSequence.G0,
+                                selectCharacterSet(CharacterSetSequence.G0,
                                         CharacterSet.ALTERNATESET_SPECIALGRAPHICS);
                                 break;
                             case ')':
-                                selectCharacterSet(
-                                        CharacterSetSequence.G1,
+                                selectCharacterSet(CharacterSetSequence.G1,
                                         CharacterSet.ALTERNATESET_SPECIALGRAPHICS);
                                 break;
                             case '*':
-                                selectCharacterSet(
-                                        CharacterSetSequence.G2,
+                                selectCharacterSet(CharacterSetSequence.G2,
                                         CharacterSet.ALTERNATESET_SPECIALGRAPHICS);
                                 break;
                             case '+':
-                                selectCharacterSet(
-                                        CharacterSetSequence.G3,
+                                selectCharacterSet(CharacterSetSequence.G3,
                                         CharacterSet.ALTERNATESET_SPECIALGRAPHICS);
                                 break;
                             default:
@@ -668,14 +650,14 @@ public abstract class VTTerminal extends VT300
                 }
                 else
                 {
-                    // System.out.println("  Character : " + a_ch);
+                    // System.out.println(" Character : " + a_ch);
                     putCharacter(a_ch);
                 }
                 break;
-        // case PUT:
-        // break;
-        // case UNHOOK:
-        // break;
+            // case PUT:
+            // break;
+            // case UNHOOK:
+            // break;
         }
     }
 

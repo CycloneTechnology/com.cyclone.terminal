@@ -1,6 +1,3 @@
-/**
- *
- */
 package com.cyclone.terminal.emulator.font.VT100;
 
 import java.io.FileNotFoundException;
@@ -44,10 +41,6 @@ public class CharSet implements CharPatterns
         // "com\\cyclone\\terminal\\emulator\\font\\VT100\\characters\\set2\\");
     }
 
-    /**
-     * @see com.cyclone.terminal.emulator.font.VT100.CharPatterns#getImage(com.cyclone.terminal.emulator.cell.Cell,
-     *      boolean, com.cyclone.terminal.emulator.cell.BlinkState)
-     */
     @Override
     public final Image getImage(final Cell a_cell, final boolean a_selected,
             final BlinkState a_blinkState) throws EmulatorException
@@ -138,9 +131,6 @@ public class CharSet implements CharPatterns
         return image;
     }
 
-    /**
-     * @see com.cyclone.terminal.emulator.font.VT100.CharPatterns#getCharSize()
-     */
     @Override
     public final Point getCharSize()
     {
@@ -172,8 +162,9 @@ public class CharSet implements CharPatterns
             {
                 for (int row = 0; row < 36; row++)
                 {
-                    character[column][row] = imageData.data[(row * imageData.bytesPerLine)
-                            + (charNumber * 15) + column] > 1 ? 0 : 1;
+                    character[column][row] = imageData.data[(row
+                            * imageData.bytesPerLine) + (charNumber * 15)
+                            + column] > 1 ? 0 : 1;
                 }
             }
             // Character done, output code...
@@ -187,16 +178,13 @@ public class CharSet implements CharPatterns
             {
                 try (final PrintStream p = new PrintStream(out))
                 {
-                    p.println("/**");
-                    p.println(" * ");
-                    p.println(" */");
-                    p.println("package "
-                            + a_package.replace('\\', '.').substring(0,
-                                    a_package.length() - 1) + ";");
+                    p.println("package " + a_package.replace('\\', '.')
+                            .substring(0, a_package.length() - 1) + ";");
                     p.println();
                     p.println("import org.eclipse.swt.graphics.Point;");
-                    p.println();
-                    p.println("import com.cyclone.terminal.emulator.font.VT100.characters.RenderImage;");
+                    p.println("");
+                    p.println(
+                            "import com.cyclone.terminal.emulator.font.VT100.characters.RenderImage;");
                     p.println("/**");
                     p.println(" * @author Phil.Baxter");
                     p.println(" * ");
@@ -218,19 +206,13 @@ public class CharSet implements CharPatterns
                         p.println();
                     }
                     p.println("};");
-                    p.println();
-                    p.println("/**");
-                    p.println(" * @see com.cyclone.netPrefect.gui.terminal.emulator.font.VT100.characters.RenderImage#getData()");
-                    p.println(" */");
+                    p.println("");
                     p.println("@Override");
                     p.println("public final int[] getData()");
                     p.println("{");
                     p.println("    return DATA;");
                     p.println("}");
                     p.println("");
-                    p.println("/**");
-                    p.println(" * @see com.cyclone.netPrefect.gui.terminal.emulator.font.VT100.characters.RenderImage#getSize()");
-                    p.println(" */");
                     p.println("@Override");
                     p.println("public final Point getSize()");
                     p.println("{");
@@ -258,8 +240,8 @@ public class CharSet implements CharPatterns
         {
             final Integer[] charNum = new Integer[]
             {charNumber};
-            System.out.println("new CHAR_"
-                    + characterIdFormatter.format(charNum) + "(),");
+            System.out.println(
+                    "new CHAR_" + characterIdFormatter.format(charNum) + "(),");
         }
         System.out.println("};");
 

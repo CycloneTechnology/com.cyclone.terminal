@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.cyclone.terminal.parser;
 
 /**

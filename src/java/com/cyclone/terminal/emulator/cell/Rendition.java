@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.cyclone.terminal.emulator.cell;
 
 import com.cyclone.terminal.emulator.Colours;
@@ -199,9 +196,6 @@ public class Rendition implements Colours, Cloneable
         return rendition;
     }
 
-    /**
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
     @Override
     public final boolean equals(final Object a_obj)
     {
@@ -209,8 +203,7 @@ public class Rendition implements Colours, Cloneable
         {
             final Rendition toCompare = (Rendition) a_obj;
 
-            if ((bold == toCompare.bold)
-                    && (italics == toCompare.italics)
+            if ((bold == toCompare.bold) && (italics == toCompare.italics)
                     && (underline == toCompare.underline)
                     && (blink == toCompare.blink)
                     && (inverse == toCompare.inverse)
@@ -225,9 +218,6 @@ public class Rendition implements Colours, Cloneable
         return false;
     }
 
-    /**
-     * @see java.lang.Object#hashCode()
-     */
     @Override
     public final int hashCode()
     {
@@ -240,8 +230,7 @@ public class Rendition implements Colours, Cloneable
     public final boolean isPlain()
     {
         final boolean plain;
-        if (bold || italics || underline || blink || inverse
-                || concealed)
+        if (bold || italics || underline || blink || inverse || concealed)
         {
             plain = false;
         }

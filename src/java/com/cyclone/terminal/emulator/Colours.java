@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.cyclone.terminal.emulator;
 
 import org.eclipse.swt.graphics.RGB;

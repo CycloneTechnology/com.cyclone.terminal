@@ -1,6 +1,3 @@
-/**
- *
- */
 package com.cyclone.terminal.emulator;
 
 import java.io.ByteArrayOutputStream;
@@ -184,9 +181,6 @@ public abstract class BaseTerminal extends Parser implements Terminal
 
         canvas.addKeyListener(new KeyListener()
         {
-            /**
-             * @see org.eclipse.swt.events.KeyListener#keyPressed(org.eclipse.swt.events.KeyEvent)
-             */
             @Override
             public void keyPressed(KeyEvent a_e)
             {
@@ -316,9 +310,6 @@ public abstract class BaseTerminal extends Parser implements Terminal
 
         composite.addDisposeListener(new DisposeListener()
         {
-            /**
-             * @see org.eclipse.swt.events.DisposeListener#widgetDisposed(org.eclipse.swt.events.DisposeEvent)
-             */
             @Override
             public void widgetDisposed(DisposeEvent a_e)
             {
@@ -369,18 +360,12 @@ public abstract class BaseTerminal extends Parser implements Terminal
         }
     }
 
-    /**
-     * @see com.cyclone.terminal.emulator.Terminal#getLEDPanel()
-     */
     @Override
     public final Panel getLEDPanel()
     {
         return ledPanel;
     }
 
-    /**
-     * @see com.cyclone.terminal.emulator.Terminal#showLEDPanel(boolean)
-     */
     @Override
     public final void showLEDPanel(final boolean a_show)
     {
@@ -391,9 +376,6 @@ public abstract class BaseTerminal extends Parser implements Terminal
         }
     }
 
-    /**
-     * @see com.cyclone.terminal.emulator.Terminal#setStatus(java.lang.String)
-     */
     @Override
     public final void setStatus(final String a_status)
     {
@@ -418,9 +400,6 @@ public abstract class BaseTerminal extends Parser implements Terminal
         return true;
     }
 
-    /**
-     * @see com.cyclone.terminal.emulator.Terminal#showStatus(boolean)
-     */
     @Override
     public final void showStatus(final boolean a_show)
     {
@@ -523,9 +502,6 @@ public abstract class BaseTerminal extends Parser implements Terminal
         return selection.toString();
     }
 
-    /**
-     * @see com.cyclone.terminal.emulator.Terminal#enableMenu(boolean)
-     */
     @Override
     public final void enableMenu(final boolean a_enable)
     {
@@ -541,9 +517,6 @@ public abstract class BaseTerminal extends Parser implements Terminal
                 copyItem.setText("Copy");
                 copyItem.addListener(SWT.Selection, new Listener()
                 {
-                    /**
-                     * @see org.eclipse.swt.widgets.Listener#handleEvent(org.eclipse.swt.widgets.Event)
-                     */
                     @Override
                     public void handleEvent(Event a_event)
                     {
@@ -561,9 +534,6 @@ public abstract class BaseTerminal extends Parser implements Terminal
                 pasteItem.setText("Paste");
                 pasteItem.addListener(SWT.Selection, new Listener()
                 {
-                    /**
-                     * @see org.eclipse.swt.widgets.Listener#handleEvent(org.eclipse.swt.widgets.Event)
-                     */
                     @Override
                     public void handleEvent(Event a_event)
                     {
@@ -579,9 +549,6 @@ public abstract class BaseTerminal extends Parser implements Terminal
 
                 menu.addMenuListener(new MenuAdapter()
                 {
-                    /**
-                     * @see org.eclipse.swt.events.MenuAdapter#menuShown(org.eclipse.swt.events.MenuEvent)
-                     */
                     @Override
                     public void menuShown(MenuEvent a_event)
                     {
@@ -614,9 +581,6 @@ public abstract class BaseTerminal extends Parser implements Terminal
             {
                 private boolean inDrag;
 
-                /**
-                 * @see org.eclipse.swt.widgets.Listener#handleEvent(org.eclipse.swt.widgets.Event)
-                 */
                 @Override
                 public void handleEvent(Event a_event)
                 {
@@ -702,9 +666,6 @@ public abstract class BaseTerminal extends Parser implements Terminal
     {
         blinkThread = new Thread()
         {
-            /**
-             * @see java.lang.Thread#run()
-             */
             @Override
             public void run()
             {
@@ -806,9 +767,6 @@ public abstract class BaseTerminal extends Parser implements Terminal
         return composite.getDisplay();
     }
 
-    /**
-     * @see com.cyclone.terminal.emulator.Terminal#getParent()
-     */
     @Override
     public final Composite getParent()
     {
@@ -1409,27 +1367,18 @@ public abstract class BaseTerminal extends Parser implements Terminal
         setRedraw(true);
     }
 
-    /**
-     * @see com.cyclone.terminal.emulator.Terminal#getCursorStyle()
-     */
     @Override
     public final CursorStyle getCursorStyle()
     {
         return cursorStyle;
     }
 
-    /**
-     * @see com.cyclone.terminal.emulator.Terminal#setCursorStyle(com.cyclone.terminal.emulator.CursorStyle)
-     */
     @Override
     public final void setCursorStyle(CursorStyle a_cursorStyle)
     {
         cursorStyle = a_cursorStyle;
     }
 
-    /**
-     * @see com.cyclone.terminal.emulator.Terminal#setLineWidth(com.cyclone.terminal.emulator.cell.LineWidth)
-     */
     @Override
     public final void setLineWidth(final LineWidth a_lineWidth)
     {
@@ -1445,9 +1394,6 @@ public abstract class BaseTerminal extends Parser implements Terminal
         }
     }
 
-    /**
-     * @see com.cyclone.terminal.emulator.Terminal#setLineHeight(com.cyclone.terminal.emulator.cell.LineHeight)
-     */
     @Override
     public final void setLineHeight(final LineHeight a_height)
     {
@@ -1458,9 +1404,6 @@ public abstract class BaseTerminal extends Parser implements Terminal
         }
     }
 
-    /**
-     * @see com.cyclone.terminal.emulator.Terminal#getCurrentCell()
-     */
     @Override
     public final Cell getCurrentCell()
     {
@@ -1468,36 +1411,24 @@ public abstract class BaseTerminal extends Parser implements Terminal
                 .getCell(logicalScreen.getCursor().getColumn());
     }
 
-    /**
-     * @see com.cyclone.terminal.emulator.Terminal#getCharSetOnDisplay()
-     */
     @Override
     public final CharacterSet getCharSetOnDisplay()
     {
         return charSetOnDisplay;
     }
 
-    /**
-     * @see com.cyclone.terminal.emulator.Terminal#setCharSetOnDisplay(com.cyclone.terminal.emulator.CharacterSet)
-     */
     @Override
     public final void setCharSetOnDisplay(CharacterSet a_charSetOnDisplay)
     {
         charSetOnDisplay = a_charSetOnDisplay;
     }
 
-    /**
-     * @see com.cyclone.terminal.emulator.Terminal#getCharSetsSequenceOnDisplay()
-     */
     @Override
     public final CharacterSetSequence getCharSetsSequenceOnDisplay()
     {
         return charSetSequenceOnDisplay;
     }
 
-    /**
-     * @see com.cyclone.terminal.emulator.Terminal#setCharSetsSequenceOnDisplay(com.cyclone.terminal.emulator.CharacterSetSequence)
-     */
     @Override
     public final void setCharSetsSequenceOnDisplay(
             CharacterSetSequence a_charSetsSequenceOnDisplay)
@@ -1513,9 +1444,6 @@ public abstract class BaseTerminal extends Parser implements Terminal
         return activeRendition;
     }
 
-    /**
-     * @see com.cyclone.terminal.emulator.Terminal#setScreenWidth(int)
-     */
     @Override
     public final void setScreenWidth(final int a_width)
     {
@@ -1540,81 +1468,54 @@ public abstract class BaseTerminal extends Parser implements Terminal
         }
     }
 
-    /**
-     * @see com.cyclone.terminal.emulator.Terminal#getSelectionStartColumn()
-     */
     @Override
     public final int getSelectionStartColumn()
     {
         return selectionStartColumn;
     }
 
-    /**
-     * @see com.cyclone.terminal.emulator.Terminal#setSelectionStartColumn(int)
-     */
     @Override
     public final void setSelectionStartColumn(int a_selectionStartColumn)
     {
         selectionStartColumn = getColumnFromCoords(a_selectionStartColumn);
     }
 
-    /**
-     * @see com.cyclone.terminal.emulator.Terminal#getSelectionStartRow()
-     */
     @Override
     public final int getSelectionStartRow()
     {
         return selectionStartRow;
     }
 
-    /**
-     * @see com.cyclone.terminal.emulator.Terminal#setSelectionStartRow(int)
-     */
     @Override
     public final void setSelectionStartRow(int a_selectionStartRow)
     {
         selectionStartRow = getRowFromCoords(a_selectionStartRow);
     }
 
-    /**
-     * @see com.cyclone.terminal.emulator.Terminal#getSelectionEndColumn()
-     */
     @Override
     public final int getSelectionEndColumn()
     {
         return selectionEndColumn;
     }
 
-    /**
-     * @see com.cyclone.terminal.emulator.Terminal#setSelectionEndColumn(int)
-     */
     @Override
     public final void setSelectionEndColumn(int a_selectionEndColumn)
     {
         selectionEndColumn = getColumnFromCoords(a_selectionEndColumn);
     }
 
-    /**
-     * @see com.cyclone.terminal.emulator.Terminal#getSelectionEndRow()
-     */
     @Override
     public final int getSelectionEndRow()
     {
         return selectionEndRow;
     }
 
-    /**
-     * @see com.cyclone.terminal.emulator.Terminal#setSelectionEndRow(int)
-     */
     @Override
     public final void setSelectionEndRow(int a_selectionEndRow)
     {
         selectionEndRow = getRowFromCoords(a_selectionEndRow);
     }
 
-    /**
-     * @see com.cyclone.terminal.emulator.Terminal#getRowFromCoords(int)
-     */
     @Override
     public final int getRowFromCoords(final int a_y)
     {
@@ -1627,9 +1528,6 @@ public abstract class BaseTerminal extends Parser implements Terminal
         return (int) (a_y / cellHeight);
     }
 
-    /**
-     * @see com.cyclone.terminal.emulator.Terminal#getColumnFromCoords(int)
-     */
     @Override
     public final int getColumnFromCoords(final int a_x)
     {
@@ -1642,18 +1540,12 @@ public abstract class BaseTerminal extends Parser implements Terminal
         return (int) (a_x / cellWidth);
     }
 
-    /**
-     * @see com.cyclone.terminal.emulator.Terminal#processDataRead(byte[])
-     */
     @Override
     public final void processDataRead(byte[] a_Data)
     {
         processDataRead(a_Data, a_Data.length);
     }
 
-    /**
-     * @see com.cyclone.terminal.emulator.Terminal#processDataRead(byte[], int)
-     */
     @Override
     public final void processDataRead(byte[] a_Data, int a_count)
     {
@@ -1664,45 +1556,30 @@ public abstract class BaseTerminal extends Parser implements Terminal
         parse(a_Data, a_count);
     }
 
-    /**
-     * @see com.cyclone.terminal.emulator.Terminal#isReadOnly()
-     */
     @Override
     public final boolean isReadOnly()
     {
         return readOnly;
     }
 
-    /**
-     * @see com.cyclone.terminal.emulator.Terminal#setReadOnly(boolean)
-     */
     @Override
     public final void setReadOnly(boolean a_readOnly)
     {
         readOnly = a_readOnly;
     }
 
-    /**
-     * @see com.cyclone.terminal.emulator.Terminal#setFocus()
-     */
     @Override
     public final boolean setFocus()
     {
         return canvas.setFocus();
     }
 
-    /**
-     * @see com.cyclone.terminal.emulator.Terminal#setRedraw(boolean)
-     */
     @Override
     public final void setRedraw(final boolean a_redraw)
     {
         canvas.setRedraw(a_redraw);
     }
 
-    /**
-     * @see com.cyclone.terminal.emulator.Terminal#fillScreen(char)
-     */
     @Override
     public final void fillScreen(final char a_char)
     {
@@ -1720,9 +1597,6 @@ public abstract class BaseTerminal extends Parser implements Terminal
         logicalScreen.getCursor().setRow(0);
     }
 
-    /**
-     * @see com.cyclone.terminal.emulator.Terminal#resetDevice()
-     */
     @Override
     public final void resetDevice()
     {
@@ -1731,36 +1605,24 @@ public abstract class BaseTerminal extends Parser implements Terminal
         logicalScreen.getCursor().reset();
     }
 
-    /**
-     * @see com.cyclone.terminal.emulator.Terminal#isInvisibleCursor()
-     */
     @Override
     public final boolean isInvisibleCursor()
     {
         return invisibleCursor;
     }
 
-    /**
-     * @see com.cyclone.terminal.emulator.Terminal#setInvisibleCursor(boolean)
-     */
     @Override
     public final void setInvisibleCursor(boolean a_invisibleCursor)
     {
         invisibleCursor = a_invisibleCursor;
     }
 
-    /**
-     * @see com.cyclone.terminal.emulator.Terminal#isLinefeed()
-     */
     @Override
     public final boolean isLinefeed()
     {
         return linefeed;
     }
 
-    /**
-     * @see com.cyclone.terminal.emulator.Terminal#setLinefeed(boolean)
-     */
     @Override
     public final void setLinefeed(final boolean a_Linefeed)
     {
@@ -1783,10 +1645,6 @@ public abstract class BaseTerminal extends Parser implements Terminal
         useApplicationCursorKeys = a_applicationKeys;
     }
 
-    /**
-     * @see com.cyclone.terminal.emulator.Terminal#selectCharacterSet(com.cyclone.terminal.emulator.CharacterSetSequence,
-     *      com.cyclone.terminal.emulator.CharacterSet)
-     */
     @Override
     public final void selectCharacterSet(final CharacterSetSequence a_sequence,
             final CharacterSet a_set)

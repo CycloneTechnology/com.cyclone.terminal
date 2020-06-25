@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.cyclone.terminal.emulator.font.VT100.characters.set1;
 
 import com.cyclone.terminal.emulator.font.VT100.characters.RenderImage;

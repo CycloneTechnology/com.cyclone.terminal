@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.cyclone.terminal.emulator.font.VT100;
 
 import org.eclipse.swt.graphics.Image;

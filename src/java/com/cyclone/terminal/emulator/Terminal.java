@@ -1,7 +1,3 @@
-/*
- * Module Terminal.java
- * Created on 20 Dec 2006
- */
 package com.cyclone.terminal.emulator;
 
 import org.eclipse.swt.widgets.Composite;

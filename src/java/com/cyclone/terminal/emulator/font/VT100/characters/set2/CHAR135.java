@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.cyclone.terminal.emulator.font.VT100.characters.set2;
 
 import org.eclipse.swt.graphics.Point;
@@ -45,18 +42,12 @@ public class CHAR135 extends RenderImage
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
-    /**
-     * @see com.cyclone.terminal.emulator.font.VT100.characters.RenderImage#getData()
-     */
     @Override
     public final int[] getData()
     {
         return DATA;
     }
 
-    /**
-     * @see com.cyclone.terminal.emulator.font.VT100.characters.RenderImage#getSize()
-     */
     @Override
     public final Point getSize()
     {
