@@ -10,7 +10,7 @@ public abstract class Parser implements ParseTable
 
     private State state;
 
-    private char[] intermediateChars = new char[MAX_INTERMEDIATE_CHARS + 1];
+    private final char[] intermediateChars = new char[MAX_INTERMEDIATE_CHARS + 1];
 
     private int intermediateCharPos;
 

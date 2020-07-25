@@ -28,7 +28,7 @@ public class CharSet implements CharPatterns
     /**
      * Constructor for CharSet. This construct6or creates an empty char set, you
      * can only use the {@link #getImage(Cell, boolean, BlinkState)} method to
-     * get charcaters when this constructor has been used.
+     * get characters when this constructor has been used.
      * 
      * @param a_device
      */
@@ -182,7 +182,7 @@ public class CharSet implements CharPatterns
                             .substring(0, a_package.length() - 1) + ";");
                     p.println();
                     p.println("import org.eclipse.swt.graphics.Point;");
-                    p.println("");
+                    p.println(" ");
                     p.println(
                             "import com.cyclone.terminal.emulator.font.VT100.characters.RenderImage;");
                     p.println("/**");
@@ -206,13 +206,13 @@ public class CharSet implements CharPatterns
                         p.println();
                     }
                     p.println("};");
-                    p.println("");
+                    p.println(" ");
                     p.println("@Override");
                     p.println("public final int[] getData()");
                     p.println("{");
                     p.println("    return DATA;");
                     p.println("}");
-                    p.println("");
+                    p.println(" ");
                     p.println("@Override");
                     p.println("public final Point getSize()");
                     p.println("{");
@@ -221,10 +221,10 @@ public class CharSet implements CharPatterns
                     p.println("}");
                 }
             }
-            catch (FileNotFoundException e)
+            catch (FileNotFoundException ignored)
             {
             }
-            catch (IOException e1)
+            catch (IOException ignored)
             {
             }
             charNumber++;

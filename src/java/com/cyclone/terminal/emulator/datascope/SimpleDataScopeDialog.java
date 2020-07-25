@@ -9,9 +9,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 
 /**
@@ -28,7 +26,7 @@ public final class SimpleDataScopeDialog implements DataScope
 
     private final Scope rx;
 
-    private final class Scope
+    private static final class Scope
     {
         private StyledText text;
 
@@ -54,14 +52,8 @@ public final class SimpleDataScopeDialog implements DataScope
                     SWT.NORMAL);
             text.setFont(font);
 
-            text.addListener(SWT.Modify, new Listener()
-            {
-                @Override
-                public void handleEvent(Event a_e)
-                {
-                    text.setTopIndex(text.getLineCount() - 1);
-                }
-            });
+            text.addListener(SWT.Modify,
+                    event -> text.setTopIndex(text.getLineCount() - 1));
         }
 
         void add(byte[] a_Data, int a_count)
@@ -90,22 +82,17 @@ public final class SimpleDataScopeDialog implements DataScope
                     }
                 }
 
-                Display.getCurrent().asyncExec(new Runnable()
-                {
-                    @Override
-                    public void run()
-                    {
+                Display.getCurrent().asyncExec(() -> {
 
-                        final int start = text.getCharCount();
+                    final int start = text.getCharCount();
 
-                        text.append(sb.toString());
+                    text.append(sb.toString());
 
-                        final StyleRange styleRange = new StyleRange();
-                        styleRange.start = start;
-                        styleRange.length = sb.length();
-                        styleRange.foreground = direction.getColor();
-                        text.setStyleRange(styleRange);
-                    }
+                    final StyleRange styleRange = new StyleRange();
+                    styleRange.start = start;
+                    styleRange.length = sb.length();
+                    styleRange.foreground = direction.getColor();
+                    text.setStyleRange(styleRange);
                 });
             }
         }
@@ -190,14 +177,8 @@ public final class SimpleDataScopeDialog implements DataScope
                 | SWT.V_SCROLL | SWT.H_SCROLL | SWT.READ_ONLY);
         messageText.setLayoutData(messageLayoutData);
 
-        messageText.addListener(SWT.Modify, new Listener()
-        {
-            @Override
-            public void handleEvent(Event a_e)
-            {
-                messageText.setTopIndex(messageText.getLineCount() - 1);
-            }
-        });
+        messageText.addListener(SWT.Modify, event -> messageText
+                .setTopIndex(messageText.getLineCount() - 1));
 
         dialogShell.setSize(1024, 500);
         dialogShell.open();
@@ -229,14 +210,9 @@ public final class SimpleDataScopeDialog implements DataScope
     @Override
     public void addMessage(final String a_message)
     {
-        messageText.getDisplay().asyncExec(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                messageText.append(a_message);
-                messageText.append("\n");
-            }
+        messageText.getDisplay().asyncExec(() -> {
+            messageText.append(a_message);
+            messageText.append("\n");
         });
     }
 }

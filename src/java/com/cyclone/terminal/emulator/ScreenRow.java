@@ -55,9 +55,8 @@ public class ScreenRow
     {
         row = a_row;
 
-        for (int iCol = 0; iCol < cells.length; iCol++)
-        {
-            cells[iCol].setRow(a_row);
+        for (Cell cell : cells) {
+            cell.setRow(a_row);
         }
     }
 }

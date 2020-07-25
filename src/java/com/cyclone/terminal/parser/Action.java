@@ -1,85 +1,87 @@
 package com.cyclone.terminal.parser;
 
+import java.util.Arrays;
+
 /**
  * @author Phil.Baxter
  * 
  */
 public enum Action
 {
-    /**
-     * 
-     */
-    NONE,
+ /**
+  * 
+  */
+ NONE,
 
-    /**
-     * 
-     */
-    CLEAR,
+ /**
+  * 
+  */
+ CLEAR,
 
-    /**
-     * 
-     */
-    COLLECT,
+ /**
+  * 
+  */
+ COLLECT,
 
-    /**
-     * 
-     */
-    CSI_DISPATCH,
+ /**
+  * 
+  */
+ CSI_DISPATCH,
 
-    /**
-     * 
-     */
-    ESC_DISPATCH,
+ /**
+  * 
+  */
+ ESC_DISPATCH,
 
-    /**
-     * 
-     */
-    EXECUTE,
+ /**
+  * 
+  */
+ EXECUTE,
 
-    /**
-     * 
-     */
-    HOOK,
+ /**
+  * 
+  */
+ HOOK,
 
-    /**
-     * 
-     */
-    IGNORE,
+ /**
+  * 
+  */
+ IGNORE,
 
-    /**
-     * 
-     */
-    OSC_END,
+ /**
+  * 
+  */
+ OSC_END,
 
-    /**
-     * 
-     */
-    OSC_PUT,
+ /**
+  * 
+  */
+ OSC_PUT,
 
-    /**
-     * 
-     */
-    OSC_START,
+ /**
+  * 
+  */
+ OSC_START,
 
-    /**
-     * 
-     */
-    PARAM,
+ /**
+  * 
+  */
+ PARAM,
 
-    /**
-     * 
-     */
-    PRINT,
+ /**
+  * 
+  */
+ PRINT,
 
-    /**
-     * 
-     */
-    PUT,
+ /**
+  * 
+  */
+ PUT,
 
-    /**
-     * 
-     */
-    UNHOOK;
+ /**
+  * 
+  */
+ UNHOOK;
 
     /**
      * @param a_ordinal
@@ -87,15 +89,9 @@ public enum Action
      */
     public static Action fromOrdinal(final int a_ordinal)
     {
-        for (Action v : Action.values())
-        {
-            if (v.ordinal() == a_ordinal)
-            {
-                return v;
-            }
-        }
-
-        return null;
+        return Arrays.asList(Action.values()).stream()
+                .filter(action -> action.ordinal() == a_ordinal).findAny()
+                .orElse(null);
     }
 
     /**

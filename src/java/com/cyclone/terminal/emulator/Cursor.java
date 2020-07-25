@@ -163,7 +163,7 @@ public final class Cursor
     }
 
     /**
-     * @return data indicating wether the rows on the screen should be scrolled
+     * @return data indicating whether the rows on the screen should be scrolled
      * 
      */
     public Scroll down()
@@ -173,7 +173,7 @@ public final class Cursor
 
     /**
      * @param a_rows
-     * @return data indicating wether the rows on the screen should be scrolled
+     * @return data indicating whether the rows on the screen should be scrolled
      */
     public Scroll down(final int a_rows)
     {
@@ -201,7 +201,7 @@ public final class Cursor
     }
 
     /**
-     * @return data indicating wether the rows on the screen should be scrolled
+     * @return data indicating whether the rows on the screen should be scrolled
      * 
      */
     public Scroll up()
@@ -211,7 +211,7 @@ public final class Cursor
 
     /**
      * @param a_rows
-     * @return data indicating wether the rows on the screen should be scrolled
+     * @return data indicating whether the rows on the screen should be scrolled
      */
     public Scroll up(final int a_rows)
     {

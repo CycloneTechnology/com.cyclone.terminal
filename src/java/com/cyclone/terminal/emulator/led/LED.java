@@ -1,8 +1,6 @@
 package com.cyclone.terminal.emulator.led;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.PaintEvent;
-import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
@@ -38,14 +36,7 @@ public class LED extends Canvas
         ledGridData.widthHint = 20;
 
         setLayoutData(ledGridData);
-        addPaintListener(new PaintListener()
-        {
-            @Override
-            public void paintControl(PaintEvent a_e)
-            {
-                draw();
-            }
-        });
+        addPaintListener(paintEvent -> draw());
 
         imageOn = new Image(getDisplay(), getClass().getClassLoader()
                 .getResourceAsStream(LED_ON_IMAGE_PATH));
@@ -75,7 +66,7 @@ public class LED extends Canvas
     }
 
     /**
-     * @return whether the LSED is on or off
+     * @return whether the LED is on or off
      */
     public final boolean isOn()
     {

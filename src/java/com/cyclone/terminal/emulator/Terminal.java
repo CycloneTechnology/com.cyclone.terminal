@@ -276,7 +276,7 @@ public interface Terminal
     void setLinefeed(final boolean a_Linefeed);
 
     /**
-     * Select a charcater set for display.
+     * Select a character set for display.
      *
      * @param a_sequence
      * @param a_set

@@ -26,7 +26,7 @@ public final class Scroll
         /**
          * Scroll Down one Row
          */
-        DOWN;
+        DOWN
     }
 
     private Direction scrollDirection;

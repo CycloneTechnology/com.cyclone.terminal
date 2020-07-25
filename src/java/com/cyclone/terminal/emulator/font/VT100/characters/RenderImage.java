@@ -72,13 +72,11 @@ public abstract class RenderImage implements Colours
         final PaletteData paletteData;
         if (a_blinkState == BlinkState.OFF)
         {
-            paletteData = new PaletteData(new RGB[]
-            {back, fore});
+            paletteData = new PaletteData(back, fore);
         }
         else
         {
-            paletteData = new PaletteData(new RGB[]
-            {fore, back});
+            paletteData = new PaletteData(fore, back);
         }
         final ImageData imageData = new ImageData(getSize().x, getSize().y, 1,
                 paletteData);

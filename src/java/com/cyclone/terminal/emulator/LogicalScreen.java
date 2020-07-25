@@ -116,13 +116,8 @@ public final class LogicalScreen
      */
     public boolean cursorInBounds(final int a_row, final int a_column)
     {
-        if (((a_row < height) && (a_column < width)) && (a_row >= 0)
-                && (a_column >= 0))
-        {
-            return true;
-        }
-
-        return false;
+        return ((a_row < height) && (a_column < width)) && (a_row >= 0) &&
+               (a_column >= 0);
     }
 
     /**

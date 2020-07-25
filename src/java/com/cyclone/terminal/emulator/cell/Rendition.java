@@ -4,7 +4,6 @@ import com.cyclone.terminal.emulator.Colours;
 
 /**
  * @author Phil.Baxter
- * 
  */
 public class Rendition implements Colours, Cloneable
 {
@@ -50,7 +49,7 @@ public class Rendition implements Colours, Cloneable
 
     /**
      * Set the background color to use for the shell
-     * 
+     *
      * @param a_backgroundIndex
      */
     public final void setBackgroundIndex(final int a_backgroundIndex)
@@ -68,7 +67,7 @@ public class Rendition implements Colours, Cloneable
 
     /**
      * Set the blink state for the cell
-     * 
+     *
      * @param a_blink
      */
     public final void setBlink(final boolean a_blink)
@@ -86,7 +85,7 @@ public class Rendition implements Colours, Cloneable
 
     /**
      * Set the bold state of the cell.
-     * 
+     *
      * @param a_bold
      */
     public final void setBold(final boolean a_bold)
@@ -95,7 +94,7 @@ public class Rendition implements Colours, Cloneable
     }
 
     /**
-     * @return wether the cell is concealed or not
+     * @return whether the cell is concealed or not
      */
     public final boolean isConcealed()
     {
@@ -177,8 +176,9 @@ public class Rendition implements Colours, Cloneable
 
     /**
      * Creates a clone of a Rendition
-     * 
+     *
      * @param a_Rendition the Rendition to clone
+     *
      * @return the cloned Rendition
      */
     public static Rendition createClone(final Rendition a_Rendition)
@@ -203,16 +203,13 @@ public class Rendition implements Colours, Cloneable
         {
             final Rendition toCompare = (Rendition) a_obj;
 
-            if ((bold == toCompare.bold) && (italics == toCompare.italics)
-                    && (underline == toCompare.underline)
-                    && (blink == toCompare.blink)
-                    && (inverse == toCompare.inverse)
-                    && (concealed == toCompare.concealed)
-                    && (foregroundIndex == toCompare.foregroundIndex)
-                    && (backgroundIndex == toCompare.backgroundIndex))
-            {
-                return true;
-            }
+            return (bold == toCompare.bold) && (italics == toCompare.italics) &&
+                   (underline == toCompare.underline) &&
+                   (blink == toCompare.blink) &&
+                   (inverse == toCompare.inverse) &&
+                   (concealed == toCompare.concealed) &&
+                   (foregroundIndex == toCompare.foregroundIndex) &&
+                   (backgroundIndex == toCompare.backgroundIndex);
         }
 
         return false;
@@ -238,13 +235,9 @@ public class Rendition implements Colours, Cloneable
         {
             plain = false;
         }
-        else if (backgroundIndex != 0)
-        {
-            plain = false;
-        }
         else
         {
-            plain = true;
+            plain = backgroundIndex == 0;
         }
 
         return plain;

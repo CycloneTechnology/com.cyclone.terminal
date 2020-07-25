@@ -52,15 +52,12 @@ public abstract class VT100 extends VT52
     public final void doCPR(final int a_numParams, final int[] a_params)
     {
         // Response should be <ESC>[Pl;PcR (pl = line, Pc = column
-        final StringBuilder sb = new StringBuilder();
-        sb.append(ESC);
-        sb.append('[');
-        sb.append(getLogicalScreen().getCursor().getRow());
-        sb.append(';');
-        sb.append(getLogicalScreen().getCursor().getColumn());
-        sb.append('R');
 
-        onTerminalData(sb.toString().getBytes());
+        final String sb = String.valueOf(ESC) + '[' +
+                          getLogicalScreen().getCursor().getRow() + ';' +
+                          getLogicalScreen().getCursor().getColumn() + 'R';
+
+        onTerminalData(sb.getBytes());
     }
 
     /**
@@ -282,16 +279,10 @@ public abstract class VT100 extends VT52
     public final void doDA(final int a_P1, final int a_P2)
     {
         // Response should be <ESC>[Pl;PcR (pl = line, Pc = column
-        final StringBuilder sb = new StringBuilder();
-        sb.append(ESC);
-        sb.append('[');
-        sb.append('?');
-        sb.append('1');
-        sb.append(';');
-        sb.append('0');
-        sb.append('c');
 
-        onTerminalData(sb.toString().getBytes());
+        final String sb =
+                String.valueOf(ESC) + '[' + '?' + '1' + ';' + '0' + 'c';
+        onTerminalData(sb.getBytes());
     }
 
     /**
@@ -876,15 +867,12 @@ public abstract class VT100 extends VT52
                         // them
                         break;
                     case 5:
-                        final StringBuilder sb = new StringBuilder();
-                        sb.append(ESC);
-                        sb.append('[');
-                        sb.append(getLogicalScreen().getCursor().getRow());
-                        sb.append('0');
-                        sb.append(getLogicalScreen().getCursor().getColumn());
-                        sb.append('n');
-
-                        onTerminalData(sb.toString().getBytes());
+                        final String sb = String.valueOf(ESC) + '[' +
+                                          getLogicalScreen().getCursor()
+                                                  .getRow() + '0' +
+                                          getLogicalScreen().getCursor()
+                                                  .getColumn() + 'n';
+                        onTerminalData(sb.getBytes());
                         break;
                     case 6:
                         doCPR(0, null);

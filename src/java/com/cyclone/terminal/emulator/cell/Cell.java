@@ -117,7 +117,7 @@ public class Cell
 
     /**
      * @return whether the line this cell is on has been set to display double
-     *         height characters and if so wether it will be the top or bottom
+     *         height characters and if so whether it will be the top or bottom
      *         half of the character that is displayed
      */
     public final LineHeight getLineHeight()

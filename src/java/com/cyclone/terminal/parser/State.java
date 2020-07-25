@@ -1,85 +1,87 @@
 package com.cyclone.terminal.parser;
 
+import java.util.Arrays;
+
 /**
  * @author Phil.Baxter
  * 
  */
 public enum State
 {
-    /**
-     * 
-     */
-    ANYWHERE,
+ /**
+  * 
+  */
+ ANYWHERE,
 
-    /**
-     * 
-     */
-    CSI_ENTRY,
+ /**
+  * 
+  */
+ CSI_ENTRY,
 
-    /**
-     * 
-     */
-    CSI_IGNORE,
+ /**
+  * 
+  */
+ CSI_IGNORE,
 
-    /**
-     * 
-     */
-    CSI_INTERMEDIATE,
+ /**
+  * 
+  */
+ CSI_INTERMEDIATE,
 
-    /**
-     * 
-     */
-    CSI_PARAM,
+ /**
+  * 
+  */
+ CSI_PARAM,
 
-    /**
-     * 
-     */
-    DCS_ENTRY,
+ /**
+  * 
+  */
+ DCS_ENTRY,
 
-    /**
-     * 
-     */
-    DCS_IGNORE,
+ /**
+  * 
+  */
+ DCS_IGNORE,
 
-    /**
-     * 
-     */
-    DCS_INTERMEDIATE,
+ /**
+  * 
+  */
+ DCS_INTERMEDIATE,
 
-    /**
-     * 
-     */
-    DCS_PARAM,
+ /**
+  * 
+  */
+ DCS_PARAM,
 
-    /**
-     * 
-     */
-    DCS_PASSTHROUGH,
+ /**
+  * 
+  */
+ DCS_PASSTHROUGH,
 
-    /**
-     * 
-     */
-    ESCAPE,
+ /**
+  * 
+  */
+ ESCAPE,
 
-    /**
-     * 
-     */
-    ESCAPE_INTERMEDIATE,
+ /**
+  * 
+  */
+ ESCAPE_INTERMEDIATE,
 
-    /**
-     * 
-     */
-    GROUND,
+ /**
+  * 
+  */
+ GROUND,
 
-    /**
-     * 
-     */
-    OSC_STRING,
+ /**
+  * 
+  */
+ OSC_STRING,
 
-    /**
-     * 
-     */
-    SOS_PM_APC_STRING;
+ /**
+  * 
+  */
+ SOS_PM_APC_STRING;
 
     /**
      * @param a_ordinal
@@ -87,15 +89,9 @@ public enum State
      */
     public static State fromOrdinal(final int a_ordinal)
     {
-        for (State v : State.values())
-        {
-            if (v.ordinal() == a_ordinal)
-            {
-                return v;
-            }
-        }
-
-        return null;
+        return Arrays.asList(State.values()).stream()
+                .filter(state -> state.ordinal() == a_ordinal).findAny()
+                .orElse(null);
     }
 
     /**
@@ -106,5 +102,4 @@ public enum State
     {
         return fromOrdinal(a_change >> 4);
     }
-
 }

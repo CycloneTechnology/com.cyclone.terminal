@@ -13,14 +13,10 @@ import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.dnd.TransferData;
 import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.ControlListener;
-import org.eclipse.swt.events.DisposeEvent;
-import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.MenuAdapter;
 import org.eclipse.swt.events.MenuEvent;
-import org.eclipse.swt.events.PaintEvent;
-import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.GC;
@@ -270,14 +266,7 @@ public abstract class BaseTerminal extends Parser implements Terminal
             }
         });
 
-        canvas.addPaintListener(new PaintListener()
-        {
-            @Override
-            public void paintControl(PaintEvent a_e)
-            {
-                redrawScreen();
-            }
-        });
+        canvas.addPaintListener(a_e -> redrawScreen());
 
         enableMenu(true);
 
@@ -308,23 +297,17 @@ public abstract class BaseTerminal extends Parser implements Terminal
         compositeGridLayout.makeColumnsEqualWidth = false;
         composite.setLayout(compositeGridLayout);
 
-        composite.addDisposeListener(new DisposeListener()
-        {
-            @Override
-            public void widgetDisposed(DisposeEvent a_e)
+        composite.addDisposeListener(a_e -> {
+            blinkThread.interrupt();
+            try
             {
-                blinkThread.interrupt();
-                try
-                {
-                    blinkThread.join();
-                }
-                catch (InterruptedException e)
-                {
-
-                }
-                blinkThread = null;
+                blinkThread.join();
             }
+            catch (InterruptedException ignored)
+            {
 
+            }
+            blinkThread = null;
         });
 
         final GridData canvasGridData = new GridData(SWT.FILL, SWT.FILL, true,
@@ -386,7 +369,7 @@ public abstract class BaseTerminal extends Parser implements Terminal
     }
 
     /**
-     * @return true if the display widget the tre minal is using has been
+     * @return true if the display widget the terminal is using has been
      *         disposed
      */
     public boolean isDisposed()
@@ -515,35 +498,24 @@ public abstract class BaseTerminal extends Parser implements Terminal
 
                 final MenuItem copyItem = new MenuItem(menu, SWT.PUSH);
                 copyItem.setText("Copy");
-                copyItem.addListener(SWT.Selection, new Listener()
-                {
-                    @Override
-                    public void handleEvent(Event a_event)
-                    {
-                        final String textData = getSelectedText();
+                copyItem.addListener(SWT.Selection, a_event -> {
+                    final String textData = getSelectedText();
 
-                        final TextTransfer textTransfer = TextTransfer
-                                .getInstance();
-                        cb.setContents(new Object[]
-                        {textData}, new Transfer[]
-                        {textTransfer});
-                    }
+                    final TextTransfer textTransfer = TextTransfer
+                            .getInstance();
+                    cb.setContents(new Object[]
+                    {textData}, new Transfer[]
+                    {textTransfer});
                 });
 
                 final MenuItem pasteItem = new MenuItem(menu, SWT.PUSH);
                 pasteItem.setText("Paste");
-                pasteItem.addListener(SWT.Selection, new Listener()
-                {
-                    @Override
-                    public void handleEvent(Event a_event)
+                pasteItem.addListener(SWT.Selection, a_event -> {
+                    final TextTransfer transfer = TextTransfer.getInstance();
+                    final String data = (String) cb.getContents(transfer);
+                    if (data != null)
                     {
-                        final TextTransfer transfer = TextTransfer
-                                .getInstance();
-                        final String data = (String) cb.getContents(transfer);
-                        if (data != null)
-                        {
-                            onTerminalData(data.getBytes());
-                        }
+                        onTerminalData(data.getBytes());
                     }
                 });
 
@@ -664,97 +636,81 @@ public abstract class BaseTerminal extends Parser implements Terminal
 
     private void initializeBlinking()
     {
-        blinkThread = new Thread()
-        {
-            @Override
-            public void run()
+        blinkThread = new Thread(() -> {
+            try
             {
-                try
+                boolean blinkOn = false;
+                while (true)
                 {
-                    boolean blinkOn = false;
-                    while (true)
+                    final BlinkState on = (blinkOn ? BlinkState.ON
+                            : BlinkState.OFF);
+
+                    // Go through each cell on the screen blinking its
+                    // value.
+                    if (!isDisposed())
                     {
-                        final BlinkState on = (blinkOn ? BlinkState.ON
-                                : BlinkState.OFF);
-
-                        // Go through each cell on the screen blinking its
-                        // value.
-                        if (!isDisposed())
-                        {
-                            getDisplay().asyncExec(new Runnable()
+                        getDisplay().asyncExec(() -> {
+                            for (int iRow = 0; iRow < logicalScreen
+                                    .getHeight(); iRow++)
                             {
-                                @Override
-                                public void run()
+                                for (int iColumn = 0; iColumn < logicalScreen
+                                        .getWidth(); iColumn++)
                                 {
-                                    for (int iRow = 0; iRow < logicalScreen
-                                            .getHeight(); iRow++)
-                                    {
-                                        for (int iColumn = 0; iColumn < logicalScreen
-                                                .getWidth(); iColumn++)
-                                        {
-                                            final Cell cell = screenData
-                                                    .get(iRow).getCell(iColumn);
+                                    final Cell cell = screenData.get(iRow)
+                                            .getCell(iColumn);
 
-                                            // is this cell the one under the
-                                            // cursor?
-                                            if ((iRow == logicalScreen
-                                                    .getCursor().getRow())
-                                                    && (iColumn == logicalScreen
-                                                            .getCursor()
-                                                            .getColumn()))
+                                    // is this cell the one under the
+                                    // cursor?
+                                    if ((iRow == logicalScreen.getCursor()
+                                            .getRow())
+                                            && (iColumn == logicalScreen
+                                                    .getCursor().getColumn()))
+                                    {
+                                        if (!invisibleCursor)
+                                        {
+                                            // Blink the cursor...
+                                            if (logicalScreen.cursorInBounds())
                                             {
-                                                if (!invisibleCursor)
+                                                switch (cursorStyle)
                                                 {
-                                                    // Blink the cursor...
-                                                    if (logicalScreen
-                                                            .cursorInBounds())
-                                                    {
-                                                        switch (cursorStyle)
-                                                        {
-                                                            default:
-                                                            case BLOCK:
-                                                                drawCell(cell,
-                                                                        false,
-                                                                        on);
-                                                                break;
-                                                            case UNDERLINE:
-                                                                drawCell(cell,
-                                                                        false,
-                                                                        on);
-                                                                break;
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                            else
-                                            {
-                                                if (cell.getRendition()
-                                                        .isBlink())
-                                                {
-                                                    // Blink the cell...
-                                                    drawCell(cell, false, on);
-                                                }
-                                                else
-                                                {
-                                                    drawCell(cell, false,
-                                                            BlinkState.OFF);
+                                                    default:
+                                                    case BLOCK:
+                                                        drawCell(cell, false,
+                                                                on);
+                                                        break;
+                                                    case UNDERLINE:
+                                                        drawCell(cell, false,
+                                                                on);
+                                                        break;
                                                 }
                                             }
                                         }
                                     }
+                                    else
+                                    {
+                                        if (cell.getRendition().isBlink())
+                                        {
+                                            // Blink the cell...
+                                            drawCell(cell, false, on);
+                                        }
+                                        else
+                                        {
+                                            drawCell(cell, false,
+                                                    BlinkState.OFF);
+                                        }
+                                    }
                                 }
-                            });
-                        }
-                        sleep(500);
-                        blinkOn = !blinkOn;
+                            }
+                        });
                     }
-                }
-                catch (InterruptedException e)
-                {
-
+                    Thread.sleep(500);
+                    blinkOn = !blinkOn;
                 }
             }
-        };
+            catch (InterruptedException ignored)
+            {
+            }
+        });
 
         blinkThread.start();
     }
@@ -837,14 +793,7 @@ public abstract class BaseTerminal extends Parser implements Terminal
                 }
                 else
                 {
-                    if (!cell.getRendition().isPlain())
-                    {
-                        doDraw = true;
-                    }
-                    else
-                    {
-                        doDraw = false;
-                    }
+                    doDraw = !cell.getRendition().isPlain();
                 }
 
                 if (doDraw)
@@ -892,14 +841,7 @@ public abstract class BaseTerminal extends Parser implements Terminal
                         if (a_cell.getRow() == selectionEndRow)
                         {
                             // Last row, is our column before the end column?
-                            if (a_cell.getColumn() <= selectionEndColumn)
-                            {
-                                selected = true;
-                            }
-                            else
-                            {
-                                selected = false;
-                            }
+                            selected = a_cell.getColumn() <= selectionEndColumn;
                         }
                         else
                         {
@@ -916,14 +858,7 @@ public abstract class BaseTerminal extends Parser implements Terminal
                     if (a_cell.getRow() == selectionEndRow)
                     {
                         // Last row, is our column before the end column?
-                        if (a_cell.getColumn() <= selectionEndColumn)
-                        {
-                            selected = true;
-                        }
-                        else
-                        {
-                            selected = false;
-                        }
+                        selected = a_cell.getColumn() <= selectionEndColumn;
                     }
                     else
                     {
