@@ -89,7 +89,7 @@ public enum Action
      */
     public static Action fromOrdinal(final int a_ordinal)
     {
-        return Arrays.asList(Action.values()).stream()
+        return Arrays.stream(Action.values())
                 .filter(action -> action.ordinal() == a_ordinal).findAny()
                 .orElse(null);
     }

@@ -89,7 +89,7 @@ public enum State
      */
     public static State fromOrdinal(final int a_ordinal)
     {
-        return Arrays.asList(State.values()).stream()
+        return Arrays.stream(State.values())
                 .filter(state -> state.ordinal() == a_ordinal).findAny()
                 .orElse(null);
     }
