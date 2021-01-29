@@ -1,57 +1,72 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<parent>
-		<groupId>com.cyclone</groupId>
-		<artifactId>com.cyclone</artifactId>
-		<version>3.2.0-SNAPSHOT</version>
-	</parent>
+
 	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.cyclone</groupId>
 	<artifactId>com.cyclone.terminal</artifactId>
 	<packaging>eclipse-plugin</packaging>
 	<name>Cyclone VTxxx Terminal Emulation</name>
-	<prerequisites>
-		<maven>3.0</maven>
-	</prerequisites>
+	<version>3.2.0-SNAPSHOT</version>
+
 	<repositories>
-		<!-- <repository> <id>cyclone</id> <name>Cyclone</name> <url>http://nexus/nexus/content/groups/public</url> 
-			<layout>default</layout> <releases> <enabled>true</enabled> <updatePolicy>never</updatePolicy> 
-			</releases> <snapshots> <enabled>true</enabled> <updatePolicy>always</updatePolicy> 
-			</snapshots> </repository> -->
 		<repository>
-			<id>4.8</id>
+			<id>4.17</id>
 			<layout>p2</layout>
-			<url>http://ftp.acc.umu.se/mirror/eclipse.org/eclipse/updates/4.8/</url>
+			<url>http://ftp.acc.umu.se/mirror/eclipse.org/eclipse/updates/4.17/</url>
 		</repository>
 		<repository>
-			<id>oxygen-ext</id>
+			<id>4.17-ext</id>
 			<layout>p2</layout>
-			<url>http://ftp.acc.umu.se/mirror/eclipse.org/releases/photon/</url>
+			<url>http://ftp.acc.umu.se/mirror/eclipse.org/releases/2020-09/</url>
 		</repository>
 	</repositories>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.enforcer.plugin.version>3.0.0-M3</maven.enforcer.plugin.version>
+		<maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
+		<maven.eclipse.plugin.version>2.9</maven.eclipse.plugin.version>
+		<tycho-version>2.0.0</tycho-version>
+	</properties>
+
 	<build>
+
 		<plugins>
-			<!-- This is actually needed by m2eclipse for eclipse-plugin projects 
-				because otherwise m2eclipse can not determine the jdk version Since the help 
-				goal has no phase defined it won't run. https://issues.sonatype.org/browse/MNGECLIPSE-2152 -->
+
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<executions>
-					<execution>
-						<goals>
-							<goal>help</goal>
-						</goals>
-					</execution>
-				</executions>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-versions-plugin</artifactId>
+				<version>${tycho-version}</version>
 			</plugin>
+
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-maven-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<extensions>true</extensions>
 			</plugin>
+
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-compiler-plugin</artifactId>
+				<version>${tycho-version}</version>
+			</plugin>
+
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-packaging-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<configuration>
+					<strictVersions>false</strictVersions>
+					<!-- <format>'v'yyyyMMdd-HHmm</format>> -->
+				</configuration>
+			</plugin>
+
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>target-platform-configuration</artifactId>
+				<version>${tycho-version}</version>
 				<configuration>
 					<resolver>p2</resolver>
 					<pomDependencies>consider</pomDependencies>
@@ -62,28 +77,60 @@
 						<environment>
 							<os>linux</os>
 							<ws>gtk</ws>
-							<arch>x86</arch>
-						</environment>
-						<environment>
-							<os>linux</os>
-							<ws>gtk</ws>
 							<arch>x86_64</arch>
-						</environment>
-						<environment>
-							<os>win32</os>
-							<ws>win32</ws>
-							<arch>x86</arch>
 						</environment>
 						<environment>
 							<os>win32</os>
 							<ws>win32</ws>
 							<arch>x86_64</arch>
 						</environment>
-						<!-- <environment> <os>macosx</os> <ws>cocoa</ws> <arch>x86_64</arch> 
-							</environment> -->
+						<environment>
+							<os>macosx</os>
+							<ws>cocoa</ws>
+							<arch>x86_64</arch>
+						</environment>
 					</environments>
 				</configuration>
 			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-enforcer-plugin</artifactId>
+				<version>${maven.enforcer.plugin.version}</version>
+				<executions>
+					<execution>
+						<id>enforce-maven</id>
+						<goals>
+							<goal>enforce</goal>
+						</goals>
+						<configuration>
+							<rules>
+								<requireMavenVersion>
+									<version>[3.6,)</version>
+								</requireMavenVersion>
+							</rules>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${maven.compiler.plugin.version}</version>
+				<configuration>
+					<release>11</release>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<version>${maven.eclipse.plugin.version}</version>
+				<configuration>
+					<pde>true</pde>
+				</configuration>
+			</plugin>
+
 		</plugins>
 	</build>
 </project>
