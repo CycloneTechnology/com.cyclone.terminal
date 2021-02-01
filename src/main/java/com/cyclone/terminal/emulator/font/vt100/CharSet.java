@@ -19,17 +19,15 @@ import com.cyclone.terminal.emulator.font.vt100.characters.set2.Set2CharArray;
 
 /**
  * @author Phil.Baxter
- * 
  */
 public class CharSet implements CharPatterns
 {
     private final Device device;
 
     /**
-     * Constructor for CharSet. This construct6or creates an empty char set, you
-     * can only use the {@link #getImage(Cell, boolean, BlinkState)} method to
-     * get characters when this constructor has been used.
-     * 
+     * Constructor for CharSet. This construct6or creates an empty char set, you can only use the {@link #getImage(Cell,
+     * boolean, BlinkState)} method to get characters when this constructor has been used.
+     *
      * @param a_device
      */
     public CharSet(final Device a_device)
@@ -49,64 +47,11 @@ public class CharSet implements CharPatterns
 
         switch (a_cell.getCharacterSetsSequence())
         {
+            // TODO - Create character sets for all modes
             default:
             case G0:
-                switch (a_cell.getCharacterSet())
-                {
-                    default:
-                    case UK:
-                    case USASCII:
-                    case ALTERNATESET_STANDARD:
-                        image = Set1CharArray.PATTERN[a_cell.getCharacter()]
-                                .getImage(device, a_cell.getRendition(),
-                                        a_selected, a_blinkState);
-                        break;
-                    case SPECIALGRAPHICS:
-                    case ALTERNATESET_SPECIALGRAPHICS:
-                        image = Set2CharArray.PATTERN[a_cell.getCharacter()]
-                                .getImage(device, a_cell.getRendition(),
-                                        a_selected, a_blinkState);
-                        break;
-                }
-                break;
             case G1:
-                switch (a_cell.getCharacterSet())
-                {
-                    default:
-                    case UK:
-                    case USASCII:
-                    case ALTERNATESET_STANDARD:
-                        image = Set1CharArray.PATTERN[a_cell.getCharacter()]
-                                .getImage(device, a_cell.getRendition(),
-                                        a_selected, a_blinkState);
-                        break;
-                    case SPECIALGRAPHICS:
-                    case ALTERNATESET_SPECIALGRAPHICS:
-                        image = Set2CharArray.PATTERN[a_cell.getCharacter()]
-                                .getImage(device, a_cell.getRendition(),
-                                        a_selected, a_blinkState);
-                        break;
-                }
-                break;
             case G2:
-                switch (a_cell.getCharacterSet())
-                {
-                    default:
-                    case UK:
-                    case USASCII:
-                    case ALTERNATESET_STANDARD:
-                        image = Set1CharArray.PATTERN[a_cell.getCharacter()]
-                                .getImage(device, a_cell.getRendition(),
-                                        a_selected, a_blinkState);
-                        break;
-                    case SPECIALGRAPHICS:
-                    case ALTERNATESET_SPECIALGRAPHICS:
-                        image = Set2CharArray.PATTERN[a_cell.getCharacter()]
-                                .getImage(device, a_cell.getRendition(),
-                                        a_selected, a_blinkState);
-                        break;
-                }
-                break;
             case G3:
                 switch (a_cell.getCharacterSet())
                 {
@@ -153,11 +98,9 @@ public class CharSet implements CharPatterns
         final ImageData imageData = characterImage.getImageData();
 
         int charNumber = 0;
+        final int[][] character = new int[15][36];
         while (charNumber <= a_charCount)
         {
-
-            final int[][] character = new int[15][36];
-
             for (int column = 0; column < 15; column++)
             {
                 for (int row = 0; row < 36; row++)
@@ -169,17 +112,20 @@ public class CharSet implements CharPatterns
             }
             // Character done, output code...
             final Integer[] charNum = new Integer[]
-            {charNumber};
+                    {charNumber};
             final String thisCharacter = characterIdFormatter.format(charNum);
 
             try (final FileOutputStream out = new FileOutputStream(
-                    "D:\\netPrefect\\cyclone_terminal\\src\\java\\" + a_package
-                            + "\\CHAR" + thisCharacter + ".java"))
+                    "D:\\netPrefect\\cyclone_terminal\\src\\java\\"
+                            .concat(a_package)
+                            .concat("\\CHAR")
+                            .concat(thisCharacter)
+                            .concat(".java")))
             {
                 try (final PrintStream p = new PrintStream(out))
                 {
-                    p.println("package " + a_package.replace('\\', '.')
-                            .substring(0, a_package.length() - 1) + ";");
+                    p.println("package ".concat(a_package.replace('\\', '.')
+                            .substring(0, a_package.length() - 1)).concat(";"));
                     p.println();
                     p.println("import org.eclipse.swt.graphics.Point;");
                     p.println(" ");
@@ -189,8 +135,7 @@ public class CharSet implements CharPatterns
                     p.println(" * @author Phil.Baxter");
                     p.println(" * ");
                     p.println(" */");
-                    p.println("public class CHAR" + thisCharacter
-                            + " extends RenderImage");
+                    p.println("public class CHAR".concat(thisCharacter).concat(" extends RenderImage"));
                     p.println("{");
                     p.println("/**");
                     p.println(" * ");
@@ -201,7 +146,8 @@ public class CharSet implements CharPatterns
                     {
                         for (int iColumn = 0; iColumn < 15; iColumn++)
                         {
-                            p.print(character[iColumn][iRow] + ", ");
+                            p.print(character[iColumn][iRow]);
+                            p.print(", ");
                         }
                         p.println();
                     }
@@ -239,9 +185,9 @@ public class CharSet implements CharPatterns
         for (charNumber = 0; charNumber <= a_charCount; charNumber++)
         {
             final Integer[] charNum = new Integer[]
-            {charNumber};
+                    {charNumber};
             System.out.println(
-                    "new CHAR_" + characterIdFormatter.format(charNum) + "(),");
+                    "new CHAR_".concat(characterIdFormatter.format(charNum)).concat("(),"));
         }
         System.out.println("};");
 

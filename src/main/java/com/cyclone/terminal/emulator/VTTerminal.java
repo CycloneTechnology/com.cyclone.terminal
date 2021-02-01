@@ -10,7 +10,6 @@ import com.cyclone.terminal.parser.Parser;
 
 /**
  * @author Phil.Baxter
- * 
  */
 public abstract class VTTerminal extends VT300
 {
@@ -58,14 +57,15 @@ public abstract class VTTerminal extends VT300
             {
                 System.out.print("Intermediate chars: ");
             }
-            System.out.print(a_parser.getIntermediateChars()[i] + "("
-                    + Integer.toHexString(a_parser.getIntermediateChars()[i])
-                    + ")");
+            System.out.print(String.valueOf(a_parser.getIntermediateChars()[i])
+                    .concat("(")
+                    .concat(Integer.toHexString(a_parser.getIntermediateChars()[i]))
+                    .concat(")"));
         }
         System.out.println(a_parser.getNumParams() + " Parameters: ");
         for (int i = 0; i < a_parser.getNumParams(); i++)
         {
-            System.out.println("\t" + a_parser.getParam(i));
+            System.out.println("\t".concat(String.valueOf(a_parser.getParam(i))));
         }
         System.out.println();
 
@@ -88,6 +88,7 @@ public abstract class VTTerminal extends VT300
      * @param a_parser
      * @param a_action
      * @param a_ch
+     *
      * @throws EmulatorException
      */
     public final void display(final Parser a_parser, final Action a_action,
@@ -96,8 +97,10 @@ public abstract class VTTerminal extends VT300
 
         switch (a_action)
         {
+            case PRINT:
+                // TODO - Should this do something different than NONE?????
             case NONE:
-                // Are we processign a VT52 Escape-Y which is followed by two
+                // Are we processing a VT52 Escape-Y which is followed by two
                 // parameters (line, column)
                 if (s_ProcessingESCY)
                 {
@@ -145,7 +148,6 @@ public abstract class VTTerminal extends VT300
                 // sb.append(params[i]);
                 // }
                 // System.out.println(sb.toString());
-
                 switch (a_ch)
                 {
                     case 'A':
@@ -160,6 +162,7 @@ public abstract class VTTerminal extends VT300
                     case 'D':
                         doCUB(a_parser.getNumParams(), a_parser.getParams());
                         break;
+                    case 'f':
                     case 'H':
                         doCUP(a_parser.getNumParams(), a_parser.getParams());
                         break;
@@ -183,7 +186,7 @@ public abstract class VTTerminal extends VT300
                                                 "Escape Sequence for " + a_ch
                                                         + " (intermediate "
                                                         + a_parser
-                                                                .getIntermediateChars()[0]
+                                                        .getIntermediateChars()[0]
                                                         + ") NOT IMPLEMENTED!");
                                 }
                         }
@@ -208,7 +211,7 @@ public abstract class VTTerminal extends VT300
                                                 "Escape Sequence for " + a_ch
                                                         + " (intermediate "
                                                         + a_parser
-                                                                .getIntermediateChars()[0]
+                                                        .getIntermediateChars()[0]
                                                         + ") NOT IMPLEMENTED!");
                                 }
                                 break;
@@ -219,9 +222,6 @@ public abstract class VTTerminal extends VT300
                         break;
                     case 'c':
                         resetDevice();
-                        break;
-                    case 'f':
-                        doCUP(a_parser.getNumParams(), a_parser.getParams());
                         break;
                     case 'g':
                         doClearTab(a_parser.getNumParams(),
@@ -235,7 +235,7 @@ public abstract class VTTerminal extends VT300
                                         "Escape Sequence for " + a_ch
                                                 + " (intermediate "
                                                 + a_parser
-                                                        .getIntermediateChars()[0]
+                                                .getIntermediateChars()[0]
                                                 + ") NOT IMPLEMENTED!");
                             case 0:
                                 // ANSI modes
@@ -255,7 +255,7 @@ public abstract class VTTerminal extends VT300
                                                 "Escape Sequence for " + a_ch
                                                         + " (intermediate "
                                                         + a_parser
-                                                                .getIntermediateChars()[0]
+                                                        .getIntermediateChars()[0]
                                                         + ") NOT IMPLEMENTED!");
                                 }
                                 break;
@@ -283,7 +283,7 @@ public abstract class VTTerminal extends VT300
                                                 "Escape Sequence for " + a_ch
                                                         + " (intermediate "
                                                         + a_parser
-                                                                .getIntermediateChars()[0]
+                                                        .getIntermediateChars()[0]
                                                         + ") NOT IMPLEMENTED!");
                                 }
                                 break;
@@ -317,7 +317,7 @@ public abstract class VTTerminal extends VT300
                                                 "Escape Sequence for " + a_ch
                                                         + " (intermediate "
                                                         + a_parser
-                                                                .getIntermediateChars()[0]
+                                                        .getIntermediateChars()[0]
                                                         + ") NOT IMPLEMENTED!");
                                 }
                                 break;
@@ -342,14 +342,13 @@ public abstract class VTTerminal extends VT300
                                         "Escape Sequence for " + a_ch
                                                 + " (intermediate "
                                                 + a_parser
-                                                        .getIntermediateChars()[0]
+                                                .getIntermediateChars()[0]
                                                 + ") NOT IMPLEMENTED!");
                         }
                         break;
                     case 'u':
-                        doUnsaveCursor();
-                        break;
                     case '8':
+                        // TODO - seperate code for 'u' and '8'???
                         doUnsaveCursor();
                         break;
                     default:
@@ -359,7 +358,6 @@ public abstract class VTTerminal extends VT300
                 break;
             case ESC_DISPATCH:
                 // System.out.println("ESC_DISPATCH : " + a_ch);
-
                 switch (a_ch)
                 {
                     case '0':
@@ -625,35 +623,6 @@ public abstract class VTTerminal extends VT300
             // break;
             // case PARAM:
             // break;
-            case PRINT:
-                // Are we processign a VT52 Escape-Y which is followed by two
-                // parameters (line, column)
-                if (s_ProcessingESCY)
-                {
-                    // Yes we are, is this the first parameter?
-                    if (!s_ProcessingESCYhaveFirst)
-                    {
-                        // Yes, store it and set the flag indicating we have got
-                        // it
-                        s_ESCYfirst = a_ch - 31;
-                        s_ProcessingESCYhaveFirst = true;
-                    }
-                    else
-                    {
-                        // No, it must be the second, so, execute the command
-                        // and reset our state back to normal
-                        doDCA(s_ESCYfirst, a_ch - 31);
-
-                        s_ProcessingESCYhaveFirst = false;
-                        s_ProcessingESCY = false;
-                    }
-                }
-                else
-                {
-                    // System.out.println(" Character : " + a_ch);
-                    putCharacter(a_ch);
-                }
-                break;
             // case PUT:
             // break;
             // case UNHOOK:

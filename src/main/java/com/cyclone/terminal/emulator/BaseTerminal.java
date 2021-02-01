@@ -46,7 +46,6 @@ import com.cyclone.terminal.parser.Parser;
 
 /**
  * @author Phil.Baxter
- * 
  */
 public abstract class BaseTerminal extends Parser implements Terminal
 {
@@ -112,7 +111,7 @@ public abstract class BaseTerminal extends Parser implements Terminal
 
     /**
      * Constructor for BaseTerminal.
-     * 
+     *
      * @param a_parent
      */
     public BaseTerminal(final Composite a_parent)
@@ -122,7 +121,7 @@ public abstract class BaseTerminal extends Parser implements Terminal
 
     /**
      * Constructor for BaseTerminal.
-     * 
+     *
      * @param a_parent
      * @param a_width
      * @param a_height
@@ -137,9 +136,8 @@ public abstract class BaseTerminal extends Parser implements Terminal
     }
 
     /**
-     * Indicates that the specified data has been typed or is being sent in
-     * response to a terminal query
-     * 
+     * Indicates that the specified data has been typed or is being sent in response to a terminal query
+     *
      * @param a_data
      */
     protected abstract void onTerminalData(final byte[] a_data);
@@ -194,9 +192,8 @@ public abstract class BaseTerminal extends Parser implements Terminal
                             {
                                 bb.write(keyCode);
                             }
-                            catch (IOException e)
+                            catch (IOException ignored)
                             {
-
                             }
                         }
                         else
@@ -277,7 +274,7 @@ public abstract class BaseTerminal extends Parser implements Terminal
 
     /**
      * This method initializes composite
-     * 
+     *
      * @param a_parent
      */
     private void createComposite(final Composite a_parent)
@@ -296,7 +293,8 @@ public abstract class BaseTerminal extends Parser implements Terminal
         compositeGridLayout.makeColumnsEqualWidth = false;
         composite.setLayout(compositeGridLayout);
 
-        composite.addDisposeListener(a_e -> {
+        composite.addDisposeListener(a_e ->
+        {
             blinkThread.interrupt();
             try
             {
@@ -368,8 +366,7 @@ public abstract class BaseTerminal extends Parser implements Terminal
     }
 
     /**
-     * @return true if the display widget the terminal is using has been
-     *         disposed
+     * @return true if the display widget the terminal is using has been disposed
      */
     public boolean isDisposed()
     {
@@ -425,11 +422,11 @@ public abstract class BaseTerminal extends Parser implements Terminal
 
     private String getSelectedText()
     {
-        final StringBuilder selection = new StringBuilder();
+        final StringBuilder selection = new StringBuilder(4096);
 
         for (int iRow = selectionStartRow; iRow <= selectionEndRow; iRow++)
         {
-            final StringBuilder sb = new StringBuilder();
+            final StringBuilder sb = new StringBuilder(132);
             if ((iRow == selectionStartRow) && (iRow == selectionEndRow))
             {
                 // All on one row, so get the characters...
@@ -497,19 +494,21 @@ public abstract class BaseTerminal extends Parser implements Terminal
 
                 final MenuItem copyItem = new MenuItem(menu, SWT.PUSH);
                 copyItem.setText("Copy");
-                copyItem.addListener(SWT.Selection, a_event -> {
+                copyItem.addListener(SWT.Selection, a_event ->
+                {
                     final String textData = getSelectedText();
 
                     final TextTransfer textTransfer = TextTransfer
                             .getInstance();
                     cb.setContents(new Object[]
-                    {textData}, new Transfer[]
-                    {textTransfer});
+                            {textData}, new Transfer[]
+                            {textTransfer});
                 });
 
                 final MenuItem pasteItem = new MenuItem(menu, SWT.PUSH);
                 pasteItem.setText("Paste");
-                pasteItem.addListener(SWT.Selection, a_event -> {
+                pasteItem.addListener(SWT.Selection, a_event ->
+                {
                     final TextTransfer transfer = TextTransfer.getInstance();
                     final String data = (String) cb.getContents(transfer);
                     if (data != null)
@@ -635,7 +634,8 @@ public abstract class BaseTerminal extends Parser implements Terminal
 
     private void initializeBlinking()
     {
-        blinkThread = new Thread(() -> {
+        blinkThread = new Thread(() ->
+        {
             try
             {
                 boolean blinkOn = false;
@@ -648,7 +648,8 @@ public abstract class BaseTerminal extends Parser implements Terminal
                     // value.
                     if (!isDisposed())
                     {
-                        getDisplay().asyncExec(() -> {
+                        getDisplay().asyncExec(() ->
+                        {
                             for (int iRow = 0; iRow < logicalScreen
                                     .getHeight(); iRow++)
                             {
@@ -663,7 +664,7 @@ public abstract class BaseTerminal extends Parser implements Terminal
                                     if ((iRow == logicalScreen.getCursor()
                                             .getRow())
                                             && (iColumn == logicalScreen
-                                                    .getCursor().getColumn()))
+                                            .getCursor().getColumn()))
                                     {
                                         if (!invisibleCursor)
                                         {
@@ -672,11 +673,9 @@ public abstract class BaseTerminal extends Parser implements Terminal
                                             {
                                                 switch (cursorStyle)
                                                 {
+                                                    // TODO - Draw Different cursor depending on BLOCK or UNDERLINE
                                                     default:
                                                     case BLOCK:
-                                                        drawCell(cell, false,
-                                                                on);
-                                                        break;
                                                     case UNDERLINE:
                                                         drawCell(cell, false,
                                                                 on);
@@ -809,8 +808,9 @@ public abstract class BaseTerminal extends Parser implements Terminal
 
     /**
      * Determines if the specified cell is within the current selection range.
-     * 
+     *
      * @param a_cell
+     *
      * @return true if the cell is withing the range of selected cells on screen
      */
     private boolean isCellSelected(final Cell a_cell)
@@ -938,7 +938,7 @@ public abstract class BaseTerminal extends Parser implements Terminal
 
     /**
      * Draw the cell to the screen.
-     * 
+     *
      * @param a_cell
      * @param a_useActiveRendition
      * @param a_blinkState
@@ -1045,9 +1045,8 @@ public abstract class BaseTerminal extends Parser implements Terminal
                             break;
                     }
                 }
-                catch (EmulatorException e)
+                catch (EmulatorException ignored)
                 {
-
                 }
 
                 canvas.redraw();
@@ -1610,8 +1609,7 @@ public abstract class BaseTerminal extends Parser implements Terminal
     }
 
     /**
-     * @return true if the screen width is allowed to change between 80 and 132
-     *         columns
+     * @return true if the screen width is allowed to change between 80 and 132 columns
      */
     public final boolean isAllowWidthChange()
     {

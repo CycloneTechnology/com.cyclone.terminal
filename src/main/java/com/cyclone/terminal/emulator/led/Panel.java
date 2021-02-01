@@ -2,12 +2,12 @@ package com.cyclone.terminal.emulator.led;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 import org.eclipse.swt.widgets.Composite;
 
 /**
  * @author Phil.Baxter
- * 
  */
 public class Panel
 {
@@ -20,10 +20,8 @@ public class Panel
     public Panel(final Composite a_parent, final int a_count)
     {
         leds = new ArrayList<>();
-        for (int i = 0; i < a_count; i++)
-        {
-            leds.add(new LED(a_parent));
-        }
+        IntStream.range(0, a_count).forEach(i ->
+                leds.add(new LED(a_parent)));
     }
 
     /**
@@ -39,7 +37,7 @@ public class Panel
     }
 
     /**
-     * 
+     *
      */
     public final void refresh()
     {
@@ -51,7 +49,7 @@ public class Panel
 
     /**
      * Show or hide the panel of LED's.
-     * 
+     *
      * @param a_show
      */
     public final void show(boolean a_show)

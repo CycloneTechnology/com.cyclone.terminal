@@ -58,11 +58,7 @@ public abstract class VT200 extends VT100
                 {
                     default:
                     case 0:
-                        // TODO
-                        break;
                     case 1:
-                        // TODO
-                        break;
                     case 2:
                         // TODO
                         break;
@@ -102,11 +98,7 @@ public abstract class VT200 extends VT100
                 {
                     default:
                     case 0:
-                        // TODO
-                        break;
                     case 1:
-                        // TODO
-                        break;
                     case 2:
                         // TODO
                         break;

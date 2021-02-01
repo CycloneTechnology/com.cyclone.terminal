@@ -453,11 +453,11 @@ public final class Cursor
     }
 
     /**
-     * @param a_leftMargin set the left margin column
+     * @param a_topMargin set the left margin column
      */
-    public void setTopMargin(int a_leftMargin)
+    public void setTopMargin(int a_topMargin)
     {
-        topMargin = a_leftMargin;
+        topMargin = a_topMargin;
         validateMargins();
     }
 

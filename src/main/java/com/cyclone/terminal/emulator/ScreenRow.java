@@ -2,9 +2,10 @@ package com.cyclone.terminal.emulator;
 
 import com.cyclone.terminal.emulator.cell.Cell;
 
+import java.util.stream.IntStream;
+
 /**
  * @author Phil.Baxter
- * 
  */
 public class ScreenRow
 {
@@ -14,7 +15,7 @@ public class ScreenRow
 
     /**
      * Constructor for ScreenRow
-     * 
+     *
      * @param a_row
      * @param a_columns
      */
@@ -23,10 +24,8 @@ public class ScreenRow
         row = a_row;
 
         cells = new Cell[a_columns];
-        for (int iCol = 0; iCol < a_columns; iCol++)
-        {
-            cells[iCol] = new Cell(a_row, iCol);
-        }
+        IntStream.range(0, a_columns).forEach(iCol ->
+                cells[iCol] = new Cell(a_row, iCol));
     }
 
     final Cell getCell(final int a_column)
@@ -55,7 +54,8 @@ public class ScreenRow
     {
         row = a_row;
 
-        for (Cell cell : cells) {
+        for (Cell cell : cells)
+        {
             cell.setRow(a_row);
         }
     }

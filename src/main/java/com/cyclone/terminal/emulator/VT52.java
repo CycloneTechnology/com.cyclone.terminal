@@ -205,8 +205,8 @@ public abstract class VT52 extends BaseTerminal
         switch (a_keyCode)
         {
             case SWT.SHIFT:
-                break;
             case SWT.CONTROL:
+                // TODO
                 break;
             case SWT.ARROW_UP:
                 return UP_ARROW_ESCAPE_SEQ;

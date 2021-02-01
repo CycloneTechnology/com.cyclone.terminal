@@ -9,7 +9,6 @@ import com.cyclone.terminal.emulator.cell.LineWidth;
 
 /**
  * @author Phil.Baxter
- * 
  */
 public abstract class VT100 extends VT52
 {
@@ -35,17 +34,15 @@ public abstract class VT100 extends VT52
 
     /**
      * CPR - Cursor Position Report - VT100 to Host.
-     * 
+     * <p>
      * ESC [ Pn ; Pn R
-     * 
+     * <p>
      * default value: 1
-     * 
-     * The CPR sequence reports the active position by means of the parameters.
-     * This sequence has two parameter values, the first specifying the line and
-     * the second specifying the column. The default condition with no
-     * parameters present, or parameters of 0, is equivalent to a cursor at home
-     * position.
-     * 
+     * <p>
+     * The CPR sequence reports the active position by means of the parameters. This sequence has two parameter values,
+     * the first specifying the line and the second specifying the column. The default condition with no parameters
+     * present, or parameters of 0, is equivalent to a cursor at home position.
+     *
      * @param a_numParams
      * @param a_params
      */
@@ -54,26 +51,24 @@ public abstract class VT100 extends VT52
         // Response should be <ESC>[Pl;PcR (pl = line, Pc = column
 
         final String sb = String.valueOf(ESC) + '[' +
-                          getLogicalScreen().getCursor().getRow() + ';' +
-                          getLogicalScreen().getCursor().getColumn() + 'R';
+                getLogicalScreen().getCursor().getRow() + ';' +
+                getLogicalScreen().getCursor().getColumn() + 'R';
 
         onTerminalData(sb.getBytes());
     }
 
     /**
      * CUB - Cursor Backward - Host to VT100 and VT100 to Host
-     * 
+     * <p>
      * ESC [ Pn D
-     * 
+     * <p>
      * default value: 1
-     * 
-     * The CUB sequence moves the active position to the left. The distance
-     * moved is determined by the parameter. If the parameter value is zero or
-     * one, the active position is moved one position to the left. If the
-     * parameter value is n, the active position is moved n positions to the
-     * left. If an attempt is made to move the cursor to the left of the left
-     * margin, the cursor stops at the left margin. Editor Function.
-     * 
+     * <p>
+     * The CUB sequence moves the active position to the left. The distance moved is determined by the parameter. If the
+     * parameter value is zero or one, the active position is moved one position to the left. If the parameter value is
+     * n, the active position is moved n positions to the left. If an attempt is made to move the cursor to the left of
+     * the left margin, the cursor stops at the left margin. Editor Function.
+     *
      * @param a_numParams
      * @param a_params
      */
@@ -95,19 +90,16 @@ public abstract class VT100 extends VT52
 
     /**
      * CUD - Cursor Down - Host to VT100 and VT100 to Host
-     * 
+     * <p>
      * ESC [ Pn B
-     * 
+     * <p>
      * default value: 1
-     * 
-     * The CUD sequence moves the active position downward without altering the
-     * column position. The number of lines moved is determined by the
-     * parameter. If the parameter value is zero or one, the active position is
-     * moved one line downward. If the parameter value is n, the active position
-     * is moved n lines downward. In an attempt is made to move the cursor below
-     * the bottom margin, the cursor stops at the bottom margin. Editor
-     * Function.
-     * 
+     * <p>
+     * The CUD sequence moves the active position downward without altering the column position. The number of lines
+     * moved is determined by the parameter. If the parameter value is zero or one, the active position is moved one
+     * line downward. If the parameter value is n, the active position is moved n lines downward. In an attempt is made
+     * to move the cursor below the bottom margin, the cursor stops at the bottom margin. Editor Function.
+     *
      * @param a_numParams
      * @param a_params
      */
@@ -129,18 +121,16 @@ public abstract class VT100 extends VT52
 
     /**
      * CUF - Cursor Forward - Host to VT100 and VT100 to Host
-     * 
+     * <p>
      * ESC [ Pn C
-     * 
+     * <p>
      * default value: 1
-     * 
-     * The CUF sequence moves the active position to the right. The distance
-     * moved is determined by the parameter. A parameter value of zero or one
-     * moves the active position one position to the right. A parameter value of
-     * n moves the active position n positions to the right. If an attempt is
-     * made to move the cursor to the right of the right margin, the cursor
-     * stops at the right margin. Editor Function.
-     * 
+     * <p>
+     * The CUF sequence moves the active position to the right. The distance moved is determined by the parameter. A
+     * parameter value of zero or one moves the active position one position to the right. A parameter value of n moves
+     * the active position n positions to the right. If an attempt is made to move the cursor to the right of the right
+     * margin, the cursor stops at the right margin. Editor Function.
+     *
      * @param a_numParams
      * @param a_params
      */
@@ -162,32 +152,28 @@ public abstract class VT100 extends VT52
 
     /**
      * CUP - Cursor Position
-     * 
+     * <p>
      * ESC [ Pn ; Pn H
-     * 
+     * <p>
      * default value: 1
-     * 
-     * The CUP sequence moves the active position to the position specified by
-     * the parameters.
      * <p>
-     * This sequence has two parameter values, the first specifying the line
-     * position and the second specifying the column position.
+     * The CUP sequence moves the active position to the position specified by the parameters.
      * <p>
-     * A parameter value of zero or one for the first or second parameter moves
-     * the active position to the first line or column in the display,
-     * respectively. The default condition with no parameters present is
-     * equivalent to a cursor to home action.
+     * This sequence has two parameter values, the first specifying the line position and the second specifying the
+     * column position.
      * <p>
-     * In the VT100, this control behaves identically with its format effector
-     * counterpart, HVP.
+     * A parameter value of zero or one for the first or second parameter moves the active position to the first line or
+     * column in the display, respectively. The default condition with no parameters present is equivalent to a cursor
+     * to home action.
+     * <p>
+     * In the VT100, this control behaves identically with its format effector counterpart, HVP.
      * <p>
      * Editor Function
      * <p>
      * The numbering of lines depends on the state of the Origin Mode (DECOM).
-     * 
-     * @param a_numParams the number of parameters present in the escape
-     *            sequence
-     * @param a_params the array of parameters
+     *
+     * @param a_numParams the number of parameters present in the escape sequence
+     * @param a_params    the array of parameters
      */
     public final void doCUP(final int a_numParams, final int[] a_params)
     {
@@ -220,16 +206,14 @@ public abstract class VT100 extends VT52
 
     /**
      * CUU - Cursor Up - Host to VT100 and VT100 to Host ESC [ Pn A
-     * 
+     * <p>
      * default value: 1
-     * 
-     * Moves the active position upward without altering the column position.
-     * The number of lines moved is determined by the parameter. A parameter
-     * value of zero or one moves the active position one line upward. A
-     * parameter value of n moves the active position n lines upward. If an
-     * attempt is made to move the cursor above the top margin, the cursor stops
-     * at the top margin. Editor Function
-     * 
+     * <p>
+     * Moves the active position upward without altering the column position. The number of lines moved is determined by
+     * the parameter. A parameter value of zero or one moves the active position one line upward. A parameter value of n
+     * moves the active position n lines upward. If an attempt is made to move the cursor above the top margin, the
+     * cursor stops at the top margin. Editor Function
+     *
      * @param a_numParams
      * @param a_params
      */
@@ -251,16 +235,14 @@ public abstract class VT100 extends VT52
 
     /**
      * DA - Device Attributes
-     * 
+     * <p>
      * ESC [ Pn c
-     * 
+     * <p>
      * default value: 0
-     * 
-     * The host requests the VT100 to send a device attributes (DA) control
-     * sequence to identify itself by sending the DA control sequence with
-     * either no parameter or a parameter of 0. Response to the request
-     * described above (VT100 to host) is generated by the VT100 as a DA control
-     * sequence with the numeric parameters as follows:
+     * <p>
+     * The host requests the VT100 to send a device attributes (DA) control sequence to identify itself by sending the
+     * DA control sequence with either no parameter or a parameter of 0. Response to the request described above (VT100
+     * to host) is generated by the VT100 as a DA control sequence with the numeric parameters as follows:
      * <ul>
      * <li>Option Present Sequence Sent
      * <li>No options ESC [?1;0c
@@ -272,7 +254,7 @@ public abstract class VT100 extends VT52
      * <li>GPO and AVO ESC [?1;6c
      * <li>GPO, STP and AVO ESC [?1;7c
      * </ul>
-     * 
+     *
      * @param a_P1
      * @param a_P2
      */
@@ -287,14 +269,13 @@ public abstract class VT100 extends VT52
 
     /**
      * DECLL - Load LEDS (DEC Private)
-     * 
+     * <p>
      * ESC [ Ps q
-     * 
+     * <p>
      * default value: 0
-     * 
-     * Load the four programmable LEDs on the keyboard according to the
-     * parameter(s).
-     * 
+     * <p>
+     * Load the four programmable LEDs on the keyboard according to the parameter(s).
+     *
      * <ul>
      * <li>Parameter Parameter Meaning
      * <li>0 Clear LEDs L1 through L4
@@ -303,9 +284,9 @@ public abstract class VT100 extends VT52
      * <li>3 Light L3
      * <li>4 Light L4
      * </ul>
-     * 
+     * <p>
      * LEDPanel numbers are indicated on the keyboard.
-     * 
+     *
      * @param a_numParams
      * @param a_params
      */
@@ -348,9 +329,9 @@ public abstract class VT100 extends VT52
     }
 
     /**
-     * ECH - Erase CharImage, Erase the number of characters specified, starting
-     * at the cursor position. The cursor remain in the same position.
-     * 
+     * ECH - Erase CharImage, Erase the number of characters specified, starting at the cursor position. The cursor
+     * remain in the same position.
+     *
      * @param a_numParams
      * @param a_params
      */
@@ -384,21 +365,19 @@ public abstract class VT100 extends VT52
 
     /**
      * EL - Erase in line.
-     * 
-     * @param a_numParams the number of parameters present in our parameter
-     *            array
-     * @param a_params an array containing the portion of line to erase, only
-     *            position 0 if present is valid and should only have one of the
-     *            following values...
-     *            <ul>
-     *            <li>0 (default) - Erase from the cursor to the end of the
-     *            line, (including the cursor position). Line attribute are not
-     *            affected.
-     *            <li>1 - Erase from the beginning of the line to the cursor
-     *            (including the cursor position). Line attribute are not
-     *            affected.
-     *            <li>2 - Erase the complete line.
-     *            </ul>
+     *
+     * @param a_numParams the number of parameters present in our parameter array
+     * @param a_params    an array containing the portion of line to erase, only position 0 if present is valid and
+     *                    should only have one of the following values...
+     *                    <ul>
+     *                    <li>0 (default) - Erase from the cursor to the end of the
+     *                    line, (including the cursor position). Line attribute are not
+     *                    affected.
+     *                    <li>1 - Erase from the beginning of the line to the cursor
+     *                    (including the cursor position). Line attribute are not
+     *                    affected.
+     *                    <li>2 - Erase the complete line.
+     *                    </ul>
      */
     public final void doEL(final int a_numParams, final int[] a_params)
     {
@@ -463,25 +442,23 @@ public abstract class VT100 extends VT52
 
     /**
      * ED - Erase in Display.
-     * 
-     * @param a_numParams the number of parameters present for the escape
-     *            sequence
-     * @param a_params an array of parameters embedded in the escape sequence,
-     *            only one parameter is valid for this sequence and if present,
-     *            its value will be one of ...
-     *            <ul>
-     *            <li>0 (default) - Erase in Display: Erase from cursor to the
-     *            end of the screen (including the cursor position). Line
-     *            attribute become single height, single width for all
-     *            completely erased lines.
-     *            <li>1 - Erase in Display: Erase from the beginning of the
-     *            screen to the cursor (including the cursor position). Line
-     *            attribute become single height, single width for all
-     *            completely erased lines.
-     *            <li>2 - Erase in Display: Erase the complete display. All
-     *            lines are erased and changed to single width. The cursor does
-     *            not move.
-     *            </ul>
+     *
+     * @param a_numParams the number of parameters present for the escape sequence
+     * @param a_params    an array of parameters embedded in the escape sequence, only one parameter is valid for this
+     *                    sequence and if present, its value will be one of ...
+     *                    <ul>
+     *                    <li>0 (default) - Erase in Display: Erase from cursor to the
+     *                    end of the screen (including the cursor position). Line
+     *                    attribute become single height, single width for all
+     *                    completely erased lines.
+     *                    <li>1 - Erase in Display: Erase from the beginning of the
+     *                    screen to the cursor (including the cursor position). Line
+     *                    attribute become single height, single width for all
+     *                    completely erased lines.
+     *                    <li>2 - Erase in Display: Erase the complete display. All
+     *                    lines are erased and changed to single width. The cursor does
+     *                    not move.
+     *                    </ul>
      */
     public final void doED(final int a_numParams, final int[] a_params)
     {
@@ -540,18 +517,16 @@ public abstract class VT100 extends VT52
 
     /**
      * DECDWL - Double-Width Line (DEC Private)
-     * 
+     * <p>
      * ESC # 6
-     * 
-     * This causes the line that contains the active position to become
-     * double-width single-height. If the line was single-width single-height,
-     * all characters to the right of the screen are lost. The cursor remains
-     * over the same character position unless it would be to the right of the
-     * right margin, in which case, it is moved to the right margin.
-     * 
-     * NOTE: The use of double-width characters reduces the number of characters
-     * per line by half.
-     * 
+     * <p>
+     * This causes the line that contains the active position to become double-width single-height. If the line was
+     * single-width single-height, all characters to the right of the screen are lost. The cursor remains over the same
+     * character position unless it would be to the right of the right margin, in which case, it is moved to the right
+     * margin.
+     * <p>
+     * NOTE: The use of double-width characters reduces the number of characters per line by half.
+     *
      * @param a_lineWidth
      */
     public final void doDECDWL(final LineWidth a_lineWidth)
@@ -563,25 +538,24 @@ public abstract class VT100 extends VT52
 
     /**
      * DECSC - Save Cursor
-     * 
+     * <p>
      * ESC 7
-     * 
+     * <p>
      * Saves the following items in the terminal's memory:
-     * 
+     * <p>
      * Cursor position
-     * 
+     * <p>
      * Character attributes set by the SGR command
-     * 
+     * <p>
      * Character sets (G0, G1, G2, or G3) currently in GL and GR
-     * 
+     * <p>
      * Wrap flag (autowrap or no autowrap)
-     * 
+     * <p>
      * State of origin mode (DECOM)
-     * 
+     * <p>
      * Selective erase attribute
-     * 
+     * <p>
      * Any single shift 2 (SS2) or single shift 3 (SS3) functions sent
-     * 
      */
     public final void doDECSC()
     {
@@ -589,22 +563,20 @@ public abstract class VT100 extends VT52
     }
 
     /**
-     * The value of the left margin (Pl) must be less than the right margin
-     * (Pr).
-     * 
-     * The maximum size of the scrolling region is the page size, based on the
-     * setting of set columns per page (DECSCPP).
-     * 
+     * The value of the left margin (Pl) must be less than the right margin (Pr).
+     * <p>
+     * The maximum size of the scrolling region is the page size, based on the setting of set columns per page
+     * (DECSCPP).
+     * <p>
      * The minimum size of the scrolling region is two columns.
-     * 
-     * The terminal only recognizes this control function if vertical split
-     * screen mode (DECLRMM) is set.
-     * 
+     * <p>
+     * The terminal only recognizes this control function if vertical split screen mode (DECLRMM) is set.
+     * <p>
      * DECSLRM moves the cursor to column 1, line 1 of the page.
-     * 
-     * If the left and right margins are set to columns other than 1 and 80 (or
-     * 132), then the terminal cannot scroll smoothly.
-     * 
+     * <p>
+     * If the left and right margins are set to columns other than 1 and 80 (or 132), then the terminal cannot scroll
+     * smoothly.
+     *
      * @param a_numParams
      * @param a_params
      */
@@ -641,21 +613,17 @@ public abstract class VT100 extends VT52
 
     /**
      * DECDHL - Double Height Line (DEC Private)
-     * 
+     * <p>
      * Top Half: ESC # 3 Bottom Half: ESC # 4
-     * 
-     * These sequences cause the line containing the active position to become
-     * the top or bottom half of a double-height double-width line. The
-     * sequences must be used in pairs on adjacent lines and the same character
-     * output must be sent to both lines to form full double-height characters.
-     * If the line was single-width single-height, all characters to the right
-     * of the center of the screen are lost. The cursor remains over the same
-     * character position unless it would be to the right of the right margin,
-     * in which case it is moved to the right margin.
-     * 
-     * NOTE: The use of double-width characters reduces the number of characters
-     * per line by half.
-     * 
+     * <p>
+     * These sequences cause the line containing the active position to become the top or bottom half of a double-height
+     * double-width line. The sequences must be used in pairs on adjacent lines and the same character output must be
+     * sent to both lines to form full double-height characters. If the line was single-width single-height, all
+     * characters to the right of the center of the screen are lost. The cursor remains over the same character position
+     * unless it would be to the right of the right margin, in which case it is moved to the right margin.
+     * <p>
+     * NOTE: The use of double-width characters reduces the number of characters per line by half.
+     *
      * @param a_height
      */
     public final void doDECDHL(final LineHeight a_height)
@@ -667,12 +635,11 @@ public abstract class VT100 extends VT52
 
     /**
      * DECID - Identify Terminal (DEC Private)
-     * 
+     * <p>
      * ESC Z
-     * 
-     * This sequence causes the same response as the ANSI device attributes
-     * (DA). This sequence will not be supported in future DEC terminals,
-     * therefore, DA should be used by any new software.
+     * <p>
+     * This sequence causes the same response as the ANSI device attributes (DA). This sequence will not be supported in
+     * future DEC terminals, therefore, DA should be used by any new software.
      */
     public final void doDECID()
     {
@@ -681,14 +648,13 @@ public abstract class VT100 extends VT52
 
     /**
      * SGR - Select Graphic Rendition
-     * 
+     * <p>
      * ESC [ Ps ; . . . ; Ps m
-     * 
+     * <p>
      * default value: 0
-     * 
-     * Invoke the graphic rendition specified by the parameter(s). All following
-     * characters transmitted to the VT100 are rendered according to the
-     * parameter(s) until the next occurrence of SGR. Format Effector
+     * <p>
+     * Invoke the graphic rendition specified by the parameter(s). All following characters transmitted to the VT100 are
+     * rendered according to the parameter(s) until the next occurrence of SGR. Format Effector
      * <ul>
      * <li>Parameter Parameter Meaning
      * <li>0 Attributes off
@@ -697,14 +663,14 @@ public abstract class VT100 extends VT52
      * <li>5 Blink
      * <li>7 Negative (reverse) image
      * </ul>
-     * 
+     * <p>
      * All other parameter values are ignored.
-     * 
+     * <p>
      * With the Advanced Video Option, only one type of character attribute is
      * possible as determined by the cursor selection; in that case specifying
      * either the underscore or the reverse attribute will activate the
      * currently selected attribute. (See cursor selection in Chapter 1).
-     * 
+     *
      * @param a_numParams
      * @param a_params
      */
@@ -829,12 +795,11 @@ public abstract class VT100 extends VT52
 
     /**
      * DSR - Device Status Report
-     * 
+     * <p>
      * ESC [ Ps n
-     * 
-     * Requests and reports the general status of the VT100 according to the
-     * following parameter(s).
-     * 
+     * <p>
+     * Requests and reports the general status of the VT100 according to the following parameter(s).
+     *
      * <ul>
      * <li>Parameter Parameter Meaning
      * <li>0 Response from VT100 - Ready, No malfunctions detected (default)
@@ -846,7 +811,7 @@ public abstract class VT100 extends VT52
      * </ul>
      * DSR with a parameter value of 0 or 3 is always sent as a response to a
      * requesting DSR with a parameter value of 5.
-     * 
+     *
      * @param a_numParams
      * @param a_params
      */
@@ -867,11 +832,14 @@ public abstract class VT100 extends VT52
                         // them
                         break;
                     case 5:
-                        final String sb = String.valueOf(ESC) + '[' +
-                                          getLogicalScreen().getCursor()
-                                                  .getRow() + '0' +
-                                          getLogicalScreen().getCursor()
-                                                  .getColumn() + 'n';
+                        final String sb = String.valueOf(ESC)
+                                .concat("[")
+                                .concat(String.valueOf(getLogicalScreen().getCursor()
+                                        .getRow()))
+                                .concat("0")
+                                .concat(String.valueOf(getLogicalScreen().getCursor()
+                                        .getColumn()))
+                                .concat("n");
                         onTerminalData(sb.getBytes());
                         break;
                     case 6:
@@ -892,7 +860,7 @@ public abstract class VT100 extends VT52
 
     /**
      * DECSCL - Set Conformance Level
-     * 
+     *
      * @param a_numParams
      * @param a_params
      */
@@ -903,7 +871,7 @@ public abstract class VT100 extends VT52
 
     /**
      * Set Column mode (normally 80 or 132 Columns).
-     * 
+     *
      * @param a_columns
      */
     public final void setColumns(final int a_columns)
@@ -913,11 +881,11 @@ public abstract class VT100 extends VT52
 
     /**
      * Clear tabs.
-     * 
+     * <p>
      * Clear tab at current column ESC [ g or ESC [ 0 g
-     * 
+     * <p>
      * Clear all tabs ESC [ 3 g
-     * 
+     *
      * @param a_numParams
      * @param a_params
      */
@@ -945,7 +913,7 @@ public abstract class VT100 extends VT52
 
     /**
      * Set Scrolling Region.
-     * 
+     *
      * @param a_numParams
      * @param a_params
      */
@@ -966,7 +934,6 @@ public abstract class VT100 extends VT52
 
     /**
      * Save the Cursor Position.
-     * 
      */
     public final void doSaveCursor()
     {
@@ -975,7 +942,6 @@ public abstract class VT100 extends VT52
 
     /**
      * Unsave the cursor position.
-     * 
      */
     public final void doUnsaveCursor()
     {
@@ -984,15 +950,14 @@ public abstract class VT100 extends VT52
 
     /**
      * Adjustments (DECALN)
-     * 
-     * The terminal has a screen alignment pattern that service personnel use to
-     * adjust the screen. You can display the screen alignment pattern with the
-     * DECALN sequence.
-     * 
+     * <p>
+     * The terminal has a screen alignment pattern that service personnel use to adjust the screen. You can display the
+     * screen alignment pattern with the DECALN sequence.
+     * <p>
      * ESC # 8
-     * 
+     * <p>
      * This sequence fills the screen with uppercase E's.
-     * 
+     *
      * @param a_numParams
      * @param a_params
      */
@@ -1023,7 +988,7 @@ public abstract class VT100 extends VT52
 
     /**
      * Set Reverse Video.
-     * 
+     *
      * @param a_reverse true if reverse video is to be set.
      */
     public final void setReverseVideo(final boolean a_reverse)
@@ -1044,7 +1009,7 @@ public abstract class VT100 extends VT52
 
     /**
      * Set Origin Mode.
-     * 
+     *
      * @param a_origin true if origin mode is to be set.
      */
     public final void setOrigin(final boolean a_origin)
@@ -1055,6 +1020,7 @@ public abstract class VT100 extends VT52
     /**
      * @param a_numParams
      * @param a_params
+     *
      * @throws EmulatorException
      */
     public final void doSM(final int a_numParams, final int[] a_params)
@@ -1064,15 +1030,15 @@ public abstract class VT100 extends VT52
         {
             switch (a_params[iParam])
             {
-            // case 2:
-            // TODO Set Keyboard Action Mode (AM)
-            // break;
-            // case 4:
-            // TODO Set Insert Mode (IRM)
-            // break;
-            // case 12:
-            // TODO Set Send/Receive (SRM)
-            // break;
+                // case 2:
+                // TODO Set Keyboard Action Mode (AM)
+                // break;
+                // case 4:
+                // TODO Set Insert Mode (IRM)
+                // break;
+                // case 12:
+                // TODO Set Send/Receive (SRM)
+                // break;
                 case 20:
                     // Set Automatic Newline(LNM)
                     setLinefeed(true);
@@ -1088,6 +1054,7 @@ public abstract class VT100 extends VT52
     /**
      * @param a_numParams
      * @param a_params
+     *
      * @throws EmulatorException
      */
     public final void doRM(final int a_numParams, final int[] a_params)
@@ -1098,15 +1065,15 @@ public abstract class VT100 extends VT52
             // System.out.println(" RM :" + a_params[iParam]);
             switch (a_params[iParam])
             {
-            // case 2:
-            // TODO Set Keyboard Action Mode (AM)
-            // break;
-            // case 4:
-            // TODO Set Replace Mode (IRM)
-            // break;
-            // case 12:
-            // TODO Set Send/Receive (SRM)
-            // break;
+                // case 2:
+                // TODO Set Keyboard Action Mode (AM)
+                // break;
+                // case 4:
+                // TODO Set Replace Mode (IRM)
+                // break;
+                // case 12:
+                // TODO Set Send/Receive (SRM)
+                // break;
                 case 20:
                     // System.out.println(" LNM");
                     // Normal Linefeed(LNM)
