@@ -1,6 +1,6 @@
 # Cyclone Terminal
 
-Open Source code for an eclipse compatible VTxxx style terminal.
+Open Source code for an eclipse compatible VTxxx style terminal emulator.
 
 This is a work in progress but aims to provide an eclipse plugin that allows an 
 application to create a VT52/100 etc view and interact with it.
