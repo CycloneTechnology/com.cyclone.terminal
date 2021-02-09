@@ -21,10 +21,11 @@ The terminal allows for the following:
   simply creating a class which implements the DataScope interface and then calling 
   'SetDatascope' on the terminal with the required datascope will activate it, setting a null
   DataScope will deactivate any prior DataScope. 
-  No DataScope is the default state fo a Terminal instance.
+  No DataScope is the default state for a Terminal instance.
 
 ## Known Deficiencies
-- The fonts embedded are not complete (and maybe not correct) for all the VT control sets.
+- The fonts embedded in the emulator are not complete (and maybe not correct) for all the VT control 
+  sets (currently a single font set is used).
   There are classes that will generate the code for creating the images used for each character, 
   these can be found in the com.cyclone.terminal.emulator.font.vt100 package
 - Not all escape sequencies have been implemented (just enough for our project(s) to get by).
