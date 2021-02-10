@@ -11,14 +11,14 @@
 
 	<repositories>
 		<repository>
-			<id>4.17</id>
+			<id>4.19</id>
 			<layout>p2</layout>
-			<url>http://ftp.acc.umu.se/mirror/eclipse.org/eclipse/updates/4.17/</url>
+			<url>http://ftp.acc.umu.se/mirror/eclipse.org/eclipse/updates/4.19/</url>
 		</repository>
 		<repository>
-			<id>4.17-ext</id>
+			<id>4.19-ext</id>
 			<layout>p2</layout>
-			<url>http://ftp.acc.umu.se/mirror/eclipse.org/releases/2020-09/</url>
+			<url>http://ftp.acc.umu.se/mirror/eclipse.org/releases/2021-03/</url>
 		</repository>
 	</repositories>
 
