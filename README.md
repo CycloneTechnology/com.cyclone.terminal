@@ -35,13 +35,10 @@ The terminal allows for the following:
 ### Contributions
 Any Contributions, Fixes and/or Enhancements to this emulator are welcome.
 
-### License
-This project is licensed under the terms of the MIT license.
-
-
-###Acknowledgements
+### Acknowledgements
 The state machine parser used in this project is a conversion from the parser presented at:
 
 - [A parser for DEC’s ANSI-compatible video terminals](https://www.vt100.net/emu/dec_ansi_parser)
 
-
+### License
+This project is licensed under the terms of the MIT license.
