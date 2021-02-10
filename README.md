@@ -35,6 +35,10 @@ The terminal allows for the following:
 ### Contributions
 Any Contributions, Fixes and/or Enhancements to this emulator are welcome.
 
+### License
+This project is licensed under the terms of the MIT license.
+
+
 ###Acknowledgements
 The state machine parser used in this project is a conversion from the parser presented at:
 
