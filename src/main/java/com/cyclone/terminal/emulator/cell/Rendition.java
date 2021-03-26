@@ -1,11 +1,9 @@
 package com.cyclone.terminal.emulator.cell;
 
-import com.cyclone.terminal.emulator.Colours;
-
 /**
  * @author Phil.Baxter
  */
-public class Rendition implements Colours, Cloneable
+public class Rendition implements Cloneable
 {
     private boolean bold;
 
@@ -203,13 +201,13 @@ public class Rendition implements Colours, Cloneable
         {
             final Rendition toCompare = (Rendition) a_obj;
 
-            return (bold == toCompare.bold) && (italics == toCompare.italics) &&
-                   (underline == toCompare.underline) &&
-                   (blink == toCompare.blink) &&
-                   (inverse == toCompare.inverse) &&
-                   (concealed == toCompare.concealed) &&
-                   (foregroundIndex == toCompare.foregroundIndex) &&
-                   (backgroundIndex == toCompare.backgroundIndex);
+            return (bold == toCompare.bold) && (italics == toCompare.italics)
+                    && (underline == toCompare.underline)
+                    && (blink == toCompare.blink)
+                    && (inverse == toCompare.inverse)
+                    && (concealed == toCompare.concealed)
+                    && (foregroundIndex == toCompare.foregroundIndex)
+                    && (backgroundIndex == toCompare.backgroundIndex);
         }
 
         return false;
