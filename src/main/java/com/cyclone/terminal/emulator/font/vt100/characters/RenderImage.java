@@ -7,7 +7,6 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.PaletteData;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.graphics.RGB;
 
 import com.cyclone.terminal.emulator.Colours;
 import com.cyclone.terminal.emulator.cell.BlinkState;
@@ -17,7 +16,7 @@ import com.cyclone.terminal.emulator.cell.Rendition;
  * @author Phil.Baxter
  * 
  */
-public abstract class RenderImage implements Colours
+public abstract class RenderImage
 {
     private Image image;
 
@@ -42,41 +41,43 @@ public abstract class RenderImage implements Colours
         // Set up our foregound and background colours based upon the bold
         // and inverse attributes. The colour indexes will have been set via
         // an SGR sequence, or they may be the default values
-        final RGB fore;
-        final RGB back;
+        final Color fore;
+        final Color back;
         if (!a_Rendition.isInverse() && !a_selected)
         {
             if (a_Rendition.isBold())
             {
-                fore = Colours.BOLD[a_Rendition.getForegroundIndex()];
+                fore = Colours.get(a_Rendition.getForegroundIndex()).getBold();
             }
             else
             {
-                fore = Colours.NORMAL[a_Rendition.getForegroundIndex()];
+                fore = Colours.get(a_Rendition.getForegroundIndex())
+                        .getNormal();
             }
-            back = Colours.NORMAL[a_Rendition.getBackgroundIndex()];
+            back = Colours.get(a_Rendition.getBackgroundIndex()).getNormal();
         }
         else
         {
-            fore = Colours.NORMAL[a_Rendition.getBackgroundIndex()];
+            fore = Colours.get(a_Rendition.getBackgroundIndex()).getNormal();
             if (a_Rendition.isBold())
             {
-                back = Colours.BOLD[a_Rendition.getForegroundIndex()];
+                back = Colours.get(a_Rendition.getForegroundIndex()).getBold();
             }
             else
             {
-                back = Colours.NORMAL[a_Rendition.getForegroundIndex()];
+                back = Colours.get(a_Rendition.getForegroundIndex())
+                        .getNormal();
             }
         }
 
         final PaletteData paletteData;
         if (a_blinkState == BlinkState.OFF)
         {
-            paletteData = new PaletteData(back, fore);
+            paletteData = new PaletteData(back.getRGB(), fore.getRGB());
         }
         else
         {
-            paletteData = new PaletteData(fore, back);
+            paletteData = new PaletteData(fore.getRGB(), back.getRGB());
         }
         final ImageData imageData = new ImageData(getSize().x, getSize().y, 1,
                 paletteData);
@@ -89,8 +90,8 @@ public abstract class RenderImage implements Colours
         final GC gc = new GC(image);
         try
         {
-            gc.setForeground(new Color(a_device, fore));
-            gc.setBackground(new Color(a_device, back));
+            gc.setForeground(fore);
+            gc.setBackground(back);
 
             if (a_Rendition.isUnderline())
             {

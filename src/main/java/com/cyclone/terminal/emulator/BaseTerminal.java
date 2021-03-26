@@ -17,7 +17,6 @@ import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.MenuAdapter;
 import org.eclipse.swt.events.MenuEvent;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
@@ -136,7 +135,8 @@ public abstract class BaseTerminal extends Parser implements Terminal
     }
 
     /**
-     * Indicates that the specified data has been typed or is being sent in response to a terminal query
+     * Indicates that the specified data has been typed or is being sent in
+     * response to a terminal query
      *
      * @param a_data
      */
@@ -167,10 +167,11 @@ public abstract class BaseTerminal extends Parser implements Terminal
 
         gc = new GC(canvas);
         gc.setFont(font);
-        gc.setBackground(new Color(getDisplay(),
-                Colours.NORMAL[Colours.BACKGROUND_COLOUR_INDEX]));
-        gc.setForeground(new Color(getDisplay(),
-                Colours.NORMAL[Colours.FOREGROUND_COLOUR_INDEX]));
+        gc.setBackground(Colours.get(Colours.DEFAULT_BACKGROUND_COLOUR_INDEX)
+                .getNormal());
+        gc.setForeground(Colours.get(Colours.DEFAULT_FOREGROUND_COLOUR_INDEX)
+                .getNormal());
+
         gc.fillRectangle(canvas.getClientArea());
 
         canvas.addKeyListener(new KeyListener()
@@ -293,8 +294,7 @@ public abstract class BaseTerminal extends Parser implements Terminal
         compositeGridLayout.makeColumnsEqualWidth = false;
         composite.setLayout(compositeGridLayout);
 
-        composite.addDisposeListener(a_e ->
-        {
+        composite.addDisposeListener(a_e -> {
             blinkThread.interrupt();
             try
             {
@@ -315,10 +315,10 @@ public abstract class BaseTerminal extends Parser implements Terminal
 
         font = new Font(getDisplay(), "fixed", 120, SWT.NONE);
         canvas.setFont(font);
-        canvas.setBackground(new Color(getDisplay(),
-                Colours.NORMAL[Colours.BACKGROUND_COLOUR_INDEX]));
-        canvas.setForeground(new Color(getDisplay(),
-                Colours.NORMAL[Colours.FOREGROUND_COLOUR_INDEX]));
+        canvas.setBackground(Colours
+                .get(Colours.DEFAULT_BACKGROUND_COLOUR_INDEX).getNormal());
+        canvas.setForeground(Colours
+                .get(Colours.DEFAULT_FOREGROUND_COLOUR_INDEX).getNormal());
 
         statusLine = new CLabel(composite, SWT.NONE);
         statusLine.setText("Online");
@@ -366,7 +366,8 @@ public abstract class BaseTerminal extends Parser implements Terminal
     }
 
     /**
-     * @return true if the display widget the terminal is using has been disposed
+     * @return true if the display widget the terminal is using has been
+     *         disposed
      */
     public boolean isDisposed()
     {
@@ -494,21 +495,19 @@ public abstract class BaseTerminal extends Parser implements Terminal
 
                 final MenuItem copyItem = new MenuItem(menu, SWT.PUSH);
                 copyItem.setText("Copy");
-                copyItem.addListener(SWT.Selection, a_event ->
-                {
+                copyItem.addListener(SWT.Selection, a_event -> {
                     final String textData = getSelectedText();
 
                     final TextTransfer textTransfer = TextTransfer
                             .getInstance();
                     cb.setContents(new Object[]
-                            {textData}, new Transfer[]
-                            {textTransfer});
+                    {textData}, new Transfer[]
+                    {textTransfer});
                 });
 
                 final MenuItem pasteItem = new MenuItem(menu, SWT.PUSH);
                 pasteItem.setText("Paste");
-                pasteItem.addListener(SWT.Selection, a_event ->
-                {
+                pasteItem.addListener(SWT.Selection, a_event -> {
                     final TextTransfer transfer = TextTransfer.getInstance();
                     final String data = (String) cb.getContents(transfer);
                     if (data != null)
@@ -634,8 +633,7 @@ public abstract class BaseTerminal extends Parser implements Terminal
 
     private void initializeBlinking()
     {
-        blinkThread = new Thread(() ->
-        {
+        blinkThread = new Thread(() -> {
             try
             {
                 boolean blinkOn = false;
@@ -648,8 +646,7 @@ public abstract class BaseTerminal extends Parser implements Terminal
                     // value.
                     if (!isDisposed())
                     {
-                        getDisplay().asyncExec(() ->
-                        {
+                        getDisplay().asyncExec(() -> {
                             for (int iRow = 0; iRow < logicalScreen
                                     .getHeight(); iRow++)
                             {
@@ -664,7 +661,7 @@ public abstract class BaseTerminal extends Parser implements Terminal
                                     if ((iRow == logicalScreen.getCursor()
                                             .getRow())
                                             && (iColumn == logicalScreen
-                                            .getCursor().getColumn()))
+                                                    .getCursor().getColumn()))
                                     {
                                         if (!invisibleCursor)
                                         {
@@ -673,7 +670,9 @@ public abstract class BaseTerminal extends Parser implements Terminal
                                             {
                                                 switch (cursorStyle)
                                                 {
-                                                    // TODO - Draw Different cursor depending on BLOCK or UNDERLINE
+                                                    // TODO - Draw Different
+                                                    // cursor depending on BLOCK
+                                                    // or UNDERLINE
                                                     default:
                                                     case BLOCK:
                                                     case UNDERLINE:
@@ -739,8 +738,9 @@ public abstract class BaseTerminal extends Parser implements Terminal
             final GC imgGC = new GC(getImage());
             try
             {
-                imgGC.setBackground(new Color(getDisplay(),
-                        Colours.NORMAL[Colours.BACKGROUND_COLOUR_INDEX]));
+                imgGC.setBackground(
+                        Colours.get(Colours.DEFAULT_BACKGROUND_COLOUR_INDEX)
+                                .getNormal());
                 imgGC.fillRectangle(0, 0, charSize.x * logicalScreen.getWidth(),
                         charSize.y * logicalScreen.getHeight());
             }
@@ -1609,7 +1609,8 @@ public abstract class BaseTerminal extends Parser implements Terminal
     }
 
     /**
-     * @return true if the screen width is allowed to change between 80 and 132 columns
+     * @return true if the screen width is allowed to change between 80 and 132
+     *         columns
      */
     public final boolean isAllowWidthChange()
     {
