@@ -24,7 +24,7 @@ The terminal allows for the following:
   No DataScope is the default state for a Terminal instance.
 
 ## Known Deficiencies
-- The fonts embedded in the emulator are not complete (and maybe not correct) for all the VT control 
+- The fonts embedded in the emulator are not complete (and maybe not be correct) for all the VT control 
   sets (currently a single font set is used).
   There are classes that will generate the code for creating the images used for each character, 
   these can be found in the com.cyclone.terminal.emulator.font.vt100 package
